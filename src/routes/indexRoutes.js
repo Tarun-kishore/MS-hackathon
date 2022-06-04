@@ -15,7 +15,7 @@ router.post("/signup", async (req, res) => {
       .cookie("token", token, {
         httpOnly: true,
       })
-      .status(200)
+      .status(201)
       .json({
         message: "Account Created",
         role,
