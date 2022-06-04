@@ -9,7 +9,11 @@
     "build": "npm install && cd client && npm install &&  npm run build && cd ..",
     "start": "node src/index.js",
     "devstart": "nodemon src/index.js  -e js,hbs",
-    "debug": "nodemon --inspect-brk src/index.js -e js,hbs"
+    "debug": "nodemon --inspect-brk src/index.js -e js,hbs",
+    "test": "jest --watch"
+  },
+  "jest": {
+    "testEnvironment": "node"
   },
   "nodemonConfig": {
     "ignore": [
@@ -23,6 +27,9 @@
     "express": "^4.18.1",
     "mongoose": "^6.3.5"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "jest": "^28.1.0",
+    "supertest": "^6.2.3"
+  },
   "description": ""
 }

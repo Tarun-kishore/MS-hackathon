@@ -28,5 +28,5 @@ First you need to setup an environment for the server to run (You have to do it 
  
  - When you want to push some changes to original code, create a branch in your local repository.
  - Then push to changes in remote repository by creating the branch in  remote repository.
- - After pushing the changes, create a pull request.
+ - After pushing the changes, create a pull request or you can also directly push to main.
  
