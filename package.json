@@ -1,0 +1,28 @@
+{
+  "name": "hackathon",
+  "version": "1.0.0",
+  "main": "index.js",
+  "engines": {
+    "node": "14.x"
+  },
+  "scripts": {
+    "build": "npm install && cd client && npm install &&  npm run build && cd ..",
+    "start": "node src/index.js",
+    "devstart": "nodemon src/index.js  -e js,hbs",
+    "debug": "nodemon --inspect-brk src/index.js -e js,hbs"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "**/client/**"
+    ]
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "mongoose": "^6.3.5"
+  },
+  "devDependencies": {},
+  "description": ""
+}
