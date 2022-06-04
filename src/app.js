@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: true, limit: "10 mb" }));
 
 // *setting up all the routes
 app.get("/test", (req, res) => {
-  res.statusCode(200).json({ message: "Test Succesful! React app running" });
+  res.status(200).json({ message: "Test Succesful! React app running" });
 });
 
 module.exports = app;

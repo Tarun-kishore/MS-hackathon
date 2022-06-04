@@ -1,4 +1,4 @@
-const app = require("./index");
+const app = require("./app.js");
 // // *setting up a public folder directory path
 // app.use(express.static("src/public"));
 
