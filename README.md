@@ -18,6 +18,9 @@ First you need to setup an environment for the server to run (You have to do it 
 - Create a file named `.env` into the cloned folder.
 - Into the file place content :
   DATABASE_URL = `mongodb database url in form of mongodb://localhost:27017/dbname`
+  and SECRET = `any random string`
+
+
   
   Every time you pull contents form repository make sure you run `npm install` to install all required modules.
   
