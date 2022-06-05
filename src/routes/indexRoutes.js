@@ -19,6 +19,7 @@ router.post("/signup", async (req, res) => {
       .json({
         message: "Account Created",
         role,
+        user,
       });
   } catch (e) {
     res.status(500).send(e);
@@ -41,8 +42,7 @@ router.post("/login", async (req, res) => {
         message: "Logged in successfully",
       });
   } catch (error) {
-    console.log(error);
-    res.status(500).send(error);
+    res.status(400).send(error);
   }
 });
 
