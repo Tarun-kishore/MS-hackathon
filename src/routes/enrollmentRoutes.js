@@ -1,44 +1,30 @@
-const express = require('express');
+const express = require("express");
+const { isVolunteer, isAdmin } = require("../middleware/userRoles");
 const router = express.Router();
-const bodyParser = require('body-parser')
-const app = express();
-const Event = require('../models/event');
-const User = require('../models/user');
-const Enrollment = require('../models/enrollment');
-const res = require('express/lib/response');
-
-app.use(bodyParser.urlencoded({ extended: true }));
-
-
+const Event = require("../models/event");
+const auth = require("../middleware/auth");
 //list of routes for enrollment
 
 //POST request for sending the enrollment (volunteer) -> add enrollment to the enrollments collection
-router.post('/enroll/:userID/:eventID', async (req, res) => {
-    const userID = req.params.userID;
-    const eventID = req.params.eventID;
-    const event = await Event.findOneAndUpdate({ _id: eventID }, { volunteersEnrolled: volunteersEnrolled + 1 }, { new: true });
-    const user = await User.findById(userID);
+router.post("/enroll/:eventID", auth, isVolunteer, async (req, res) => {
+  const eventID = req.params.eventID;
+  try {
+    const eventModel = await Event.findOne({ _id: eventID });
 
-    const newEnrollment = new Enrollment({
-        volunteer: user,
-        event: event
-    });
+    const finalEvent = await eventModel.addNewVolunteer(req.user._id);
 
-    newEnrollment.save((error, newEnrollment) => {
-        if (error) throw error
-        res.json(newEnrollment)
-    })
-
-})
-
-
+    res.status(201).send(finalEvent);
+  } catch (e) {
+    res.status(400).send(e);
+  }
+});
 
 //GET request for displaying all enrollments (admin)- fetch from database /requests
-router.get('/enrollments',function(req,res){
-    //display all values in the enrollments db
-    const enrollments = Enrollment.find({});
-    res.render('{filename}', {enrollments})
-})
-
+router.get("/", auth, isAdmin, function (req, res) {
+  //display all values in the enrollments db
+  //const enrollments = Enrollment.find({});
+  //res.render("{filename}", { enrollments });
+});
 
 module.exports = router;
+
