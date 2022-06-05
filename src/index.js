@@ -11,5 +11,5 @@ const port = process.env.PORT || 3001;
 
 // *making server listen at port defined above
 app.listen(port, () => {
-  console.log("server runnning");
+  console.log("server running");
 });

@@ -3,4 +3,4 @@
 
 // ! all database information are saved in environment
 const mongoose = require('mongoose')
-mongoose.connect(process.env.DATABASE_URL, {useNewUrlParser: true})
+mongoose.connect("mongodb://localhost:27017/toybankDB" || process.env.DATABASE_URL)
