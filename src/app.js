@@ -19,8 +19,12 @@ app.use(cookieParser());
 //Importing routes from files
 const indexRouter = require("./routes/indexRoutes");
 const volunteerRouter = require("./routes/volunteerRoutes");
+const eventRouter = require("./routes/eventRoutes");
+const enrollmentRouter = require("./routes/enrollmentRoutes");
 
 app.use("/volunteer", volunteerRouter);
 app.use("/", indexRouter);
+app.use("/event", indexRouter);
+app.use("/enrollment", indexRouter);
 
 module.exports = app;
