@@ -1,9 +1,12 @@
 ### Signup 
 method : POST
+
 endpoint: /signup
 
 Sample Input: json
+
 {
+
     name: "name ",
     DOB: "Feb 29 2009" //or any other format,
     mobile: "9999999999",
@@ -39,6 +42,7 @@ Sample Input: json
 
 Sample Output:
 {
+
     "message": "Account Created",
     "role": "volunteer",
     "user": {       //user data
@@ -64,12 +68,14 @@ endpoint: /login
 
 Sample Input: json
 {
+
     mobile:"9998887776",
     password:"password"
 }
 
 Sample Output:
 {
+
     "message": "Logged in successfully"
 }
 
@@ -82,6 +88,7 @@ Sample Input: json
 
 Sample Output:
 {
+
     "message": "Logged Out Successfully"
 }
 
@@ -94,6 +101,7 @@ Sample Input: json
 
 Sample Output:
 {
+
     "_id": "629c5e9f0a4fb53e7da07e61",
     "name": "user name",
     "DOB": "2011-09-15T18:30:00.000Z",
