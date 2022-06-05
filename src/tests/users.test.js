@@ -64,14 +64,13 @@ test("Should be able to logout", async () => {
     .post("/logout")
     .set("Cookie", [token])
     .expect(200);
+  expect(response.headers["set-cookie"][0].split(";")[0]).toBe("token=");
+
+  token = undefined;
 });
 
 test("Should not be able to logout without authorization", async () => {
   const response = await request(app).post("/logout").expect(401);
-
-  expect(response.headers["set-cookie"]).not.toBeDefined();
-
-  token = undefined;
 });
 
 test("Should not be able to access profile without authorization", async () => {
@@ -104,9 +103,65 @@ test("Should be able to access profile after login", async () => {
     .expect(200);
 });
 
+test("Should be able to update profile after login", async () => {
+  const response = await request(app)
+    .patch("/volunteer/profile")
+    .send({
+      name: "updated name",
+    })
+    .set("Cookie", [token])
+    .expect(200);
+
+  expect(response.body).toMatchObject({
+    name: "updated name",
+  });
+});
+
+test("Should not be able to update profile with request containing non Allowed fields", async () => {
+  const response = await request(app)
+    .patch("/volunteer/profile")
+    .send({
+      name: "updated name",
+      mobile: "6677889955",
+    })
+    .set("Cookie", [token])
+    .expect(400);
+
+  expect(response.body).toMatchObject({
+    error: "invalid updates",
+  });
+});
+
 test("Should be able to logout after login", async () => {
   const response = await request(app)
     .post("/logout")
     .set("Cookie", [token])
     .expect(200);
+  expect(response.headers["set-cookie"][0].split(";")[0]).toBe("token=");
+
+  token = undefined;
+});
+
+test("cannot delete profile without login", async () => {
+  const response = await request(app).delete("/volunteer/profile").expect(401);
+});
+
+test("cannot delete profile without login", async () => {
+  const res = await request(app)
+    .post("/login")
+    .send({
+      mobile: tempUser.mobile,
+      password: tempUser.password,
+    })
+    .expect(200);
+
+  token = res.headers["set-cookie"][0];
+
+  const response = await request(app)
+    .delete("/volunteer/profile")
+    .set("Cookie", [token])
+    .expect(200);
+
+  expect(response.headers["set-cookie"][0].split(";")[0]).toBe("token=");
+  token = undefined;
 });
