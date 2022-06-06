@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const Event = require("../models/event");
 
 const userSchema = mongoose.Schema(
   {
@@ -137,6 +138,15 @@ userSchema.methods.generateAuthToken = async function () {
   await user.save();
 
   return token;
+};
+
+//get personalised events recommendation
+userSchema.methods.getRelatedEvents = async function () {
+  const user = this;
+
+  const events = await Event.find();
+
+  return events;
 };
 
 userSchema.statics.findByCredentials = async (mobile, password) => {
