@@ -62,6 +62,19 @@ router.get("/requests/approve/:userId", auth , isAdmin, async (req, res) =>{
   }
 });
 
+router.get("/requests/reject/:userId", auth , isAdmin, async (req, res) =>{
+  const userId = req.params.userId;
+  try {
+    const user = await User.findOne({ _id: userId });
+    user.approval = "rejected";
+    await user.save();
+    res.status(200).send("user rejection successful");
+    
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
 
 
 module.exports = router;
