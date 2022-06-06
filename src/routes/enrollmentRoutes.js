@@ -46,5 +46,21 @@ router.get("/volunteers/:eventId", auth, isAdmin, async (req, res) => {
   }
 });
 
+//GET request to approve the registration of the volunteer(admin)
+router.get("/requests/approve/:userId", auth , isAdmin, async (req, res) =>{
+  const userId = req.params.userId;
+  try {
+    const user = await User.findOne({ _id: userId });
+    user.approval = "accepted";
+    await user.save();
+    res.status(200).send("user approval successful");
+    
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+
+
 module.exports = router;
 
