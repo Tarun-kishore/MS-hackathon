@@ -113,6 +113,12 @@ const userSchema = mongoose.Schema(
   }
 );
 
+userSchema.virtual("events", {
+  ref: "Event",
+  localField: "_id",
+  foreignField: "enrolledVolunteers.enrolledVolunteer",
+});
+
 userSchema.methods.toJSON = function () {
   const user = this;
   const userObject = user.toObject();

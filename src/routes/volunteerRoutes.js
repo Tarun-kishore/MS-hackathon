@@ -27,4 +27,14 @@ router.post("/register", auth, isVolunteer, async (req, res) => {
   }
 });
 
+router.get("/myEvents", auth, isVolunteer, async (req, res) => {
+  try {
+    await req.user.populate("events");
+
+    res.status(200).send(req.user.events);
+  } catch (e) {
+    res.status(500).send(e);
+  }
+});
+
 module.exports = router;
