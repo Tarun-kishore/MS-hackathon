@@ -17,6 +17,13 @@ router.post("/add", auth, isAdmin, async (req, res) => {
   }
 });
 
+//GET request to display the form for updating event
+
+router.get("/edit/:eventID", auth, isAdmin, async(req,res)=>{
+//display the form
+})
+
+
 //GET request for displaying all events according to the form filled (volunteer) --
 //fetch from database --/{name of user}/events
 router.get("/", auth, async (req, res) => {
