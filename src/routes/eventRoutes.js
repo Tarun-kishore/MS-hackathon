@@ -23,6 +23,19 @@ router.get("/edit/:eventID", auth, isAdmin, async(req,res)=>{
 //display the form
 })
 
+// PUT request for updating an event
+router.put("/edit/:eventID", auth, isAdmin, async(req,res)=>{
+  const eventID = req.params.eventID;
+  const updatedEvent = req.body;
+  try{
+const event = await Event.findOneAndUpdate({_id: eventID}, updatedEvent, {new: true})
+res.send(event);
+  }catch(e) {
+    res.send(e);
+  }
+  
+})
+
 router.get("/:eventId", auth, async (req, res) => {
   try {
     const eventDate = await Event.findById(req.params.eventId);

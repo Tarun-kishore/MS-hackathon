@@ -66,6 +66,8 @@ eventSchema.methods.addNewVolunteer = async function (volunteerId) {
   const Event = this;
 
   Event.volunteersEnrolled++;
+  Event.volunteersRequired--;
+
   Event.enrolledVolunteers = Event.enrolledVolunteers.concat({
     enrolledVolunteer: volunteerId,
   });
@@ -75,6 +77,20 @@ eventSchema.methods.addNewVolunteer = async function (volunteerId) {
   return Event;
 };
 
+eventSchema.methods.removeVolunteer = async function(volunteerID){
+  const Event =this;
+  Event.volunteersEnrolled--;
+  Event.volunteersRequired++;
+ const index = Event.enrolledVolunteers.findIndex((obj)=>{
+   obj.enrolledVolunteer = volunteerID;
+ })
+  Event.enrolledVolunteers.splice(index,1);
+
+  await Event.save();
+  return Event;
+
+  
+};
 const Event = mongoose.model("Event", eventSchema);
 
 module.exports = Event;
