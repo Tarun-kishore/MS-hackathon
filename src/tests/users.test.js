@@ -54,7 +54,7 @@ test("Signing Up User", async () => {
 
 test("Should be able to access profile after Signup", async () => {
   const response = await request(app)
-    .get("/volunteer/profile")
+    .get("/profile")
     .set("Cookie", [token])
     .expect(200);
 });
@@ -74,7 +74,7 @@ test("Should not be able to logout without authorization", async () => {
 });
 
 test("Should not be able to access profile without authorization", async () => {
-  const response = await request(app).get("/volunteer/profile").expect(401);
+  const response = await request(app).get("/profile").expect(401);
 });
 
 test("Should not signup multiple users with same credentials", async () => {
@@ -98,14 +98,14 @@ test("login test", async () => {
 
 test("Should be able to access profile after login", async () => {
   const response = await request(app)
-    .get("/volunteer/profile")
+    .get("/profile")
     .set("Cookie", [token])
     .expect(200);
 });
 
 test("Should be able to update profile after login", async () => {
   const response = await request(app)
-    .patch("/volunteer/profile")
+    .patch("/profile")
     .send({
       name: "updated name",
     })
@@ -119,7 +119,7 @@ test("Should be able to update profile after login", async () => {
 
 test("Should not be able to update profile with request containing non Allowed fields", async () => {
   const response = await request(app)
-    .patch("/volunteer/profile")
+    .patch("/profile")
     .send({
       name: "updated name",
       mobile: "6677889955",
@@ -143,7 +143,7 @@ test("Should be able to logout after login", async () => {
 });
 
 test("cannot delete profile without login", async () => {
-  const response = await request(app).delete("/volunteer/profile").expect(401);
+  const response = await request(app).delete("/profile").expect(401);
 });
 
 test("cannot delete profile without login", async () => {
@@ -158,7 +158,7 @@ test("cannot delete profile without login", async () => {
   token = res.headers["set-cookie"][0];
 
   const response = await request(app)
-    .delete("/volunteer/profile")
+    .delete("/profile")
     .set("Cookie", [token])
     .expect(200);
 
