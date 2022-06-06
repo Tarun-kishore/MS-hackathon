@@ -34,11 +34,16 @@ router.post("/enroll/:eventID", auth, isVolunteer, async (req, res) => {
   }
 });
 
-//GET request for displaying all enrollments (admin)- fetch from database /requests
-router.get("/:enrollment", auth, isAdmin, function (req, res) {
-  //display all values in the enrollments db
-  //const enrollments = Enrollment.find({});
-  //res.render("{filename}", { enrollments });
+//GET request for displaying all enrollments  for particular event(admin)-
+router.get("/volunteers/:eventId", auth, isAdmin, async (req, res) => {
+  try {
+    const eventData = await Event.findById(req.params.eventId);
+
+    await eventData.populate({ path: "enrolledVolunteers.enrolledVolunteer" });
+    res.status(200).send(eventData.enrolledVolunteers);
+  } catch (e) {
+    res.status(500).send(e);
+  }
 });
 
 module.exports = router;
