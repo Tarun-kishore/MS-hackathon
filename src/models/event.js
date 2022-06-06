@@ -26,7 +26,7 @@ const eventSchema = new mongoose.Schema(
     },
 
     startsAt: {
-      type: String,
+      type: Date,
       required: [true, "Please enter the start time of the event"],
     },
 
@@ -66,14 +66,15 @@ eventSchema.methods.addNewVolunteer = async function (volunteerId) {
   const Event = this;
 
   Event.volunteersEnrolled++;
-  Event.enrolledVolunteer = this.enrolledVolunteer.concat({ volunteerId });
+  Event.enrolledVolunteers = Event.enrolledVolunteers.concat({
+    enrolledVolunteer: volunteerId,
+  });
 
   await Event.save();
 
-  return Event();
+  return Event;
 };
 
 const Event = mongoose.model("Event", eventSchema);
 
 module.exports = Event;
-

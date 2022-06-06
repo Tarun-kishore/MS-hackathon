@@ -23,11 +23,19 @@ router.get("/edit/:eventID", auth, isAdmin, async(req,res)=>{
 //display the form
 })
 
+router.get("/:eventId", auth, async (req, res) => {
+  try {
+    const eventDate = await Event.findById(req.params.eventId);
+    res.status(201).send(eventDate);
+  } catch (e) {
+    res.status(500).send(e);
+  }
+});
 
 //GET request for displaying all events according to the form filled (volunteer) --
 //fetch from database --/{name of user}/events
 router.get("/", auth, async (req, res) => {
-  if (req.user.isAdmin == true) {
+  if (req.user.isadmin == true) {
     //render all events
   } else {
     ///render according to the preferences
@@ -37,4 +45,3 @@ router.get("/", auth, async (req, res) => {
 });
 
 module.exports = router;
-
