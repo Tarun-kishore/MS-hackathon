@@ -5,7 +5,7 @@ const User = require("../models/user");
 const auth = require("../middleware/auth");
 
 router.post("/signup", async (req, res) => {
-  //delete req.body.isAdmin;
+  delete req.body.isAdmin;
   const user = new User(req.body);
 
   try {

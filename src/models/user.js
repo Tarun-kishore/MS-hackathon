@@ -69,6 +69,11 @@ const userSchema = mongoose.Schema(
     availableTill: {
       type: Date,
     },
+    approval: {
+      type: "String",
+      required: true,
+      default: "notRegistered",
+    },
     canTravel: {
       type: Boolean,
     },

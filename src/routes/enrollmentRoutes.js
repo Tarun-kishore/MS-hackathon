@@ -9,6 +9,8 @@ const auth = require("../middleware/auth");
 router.post("/enroll/:eventID", auth, isVolunteer, async (req, res) => {
   const eventID = req.params.eventID;
   try {
+    if (req.user.approval != "accepted")
+      return res.status(403).send({ error: "Volunteer not registered" });
     const eventModel = await Event.findOne({ _id: eventID });
 
     const finalEvent = await eventModel.addNewVolunteer(req.user._id);
@@ -20,7 +22,7 @@ router.post("/enroll/:eventID", auth, isVolunteer, async (req, res) => {
 });
 
 //GET request for displaying all enrollments (admin)- fetch from database /requests
-router.get("/", auth, isAdmin, function (req, res) {
+router.get("/:enrollment", auth, isAdmin, function (req, res) {
   //display all values in the enrollments db
   //const enrollments = Enrollment.find({});
   //res.render("{filename}", { enrollments });
