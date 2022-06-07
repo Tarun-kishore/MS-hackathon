@@ -46,6 +46,12 @@ const userSchema = mongoose.Schema(
     isStudent: {
       type: Boolean,
     },
+    school: {
+      type: String,
+    },
+    organisation: {
+      type: String,
+    },
     isEmployee: {
       type: Boolean,
     },
@@ -64,6 +70,9 @@ const userSchema = mongoose.Schema(
     nationality: {
       type: String,
     },
+    address: {
+      type: String,
+    },
     Location: {
       type: String,
     },
@@ -74,9 +83,6 @@ const userSchema = mongoose.Schema(
       type: "String",
       required: true,
       default: "notRegistered",
-    },
-    canTravel: {
-      type: Boolean,
     },
     preferences: [
       {
@@ -152,7 +158,8 @@ userSchema.methods.getRelatedEvents = async function () {
   });
 
   const recommendedEvents = events.filter((eventData) => {
-    if (user.canTravel) return true;
+    if (eventData.volunteersEnrolled >= eventData.volunteersRequired)
+      return false;
     if (eventData.Location === "online") return true;
     if (eventData.Location === user.Location) return true;
   });

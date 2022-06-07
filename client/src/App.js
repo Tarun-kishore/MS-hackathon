@@ -4,12 +4,21 @@ function App() {
   const [data, setData] = React.useState(null);
 
   React.useEffect(() => {
-    fetch("/test")
+    fetch("/login", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        mobile: "9998887776",
+        password: "password",
+      }),
+    })
       .then((res) => {
         return res.json();
       })
       .then((data) => {
-        return setData(data.message);
+        console.log(data);
       })
       .catch((e) => console.log("error" + e));
   }, []);
