@@ -77,9 +77,13 @@ const userSchema = mongoose.Schema(
     address: {
       type: String,
     },
-    Location: {
-      type: String,
-    },
+    Locations: [
+      {
+        Location: {
+          type: String,
+        },
+      },
+    ],
     availableTill: {
       type: Date,
     },
@@ -165,7 +169,8 @@ userSchema.methods.getRelatedEvents = async function () {
     if (eventData.volunteersEnrolled >= eventData.volunteersRequired)
       return false;
     if (eventData.Location === "online") return true;
-    if (eventData.Location === user.Location) return true;
+    const tempArray = user.Locations.map((obj) => obj.Location);
+    if (tempArray.includes(eventData.Location)) return true;
   });
   return recommendedEvents;
 };
