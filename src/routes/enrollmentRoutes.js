@@ -85,6 +85,8 @@ router.get("/requests/approve/:userId", auth, isAdmin, async (req, res) => {
   }
 });
 
+
+//GET request to approve the registration of the volunteer(admin)
 router.get("/requests/reject/:userId", auth, isAdmin, async (req, res) => {
   const userId = req.params.userId;
   try {
@@ -95,6 +97,18 @@ router.get("/requests/reject/:userId", auth, isAdmin, async (req, res) => {
   } catch (error) {
     res.status(500).send(error);
   }
+});
+
+//GET request to display all the requests pending for approval(admin)
+router.get("/requests", auth, isAdmin, async (req, res) =>{
+  try{
+    const data = await User.find({ approval: "pending" });
+
+    res.status(200).send(data);
+  } catch(e){
+    res.status(500).send(e);
+  }
+  
 });
 
 module.exports = router;
