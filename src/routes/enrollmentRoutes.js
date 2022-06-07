@@ -9,7 +9,7 @@ const auth = require("../middleware/auth");
 router.post("/enroll/:eventID", auth, isVolunteer, async (req, res) => {
   const eventID = req.params.eventID;
 
-  try { 
+  try {
     if (req.user.approval != "accepted")
       return res.status(403).send({ error: "Volunteer not registered" });
     const eventModel = await Event.findOne({ _id: eventID });
@@ -34,28 +34,29 @@ router.post("/enroll/:eventID", auth, isVolunteer, async (req, res) => {
   }
 });
 // POST request for unenrolling a volunteer
-router.post("unenroll/:eventID", auth, isVolunteer, async(req,res)=>{
+router.post("/unenroll/:eventID", auth, isVolunteer, async (req, res) => {
   const eventID = req.params.eventID;
 
-  try{
+  try {
     const eventModel = await Event.findOne({ _id: eventID });
 
-    const Exist = eventModel.enrolledVolunteers.every(
+    const notExist = eventModel.enrolledVolunteers.every(
       (enrolledVolunteerObject) =>
-        enrolledVolunteerObject.enrolledVolunteer.equals(req.user._id)
+        !enrolledVolunteerObject.enrolledVolunteer.equals(req.user._id)
     );
 
-    if (Exist)
-      return res.status(401).send({ error: "User is not enrolled for this event." });
+    if (notExist)
+      return res
+        .status(401)
+        .send({ error: "User is not enrolled for this event." });
     const updatedEvent = await eventModel.removeVolunteer(req.user._id);
 
     res.status(201).send(updatedEvent);
-  } catch(e){
+  } catch (e) {
     console.log(e);
     res.status(400).send(e);
   }
-})
-
+});
 
 //GET request for displaying all enrollments  for particular event(admin)-
 router.get("/volunteers/:eventId", auth, isAdmin, async (req, res) => {
@@ -70,4 +71,3 @@ router.get("/volunteers/:eventId", auth, isAdmin, async (req, res) => {
 });
 
 module.exports = router;
-

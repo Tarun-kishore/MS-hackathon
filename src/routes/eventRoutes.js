@@ -17,24 +17,20 @@ router.post("/add", auth, isAdmin, async (req, res) => {
   }
 });
 
-//GET request to display the form for updating event
-
-router.get("/edit/:eventID", auth, isAdmin, async(req,res)=>{
-//display the form
-})
-
 // PUT request for updating an event
-router.put("/edit/:eventID", auth, isAdmin, async(req,res)=>{
+router.put("/edit/:eventID", auth, isAdmin, async (req, res) => {
   const eventID = req.params.eventID;
-  const updatedEvent = req.body;
-  try{
-const event = await Event.findOneAndUpdate({_id: eventID}, updatedEvent, {new: true})
-res.send(event);
-  }catch(e) {
-    res.send(e);
+  const updates = Object.keys(req.body);
+  try {
+    const eventData = await Event.findById(eventID);
+    updates.forEach((update) => (eventData[update] = req.body[update]));
+
+    await eventData.save();
+    res.status(200).send(eventData);
+  } catch (e) {
+    res.status(500).send(e);
   }
-  
-})
+});
 
 router.get("/:eventId", auth, async (req, res) => {
   try {
