@@ -14,15 +14,17 @@ Sample Input: json
     email: "email@domain.com",
     password: "password",
     isStudent: false, 
+    school:"",
+    organisation: "",
     isEmployee: false, 
     Organisation: false,
     educationalBackground: "Graduate",
     occupation: "Student",
     languages: "Hindi",
-    nationality: "indian,
-    Location: "delhi,
+    nationality: "indian",
+    address:"address"
+    Location: "delhi",
     availableTill: "Jun 30 2022", //not needed during signup
-    canTravel: false, //not needed during signup
     preferences: [
       {
         preference: "event management"
@@ -202,12 +204,29 @@ Sample Input: json
 {
 
     "name":"activity",
-    "type":"translations",
-    "location" : "none",
+    "description":"desc",
+    "type":"translations",  //can only have values ["play sessions", "translations", "virtual sessions"]
+    "location" : "online",  //online in case of online events else mention city
     "date":"Fri 10 Jun 2022",
     "startsAt" : "Fri 10 Jun 2022",
-    "duration" : "24",
-    "volunteersRequired":"2"
+    "duration" : "24",  //number of hours
+    "volunteersRequired":"2",
+     preferences: [
+      {
+        preference: "event management"
+      },
+      {
+        preference : "game playing"
+        }
+    ], 
+    skills: [
+      {
+        skill: "content"
+      },
+      {
+        skill : "design"
+        }
+    ] 
 }
 
 Sample Output:
@@ -229,7 +248,7 @@ Sample Output:
 }
 
 
-### View event ( Admin Must be logged in)
+### View event ( User Must be logged in)
 method : `get`
 endpoint: `/event/629dc2a8e0c2dbd77272aad5`       //event Id is passed in url
 
@@ -252,6 +271,58 @@ Sample Output:
     "createdAt": "2022-06-05T07:43:27.287Z",
     "updatedAt": "2022-06-05T07:46:41.546Z",
     "__v": 2
+}
+
+### Edit event ( Admin Must be logged in)
+method : `put`
+endpoint: `/event/edit/629dc2a8e0c2dbd77272aad5`       //event Id is passed in url
+
+Sample Input: json 
+
+{
+
+name : "updated event",
+     preferences:[
+        {
+            preference:"Game playing"
+        }
+    ]
+}
+
+Sample Output:
+{
+
+    "name":"updated event",
+    "type":"translations",
+    "location" : "none",
+    "date":"Fri 10 Jun 2022",
+    "startsAt" : "Fri 10 Jun 2022",
+    "duration" : "24",
+    "volunteersRequired":"2",
+    "enrolledVolunteers" : [],
+    "volunteersEnrolled" : "0",
+    preferences:[
+        {
+            preference:"Game playing"
+        }
+    ]
+    "createdAt": "2022-06-05T07:43:27.287Z",
+    "updatedAt": "2022-06-05T07:46:41.546Z",
+    "__v": 2
+}
+
+### Delete event ( Admin Must be logged in)
+method : `delete`
+endpoint: `/event/629dc2a8e0c2dbd77272aad5`       //event Id is passed in url
+
+Sample Input: json 
+
+{}
+
+Sample Output:
+{
+
+    message:"Event deleted succefully"
 }
 
 ### enroll event ( Volunteer Must be logged in)
@@ -283,6 +354,32 @@ Sample Output:
     "updatedAt": "2022-06-05T07:46:41.546Z",
     "__v": 2
 }
+
+### Unenroll event ( Volunteer Must be logged in)
+method : `post`
+endpoint: `/enrollment/unenroll/629dc2a8e0c2dbd77272aad5`       //event Id is passed in url
+
+Sample Input: json 
+
+{}
+
+Sample Output:
+{
+
+    "name":"activity",
+    "type":"translations",
+    "location" : "none",
+    "date":"Fri 10 Jun 2022",
+    "startsAt" : "Fri 10 Jun 2022",
+    "duration" : "24",
+    "volunteersRequired":"2",
+    "enrolledVolunteers" : [],
+    "volunteersEnrolled" : "0",
+    "createdAt": "2022-06-05T07:43:27.287Z",
+    "updatedAt": "2022-06-05T07:46:41.546Z",
+    "__v": 2
+}
+
 
 
 ### Get enrolled volunteer in an event ( Admin Must be logged in)
@@ -353,3 +450,111 @@ Sample Output:
         "__v": 27
     }
 }
+
+
+### Get all events( User Must be logged in)
+method : `get`
+endpoint: `/event/all`     
+
+Sample Input: json 
+
+{}
+
+Sample Output:
+{
+
+      {
+        "_id": "629dc8e5edfe389cf1d4b41d",
+        "name": "activity",
+        "type": "translations",
+        "location": "none",
+        "date": "2022-06-09T18:30:00.000Z",
+        "startsAt": "2022-06-09T18:30:00.000Z",
+        "duration": 24,
+        "volunteersEnrolled": 1,
+        "volunteersRequired": 2,
+        "skillsRequired": [
+            "None"
+        ],
+        "enrolledVolunteers": [
+            {
+                "enrolledVolunteer": "629c5e9f0a4fb53e7da07e61",
+                "_id": "629dce5602ac5261d14ea53a"
+            }
+        ],
+        "createdAt": "2022-06-06T09:29:09.757Z",
+        "updatedAt": "2022-06-06T09:52:22.073Z",
+        "__v": 27
+    }
+}
+
+
+### Get all recommended events( Volunteer Must be logged in)
+method : `get`
+endpoint: `/event/recommended`     
+
+Sample Input: json 
+
+{}
+
+Sample Output:
+{
+
+      {
+        "_id": "629dc8e5edfe389cf1d4b41d",
+        "name": "activity",
+        "type": "translations",
+        "location": "none",
+        "date": "2022-06-09T18:30:00.000Z",
+        "startsAt": "2022-06-09T18:30:00.000Z",
+        "duration": 24,
+        "volunteersEnrolled": 1,
+        "volunteersRequired": 2,
+        "skillsRequired": [
+            "None"
+        ],
+        "enrolledVolunteers": [
+            {
+                "enrolledVolunteer": "629c5e9f0a4fb53e7da07e61",
+                "_id": "629dce5602ac5261d14ea53a"
+            }
+        ],
+        "createdAt": "2022-06-06T09:29:09.757Z",
+        "updatedAt": "2022-06-06T09:52:22.073Z",
+        "__v": 27
+    }
+}
+
+
+### Approve user registration( Admin Must be logged in)
+method : `get`
+endpoint: `/enrollment/requests/approve/629c5e9f0a4fb53e7da07e61`   //volunteer id is passed  
+
+Sample Input: json 
+
+{}
+
+Sample Output:
+{
+ 
+     message: "user approval successful"
+ 
+ }
+
+
+
+### Reject user registration( Admin Must be logged in)
+method : `get`
+endpoint: `/enrollment/requests/reject/629c5e9f0a4fb53e7da07e61`   //volunteer id is passed  
+
+Sample Input: json 
+
+{}
+
+Sample Output:
+{
+ 
+    message: "user rejection successful"
+ 
+ }
+
