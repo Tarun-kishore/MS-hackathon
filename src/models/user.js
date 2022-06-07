@@ -144,9 +144,19 @@ userSchema.methods.generateAuthToken = async function () {
 userSchema.methods.getRelatedEvents = async function () {
   const user = this;
 
-  const events = await Event.find();
+  const events = await Event.find({
+    "preferences.preference": {
+      $in: user.preferences.map((preferenceObj) => preferenceObj.preference),
+    },
+    "skills.skill": { $in: user.skills.map((skillObj) => skillObj.skill) },
+  });
 
-  return events;
+  const recommendedEvents = events.filter((eventData) => {
+    if (user.canTravel) return true;
+    if (eventData.Location === "online") return true;
+    if (eventData.Location === user.Location) return true;
+  });
+  return recommendedEvents;
 };
 
 userSchema.statics.findByCredentials = async (mobile, password) => {

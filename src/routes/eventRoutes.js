@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Event = require("../models/event");
 const auth = require("../middleware/auth");
-const { isAdmin } = require("../middleware/userRoles");
+const { isAdmin, isVolunteer } = require("../middleware/userRoles");
 
 // list of routes required
 
@@ -32,27 +32,24 @@ router.put("/edit/:eventID", auth, isAdmin, async (req, res) => {
   }
 });
 
-router.get("/:eventId", auth, async (req, res) => {
+//Get all events
+
+router.get("/all", auth, async (req, res) => {
   try {
-    const eventDate = await Event.findById(req.params.eventId);
-    res.status(201).send(eventDate);
+    const events = await Event.find({});
+
+    res.status(200).send(events);
   } catch (e) {
     res.status(500).send(e);
   }
 });
 
 //GET request for displaying all events according to the form filled (volunteer) --
-router.get("/", auth, async (req, res) => {
+router.get("/recommended", auth, isVolunteer, async (req, res) => {
   try {
-    if (req.user.isadmin == true) {
-      const events = await Event.find();
+    const events =await req.user.getRelatedEvents();
 
-      res.status(200).send(events);
-    } else {
-      const events = req.user.getRelatedEvents();
-
-      res.status(200).send(events);
-    }
+    res.status(200).send(events);
   } catch (e) {
     res.status(500).send(e);
   }
@@ -72,4 +69,12 @@ router.delete("/:eventID", auth, isAdmin, async (req, res) => {
   }
 });
 
+router.get("/:eventId", auth, async (req, res) => {
+  try {
+    const eventDate = await Event.findById(req.params.eventId);
+    res.status(201).send(eventDate);
+  } catch (e) {
+    res.status(500).send(e);
+  }
+});
 module.exports = router;
