@@ -558,3 +558,48 @@ Sample Output:
  
  }
 
+
+### Get all requests pending for approval (Admin must be logged in)
+method : `get`
+endpoint : `/enrollment/requests`
+
+Sample Input : json
+
+{}
+
+Sample Output:
+
+[
+    {
+        "_id": "629f14ce830ee0f61f7bab69",
+        "name": "second User",
+        "DOB": "2001-12-15T18:30:00.000Z",
+        "mobile": "9000000009",
+        "email": "user@domain.com",
+        "isStudent": true,
+        "isEmployee": false,
+        "approval": "pending",
+        "isAdmin": false,
+        "preferences": [],
+        "skills": [],
+        "createdAt": "2022-06-07T09:05:18.235Z",
+        "updatedAt": "2022-06-07T09:05:18.235Z",
+        "__v": 0
+    },
+    {
+        "_id": "629f165acdabcb422b2c3895",
+        "name": "third user",
+        "DOB": "2001-09-10T18:30:00.000Z",
+        "mobile": "9922300431",
+        "email": "user3@gmail.com",
+        "isStudent": false,
+        "isEmployee": false,
+        "approval": "pending",
+        "isAdmin": false,
+        "preferences": [],
+        "skills": [],
+        "createdAt": "2022-06-07T09:11:54.526Z",
+        "updatedAt": "2022-06-07T09:11:54.526Z",
+        "__v": 0
+    }
+]
