@@ -64,9 +64,13 @@ const userSchema = mongoose.Schema(
     occupation: {
       type: String,
     },
-    languages: {
-      type: String,
-    },
+    languages: [
+      {
+        language: {
+          type: String,
+        },
+      },
+    ],
     nationality: {
       type: String,
     },
