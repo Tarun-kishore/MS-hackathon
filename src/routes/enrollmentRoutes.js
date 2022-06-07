@@ -2,6 +2,8 @@ const express = require("express");
 const { isVolunteer, isAdmin } = require("../middleware/userRoles");
 const router = express.Router();
 const Event = require("../models/event");
+const User = require("../models/user");
+
 const auth = require("../middleware/auth");
 //list of routes for enrollment
 
@@ -69,5 +71,34 @@ router.get("/volunteers/:eventId", auth, isAdmin, async (req, res) => {
     res.status(500).send(e);
   }
 });
+
+//GET request to approve the registration of the volunteer(admin)
+router.get("/requests/approve/:userId", auth , isAdmin, async (req, res) =>{
+  const userId = req.params.userId;
+  try {
+    const user = await User.findOne({ _id: userId });
+    user.approval = "accepted";
+    await user.save();
+    res.status(200).send("user approval successful");
+    
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+router.get("/requests/reject/:userId", auth , isAdmin, async (req, res) =>{
+  const userId = req.params.userId;
+  try {
+    const user = await User.findOne({ _id: userId });
+    user.approval = "rejected";
+    await user.save();
+    res.status(200).send("user rejection successful");
+    
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+
 
 module.exports = router;
