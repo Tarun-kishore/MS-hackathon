@@ -47,7 +47,7 @@ router.get("/all", auth, async (req, res) => {
 //GET request for displaying all events according to the form filled (volunteer) --
 router.get("/recommended", auth, isVolunteer, async (req, res) => {
   try {
-    const events =await req.user.getRelatedEvents();
+    const events = await req.user.getRelatedEvents();
 
     res.status(200).send(events);
   } catch (e) {
@@ -63,7 +63,7 @@ router.delete("/:eventID", auth, isAdmin, async (req, res) => {
     const eventModel = await Event.findById(eventID);
     await eventModel.remove();
 
-    res.status(200).send("Event Deleted Successfully");
+    res.status(200).send({ message: "Event Deleted Successfully" });
   } catch (e) {
     res.status(400).send(e);
   }
