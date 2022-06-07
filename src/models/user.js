@@ -188,6 +188,19 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
+userSchema.pre("remove", async function (next) {
+  const user = this;
+
+  const events = Event.find({
+    "enrolledVolunteers.enrolledVolunteer": user._id,
+  });
+
+  for (let i = 0, len = events.length; i < len; i++) {
+    await events[i].removeVolunteer(user._id);
+  }
+
+  next();
+});
 const User = mongoose.model("User", userSchema);
 
 module.exports = User;
