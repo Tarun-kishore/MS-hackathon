@@ -60,19 +60,16 @@ router.get("/", auth, async (req, res) => {
 
 //DELETE request for deletion of an event using the eventID(admin)
 
-router.delete("/:eventID", auth, isAdmin, async (req, res) =>{
+router.delete("/:eventID", auth, isAdmin, async (req, res) => {
   const eventID = req.params.eventID;
-  // console.log(eventID);
   try {
-    const eventModel = await Event.findOne({ _id: eventID });
+    const eventModel = await Event.findById(eventID);
     await eventModel.remove();
 
-    res.status(201).send("Event Deleted Successfully");
+    res.status(200).send("Event Deleted Successfully");
   } catch (e) {
     res.status(400).send(e);
   }
 });
-
-
 
 module.exports = router;
