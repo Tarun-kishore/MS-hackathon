@@ -44,10 +44,13 @@ const eventSchema = new mongoose.Schema(
       type: Number,
     },
 
-    skillsRequired: {
-      type: [String],
-      default: ["None"],
-    },
+    skillsRequired: [
+      {
+        skill: {
+          type: String,
+        },
+      },
+    ],
     enrolledVolunteers: [
       {
         enrolledVolunteer: {

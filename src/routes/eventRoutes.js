@@ -42,15 +42,20 @@ router.get("/:eventId", auth, async (req, res) => {
 });
 
 //GET request for displaying all events according to the form filled (volunteer) --
-//fetch from database --/{name of user}/events
 router.get("/", auth, async (req, res) => {
-  if (req.user.isadmin == true) {
-    //render all events
-  } else {
-    ///render according to the preferences
+  try {
+    if (req.user.isadmin == true) {
+      const events = await Event.find();
+
+      res.status(200).send(events);
+    } else {
+      const events = req.user.getRelatedEvents();
+
+      res.status(200).send(events);
+    }
+  } catch (e) {
+    res.status(500).send(e);
   }
-  //if the user is a volunteer then display then fetch
-  //data accordingly
 });
 
 module.exports = router;
