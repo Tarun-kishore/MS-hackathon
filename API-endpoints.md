@@ -1,4 +1,5 @@
-### Signup 
+### Signup
+
 method : `POST`
 
 endpoint: `/signup`
@@ -13,10 +14,10 @@ Sample Input: json
     mobile: "9999999999",
     email: "email@domain.com",
     password: "password",
-    isStudent: false, 
+    isStudent: false,
     school:"",
     organisation: "",
-    isEmployee: false, 
+    isEmployee: false,
     Organisation: false,
     educationalBackground: "Graduate",
     occupation: "Student",
@@ -40,7 +41,8 @@ Sample Input: json
       {
         skill : "design"
         }
-    ]  //not needed during signup   
+    ]  //not needed during signup
+
 }
 
 Sample Output:
@@ -63,9 +65,11 @@ Sample Output:
         "updatedAt": "2022-06-05T07:43:27.287Z",
         "__v": 0
     }
+
 }
 
 ### Login
+
 method : `POST`
 endpoint: `/login`
 
@@ -74,15 +78,18 @@ Sample Input: json
 
     mobile:"9998887776",
     password:"password"
+
 }
 
 Sample Output:
 {
 
     "message": "Logged in successfully"
+
 }
 
-### Logout 
+### Logout
+
 method : `POST`
 endpoint: `/logout`
 
@@ -94,9 +101,11 @@ Sample Output:
 {
 
     "message": "Logged Out Successfully"
+
 }
 
 ### View profile ( User Must be logged in)
+
 method : `Get`
 endpoint: `/profile`
 
@@ -120,9 +129,11 @@ Sample Output:
     "createdAt": "2022-06-05T07:43:27.287Z",
     "updatedAt": "2022-06-05T07:46:41.546Z",
     "__v": 2
+
 }
 
 ### View profile ( User Must be logged in)
+
 method : `Patch`
 endpoint: `/profile`
 
@@ -130,6 +141,7 @@ Sample Input: json //Do not give email,mobile,password,isAdmin because they cann
 {
 
     "name":"updated name"
+
 }
 
 Sample Output:
@@ -148,34 +160,37 @@ Sample Output:
     "createdAt": "2022-06-05T07:43:27.287Z",
     "updatedAt": "2022-06-05T07:46:41.546Z",
     "__v": 2
+
 }
 
 ### Delete profile ( User Must be logged in)
+
 method : `delete`
 endpoint: `/profile`
 
-Sample Input: json 
+Sample Input: json
 
 {}
 
 Sample Output:
 {
 
-    "message": "User profile deleted" 
+    "message": "User profile deleted"
+
 }
 
-
 ### Register as a volunteer profile ( Volunteer Must be logged in)
+
 method : `post`
 endpoint: `/volunteer/register`
 
-Sample Input: json 
+Sample Input: json
 {
 
-    ... other details 
+    ... other details
     "availableTill" : "Fri 10 Jun 2022" //can also be passed in form of date object
-}
 
+}
 
 Sample Output:
 {
@@ -193,14 +208,15 @@ Sample Output:
     "createdAt": "2022-06-05T07:43:27.287Z",
     "updatedAt": "2022-06-05T07:46:41.546Z",
     "__v": 2
+
 }
 
-
 ### Add event ( Admin Must be logged in)
+
 method : `post`
 endpoint: `/event/add`
 
-Sample Input: json 
+Sample Input: json
 {
 
     "name":"activity",
@@ -218,7 +234,7 @@ Sample Input: json
       {
         preference : "game playing"
         }
-    ], 
+    ],
     skills: [
       {
         skill: "content"
@@ -226,7 +242,8 @@ Sample Input: json
       {
         skill : "design"
         }
-    ] 
+    ]
+
 }
 
 Sample Output:
@@ -245,14 +262,15 @@ Sample Output:
     "createdAt": "2022-06-05T07:43:27.287Z",
     "updatedAt": "2022-06-05T07:46:41.546Z",
     "__v": 2
+
 }
 
-
 ### View event ( User Must be logged in)
-method : `get`
-endpoint: `/event/629dc2a8e0c2dbd77272aad5`       //event Id is passed in url
 
-Sample Input: json 
+method : `get`
+endpoint: `/event/629dc2a8e0c2dbd77272aad5` //event Id is passed in url
+
+Sample Input: json
 
 {}
 
@@ -271,22 +289,24 @@ Sample Output:
     "createdAt": "2022-06-05T07:43:27.287Z",
     "updatedAt": "2022-06-05T07:46:41.546Z",
     "__v": 2
+
 }
 
 ### Edit event ( Admin Must be logged in)
-method : `put`
-endpoint: `/event/edit/629dc2a8e0c2dbd77272aad5`       //event Id is passed in url
 
-Sample Input: json 
+method : `put`
+endpoint: `/event/edit/629dc2a8e0c2dbd77272aad5` //event Id is passed in url
+
+Sample Input: json
 
 {
 
 name : "updated event",
-     preferences:[
-        {
-            preference:"Game playing"
-        }
-    ]
+preferences:[
+{
+preference:"Game playing"
+}
+]
 }
 
 Sample Output:
@@ -309,13 +329,15 @@ Sample Output:
     "createdAt": "2022-06-05T07:43:27.287Z",
     "updatedAt": "2022-06-05T07:46:41.546Z",
     "__v": 2
+
 }
 
 ### Delete event ( Admin Must be logged in)
-method : `delete`
-endpoint: `/event/629dc2a8e0c2dbd77272aad5`       //event Id is passed in url
 
-Sample Input: json 
+method : `delete`
+endpoint: `/event/629dc2a8e0c2dbd77272aad5` //event Id is passed in url
+
+Sample Input: json
 
 {}
 
@@ -323,13 +345,15 @@ Sample Output:
 {
 
     message:"Event deleted succefully"
+
 }
 
 ### enroll event ( Volunteer Must be logged in)
-method : `post`
-endpoint: `/enrollment/enroll/629dc2a8e0c2dbd77272aad5`       //event Id is passed in url
 
-Sample Input: json 
+method : `post`
+endpoint: `/enrollment/enroll/629dc2a8e0c2dbd77272aad5` //event Id is passed in url
+
+Sample Input: json
 
 {}
 
@@ -353,13 +377,15 @@ Sample Output:
     "createdAt": "2022-06-05T07:43:27.287Z",
     "updatedAt": "2022-06-05T07:46:41.546Z",
     "__v": 2
+
 }
 
 ### Unenroll event ( Volunteer Must be logged in)
-method : `post`
-endpoint: `/enrollment/unenroll/629dc2a8e0c2dbd77272aad5`       //event Id is passed in url
 
-Sample Input: json 
+method : `post`
+endpoint: `/enrollment/unenroll/629dc2a8e0c2dbd77272aad5` //event Id is passed in url
+
+Sample Input: json
 
 {}
 
@@ -378,15 +404,15 @@ Sample Output:
     "createdAt": "2022-06-05T07:43:27.287Z",
     "updatedAt": "2022-06-05T07:46:41.546Z",
     "__v": 2
+
 }
 
-
-
 ### Get enrolled volunteer in an event ( Admin Must be logged in)
-method : `get`
-endpoint: `/enrollment/volunteers/629dc8e5edfe389cf1d4b41d`       //event Id is passed in url
 
-Sample Input: json 
+method : `get`
+endpoint: `/enrollment/volunteers/629dc8e5edfe389cf1d4b41d` //event Id is passed in url
+
+Sample Input: json
 
 {}
 
@@ -413,13 +439,15 @@ Sample Output:
             },
             "_id": "629dce5602ac5261d14ea53a"
         }
+
 }
 
 ### Get all event which the loggedIn volunteer enrolled in( Volunteer Must be logged in)
-method : `get`
-endpoint: `/volunteer/myEvents`     
 
-Sample Input: json 
+method : `get`
+endpoint: `/volunteer/myEvents`
+
+Sample Input: json
 
 {}
 
@@ -449,14 +477,15 @@ Sample Output:
         "updatedAt": "2022-06-06T09:52:22.073Z",
         "__v": 27
     }
-}
 
+}
 
 ### Get all events( User Must be logged in)
-method : `get`
-endpoint: `/event/all`     
 
-Sample Input: json 
+method : `get`
+endpoint: `/event/all`
+
+Sample Input: json
 
 {}
 
@@ -486,14 +515,15 @@ Sample Output:
         "updatedAt": "2022-06-06T09:52:22.073Z",
         "__v": 27
     }
-}
 
+}
 
 ### Get all recommended events( Volunteer Must be logged in)
-method : `get`
-endpoint: `/event/recommended`     
 
-Sample Input: json 
+method : `get`
+endpoint: `/event/recommended`
+
+Sample Input: json
 
 {}
 
@@ -523,43 +553,43 @@ Sample Output:
         "updatedAt": "2022-06-06T09:52:22.073Z",
         "__v": 27
     }
+
 }
 
-
 ### Approve user registration( Admin Must be logged in)
-method : `get`
-endpoint: `/enrollment/requests/approve/629c5e9f0a4fb53e7da07e61`   //volunteer id is passed  
 
-Sample Input: json 
+method : `get`
+endpoint: `/enrollment/requests/approve/629c5e9f0a4fb53e7da07e61` //volunteer id is passed
+
+Sample Input: json
 
 {}
 
 Sample Output:
 {
- 
+
      message: "user approval successful"
- 
- }
 
-
+}
 
 ### Reject user registration( Admin Must be logged in)
-method : `get`
-endpoint: `/enrollment/requests/reject/629c5e9f0a4fb53e7da07e61`   //volunteer id is passed  
 
-Sample Input: json 
+method : `get`
+endpoint: `/enrollment/requests/reject/629c5e9f0a4fb53e7da07e61` //volunteer id is passed
+
+Sample Input: json
 
 {}
 
 Sample Output:
 {
- 
-    message: "user rejection successful"
- 
- }
 
+    message: "user rejection successful"
+
+}
 
 ### Get all requests pending for approval (Admin must be logged in)
+
 method : `get`
 endpoint : `/enrollment/requests`
 
@@ -570,36 +600,36 @@ Sample Input : json
 Sample Output:
 
 [
-    {
-        "_id": "629f14ce830ee0f61f7bab69",
-        "name": "second User",
-        "DOB": "2001-12-15T18:30:00.000Z",
-        "mobile": "9000000009",
-        "email": "user@domain.com",
-        "isStudent": true,
-        "isEmployee": false,
-        "approval": "pending",
-        "isAdmin": false,
-        "preferences": [],
-        "skills": [],
-        "createdAt": "2022-06-07T09:05:18.235Z",
-        "updatedAt": "2022-06-07T09:05:18.235Z",
-        "__v": 0
-    },
-    {
-        "_id": "629f165acdabcb422b2c3895",
-        "name": "third user",
-        "DOB": "2001-09-10T18:30:00.000Z",
-        "mobile": "9922300431",
-        "email": "user3@gmail.com",
-        "isStudent": false,
-        "isEmployee": false,
-        "approval": "pending",
-        "isAdmin": false,
-        "preferences": [],
-        "skills": [],
-        "createdAt": "2022-06-07T09:11:54.526Z",
-        "updatedAt": "2022-06-07T09:11:54.526Z",
-        "__v": 0
-    }
+{
+"\_id": "629f14ce830ee0f61f7bab69",
+"name": "second User",
+"DOB": "2001-12-15T18:30:00.000Z",
+"mobile": "9000000009",
+"email": "user@domain.com",
+"isStudent": true,
+"isEmployee": false,
+"approval": "pending",
+"isAdmin": false,
+"preferences": [],
+"skills": [],
+"createdAt": "2022-06-07T09:05:18.235Z",
+"updatedAt": "2022-06-07T09:05:18.235Z",
+"**v": 0
+},
+{
+"\_id": "629f165acdabcb422b2c3895",
+"name": "third user",
+"DOB": "2001-09-10T18:30:00.000Z",
+"mobile": "9922300431",
+"email": "user3@gmail.com",
+"isStudent": false,
+"isEmployee": false,
+"approval": "pending",
+"isAdmin": false,
+"preferences": [],
+"skills": [],
+"createdAt": "2022-06-07T09:11:54.526Z",
+"updatedAt": "2022-06-07T09:11:54.526Z",
+"**v": 0
+}
 ]
