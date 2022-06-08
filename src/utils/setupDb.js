@@ -12,7 +12,8 @@ const createAdminAccount = async(){
         email:process.env.ADMIN_EMAIL,
         mobile:process.env.ADMIN_MOBILE,
         password : process.env.ADMIN_PASSWORD,
-        DOB: "1 Jan 2000"
+        DOB: "1 Jan 2000",
+        isAdmin : true
     }
     await userData.save();
     } catch (e) {
