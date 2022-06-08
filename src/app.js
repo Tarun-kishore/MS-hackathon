@@ -11,6 +11,7 @@ const cookieParser = require("cookie-parser");
 require("./db/mongoose");
 
 require("./utils/cronJob");
+require("./utils/setupDb");
 
 // *Instructing server to use json and extended url encoded data
 app.use(express.json());
