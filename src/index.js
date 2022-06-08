@@ -1,4 +1,5 @@
-const express = require('express')
+const express = require("express");
+const path = require("path");
 const app = require("./app.js");
 // // *setting up a public folder directory path
 // app.use(express.static("src/public"));
