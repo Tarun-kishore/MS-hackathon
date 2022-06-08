@@ -3,7 +3,7 @@ const User = require("../models/user");
 
 const checkingRegistrationStatus = new CronJob({
   cronTime: "0 0 * * *", // every 24 hours
-  onTick: function () {
+  onTick: async function () {
     await User.update(
       {
         availableTill: {
@@ -17,4 +17,4 @@ const checkingRegistrationStatus = new CronJob({
   timezone: "Asia/Kolkata",
 });
 
-checkingRegistraionStatus.start();
+checkingRegistrationStatus.start();
