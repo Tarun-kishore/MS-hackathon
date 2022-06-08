@@ -1,0 +1,48 @@
+.top{
+    width: 100%;
+    height: 40px;
+    background-color: #ffc900;
+    position: sticky;
+    top: 0;
+    display: flex;
+    align-items: center;
+    font-family: 'Josefin Sans', sans-serif;
+    z-index: 100;
+    font-size: 15px;
+}
+
+.topLeft, .topRight {
+    display: flex;
+    flex: 3;
+    height: 100%;
+    align-items: center;
+    justify-content: center; 
+    padding-top: 2px; 
+}
+
+.topLeft {
+    border-right: 1px solid #ffc900;
+}
+
+.topRight {
+    border-left: 1px solid #ffc900;
+}
+
+.topLeft:hover {
+    background-color: #2b281b;
+    color: white;
+    cursor: pointer;
+}
+
+.topRight:hover {
+    background-color: #2b281b;
+    color: white;
+    cursor: pointer;
+}
+
+.topCenter:hover {
+    cursor: pointer;
+    background-color: grey;
+    /* background-color: #ffc900;
+    color: #2b281b; */
+}

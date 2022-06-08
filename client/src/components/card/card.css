@@ -1,0 +1,89 @@
+.card {
+    width: 300px;
+    margin: 10px 12px 25px 25px;
+    /* background-color: #f6f0f0; */
+    background-color: #fffff7;
+    border-radius: 10px;
+}
+
+.heading {
+    margin: 20px;
+    font-family: 'Roboto', serif;
+    font-weight: 600;
+    text-align: center;
+}
+
+.cardImg {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 7px;
+}
+
+.cardInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.cardCat {
+    font-family: 'Josefin Sans', serif;
+    font-size: 13px;
+    color: #be9656;
+    line-height: 20px;
+    margin-top: 15px;
+    margin-right: 15px;
+}
+
+
+.cardTitle {
+    font-family: 'Roboto', serif;
+    font-size: 21px;
+    font-weight: 700;
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+
+.cardDate {
+    font-family: 'Josefin Sans', serif;
+    font-size: 16px;
+    color: grey;
+    margin-bottom: 12px;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+}
+
+.badge {
+    background-color: #f0efef;
+    margin-right: 12px;
+    border-radius: 10px;
+    padding-left: 18px;
+    padding-right: 18px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    letter-spacing: 0.5px;
+    font-size: 14px;
+}
+
+.badge:hover {
+    background-color: #ffc900;
+}
+
+.badge:active {
+    background-color: white;
+    box-shadow: 0 1px #666;
+    transform: translateY(1px);
+  }
+
+.sec {
+    padding-left: 18px;
+    padding-right: 18px;
+}
+
+
+
