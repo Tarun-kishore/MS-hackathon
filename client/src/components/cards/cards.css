@@ -1,0 +1,66 @@
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.heading {
+    /* font-family: 'Lora', 'Roboto', serif; */
+    font-size: 14px;
+    font-weight: 300;
+    display: flex;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    /* justify-content: flex-end; */
+}
+
+.line {
+    height: 1px;
+    background-color: grey;
+    border: none;
+    margin-left: 3%;
+    margin-right: 3%;
+}
+
+.waste {
+    flex: 10%;
+    background-color: none;
+}
+
+.act {
+    padding-right: 40px;
+    background-color: #fffff7;
+    padding-top: 10px;
+    padding-left: 20px;
+    padding-bottom: 10px;
+    border-top-left-radius: 10px;
+}
+
+.all {
+    padding-right: 20px;
+    background-color: #fffff7;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    cursor: pointer;
+    font-size: 13px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+}
+
+.enrol {
+    background-color: #fffff7;
+    padding-top: 10px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+    border-top-right-radius: 10px;
+    cursor: pointer;
+    font-size: 13px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+}
+
+.all:hover {
+    color: rgb(150, 149, 149);
+}
+
+.enrol:hover {
+    color: rgb(150, 149, 149);
+}
