@@ -7,6 +7,8 @@ const createAdminAccount = async () => {
       email: process.env.ADMIN_EMAIL,
     });
 
+    console.log({ existingUser });
+
     if (existingUser) return;
 
     const userData = {
@@ -19,6 +21,7 @@ const createAdminAccount = async () => {
     };
     const user = new User(userData);
     await user.save();
+    console.log({ user });
   } catch (e) {
     console.log(e);
   }
