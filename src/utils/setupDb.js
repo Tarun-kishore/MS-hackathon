@@ -9,7 +9,7 @@ const createAdminAccount = async () => {
 
     console.log({ existingUser });
 
-    if (existingUser) return;
+    if (existingUser.length > 0) return;
 
     const userData = {
       name: "Admin",
