@@ -15,7 +15,8 @@ const createAdminAccount = async(){
         DOB: "1 Jan 2000",
         isAdmin : true
     }
-    await userData.save();
+        const user = new User(userData)
+    await user.save();
     } catch (e) {
         console.log(e)
     }
