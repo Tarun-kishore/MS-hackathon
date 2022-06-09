@@ -90,7 +90,7 @@ const userSchema = mongoose.Schema(
     approval: {
       type: "String",
       required: true,
-      default: "notRegistered",
+      default: "pending",
     },
     preferences: [
       {
