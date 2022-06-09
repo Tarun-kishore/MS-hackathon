@@ -158,17 +158,29 @@ userSchema.methods.generateAuthToken = async function () {
 userSchema.methods.getRelatedEvents = async function () {
   const user = this;
 
+  await user.populate("events");
+
   const events = await Event.find({
-    "preferences.preference": {
-      $in: user.preferences.map((preferenceObj) => preferenceObj.preference),
-    },
-    "skills.skill": { $in: user.skills.map((skillObj) => skillObj.skill) },
+    $or: [
+      {
+        "preferences.preference": {
+          $in: user.preferences.map(
+            (preferenceObj) => preferenceObj.preference
+          ),
+        },
+      },
+      {
+        "skills.skill": { $in: user.skills.map((skillObj) => skillObj.skill) },
+      },
+      { language: { $in: user.languages.map((lang) => lang.language) } },
+    ],
+    _id: { $nin: user.events.map((eventData) => eventData._id) },
   });
 
   const recommendedEvents = events.filter((eventData) => {
     if (eventData.volunteersEnrolled >= eventData.volunteersRequired)
       return false;
-    if (eventData.Location === "online") return true;
+    if (eventData.Location == "online") return true;
     const tempArray = user.Locations.map((obj) => obj.Location);
     if (tempArray.includes(eventData.Location)) return true;
   });

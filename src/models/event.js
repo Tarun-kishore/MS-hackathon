@@ -14,8 +14,14 @@ const eventSchema = new mongoose.Schema(
       lowercase: true,
       enum: ["play sessions", "translations", "virtual sessions"],
     },
-
-    location: {
+    language: {
+      type: String,
+      lowercase: true,
+    },
+    address: {
+      type: String,
+    },
+    Location: {
       type: String,
       required: [true, "Location is required"],
     },

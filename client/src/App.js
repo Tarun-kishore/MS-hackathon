@@ -33,7 +33,7 @@ function App() {
   }
 
   // const user = JSON.parse(localStorage.getItem('user')).data.user.mobile;
-  if(user) { console.log(mobile); }
+  if(user) { console.log(user.data); }
 
   var admin = false;
   if(mobile == admin_mobile) {

@@ -79,7 +79,7 @@ const LoginForm = () => {
 
     const [name, setName] = useState("")
     const [type, setType] = useState("")
-    const [location, setLocation] = useState("")
+    const [Location, setLocation] = useState("")
     const [date, setDate] = useState("")
     const [startsAt, setStartsAt] = useState("")
     const [volunteersRequired, setVolunteersRequired] = useState("")
@@ -131,7 +131,7 @@ const LoginForm = () => {
         console.log(skills);
 
       const res = await axios.post("/event/add", {
-        name, type, description, location, date, startsAt, volunteersRequired, 
+        name, type, description, Location, date, startsAt, volunteersRequired, 
         preferences, skills, duration
       });
 
