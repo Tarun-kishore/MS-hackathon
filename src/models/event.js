@@ -12,12 +12,14 @@ const eventSchema = new mongoose.Schema(
     type: {
       type: String,
       lowercase: true,
-      enum: ["play sessions", "translations", "virtual sessions"],
     },
-    language: {
-      type: String,
-      lowercase: true,
-    },
+    languages: [
+      {
+        language: {
+          type: String,
+        },
+      },
+    ],
     address: {
       type: String,
     },

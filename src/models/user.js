@@ -172,7 +172,11 @@ userSchema.methods.getRelatedEvents = async function () {
       {
         "skills.skill": { $in: user.skills.map((skillObj) => skillObj.skill) },
       },
-      { language: { $in: user.languages.map((lang) => lang.language) } },
+      {
+        "languages.language": {
+          $in: user.languages.map((lang) => lang.language),
+        },
+      },
     ],
     _id: { $nin: user.events.map((eventData) => eventData._id) },
   });
