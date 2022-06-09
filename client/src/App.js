@@ -21,24 +21,21 @@ import {
 } from "react-router-dom";
 import CreateEvent from './admin/createEvent/CreateEvent';
 
-const admin_mobile = "0000000000";
-const admin_password = "password";
-
 function App() {
 
   const user = JSON.parse(localStorage.getItem('user'));
-  var mobile;
-  if(user) {
-    mobile = user.data.user.mobile;
-  }
-
-  // const user = JSON.parse(localStorage.getItem('user')).data.user.mobile;
-  if(user) { console.log(user.data); }
-
   var admin = false;
-  if(mobile == admin_mobile) {
-    admin = true;
+  if(user) {
+    admin = user.data.user.isAdmin;
   }
+  if(user) { console.log(user.data.user.isAdmin); }
+  // const user = JSON.parse(localStorage.getItem('user')).data.user.mobile;
+  // if(user) { console.log(user.data); }
+
+  // var admin = false;
+  // if(mobile == admin_mobile) {
+  //   admin = true;
+  // }
 
   if(!admin) {
     return (

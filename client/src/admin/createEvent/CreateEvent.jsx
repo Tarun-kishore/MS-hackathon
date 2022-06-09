@@ -82,9 +82,11 @@ const LoginForm = () => {
     const [Location, setLocation] = useState("")
     const [date, setDate] = useState("")
     const [startsAt, setStartsAt] = useState("")
+    const [address, setAddress] = useState("")
     const [volunteersRequired, setVolunteersRequired] = useState("")
     const [description, setDescription] = useState("")
     const [duration, setDuration] = useState("")
+    const [errorMessage, setErrorMessage] = useState("")
     let [languages, setLanguages] = useState([])
     let [preferences, setPreferences] = useState([])
     let [skills, setSkills] = useState([])
@@ -107,8 +109,12 @@ const LoginForm = () => {
       }
 
     const handleSubmit = async (e) => {
+
+      console.log("Hello");
+
       e.preventDefault();
       setError(false);
+      setErrorMessage("");
       
       try {  
         let arrayLanguages = Array.from(tickedLanguages);
@@ -132,7 +138,7 @@ const LoginForm = () => {
 
       const res = await axios.post("/event/add", {
         name, type, description, Location, date, startsAt, volunteersRequired, 
-        preferences, skills, duration
+        preferences, skillsRequired : skills, duration, languages, address
       });
 
       console.log(res);
@@ -142,6 +148,7 @@ const LoginForm = () => {
     } catch(err) {
       console.log(err);
       setError(true);
+      setErrorMessage(err);
     }
   }
 
@@ -206,12 +213,17 @@ const LoginForm = () => {
         </FormControl>
 
         <FormControl mt={4}>
+        <FormLabel>Address</FormLabel>
+        <Input required type="text" onChange={e => setAddress(e.target.value)}></Input>
+        </FormControl>
+
+        <FormControl mt={4}>
         <FormLabel>Date</FormLabel>
         <Input required type="date" onChange={e => setDate(e.target.value)}></Input>
         </FormControl>
 
         <FormControl mt={4}>
-        <FormLabel>Event Date</FormLabel>
+        <FormLabel>Begin Time</FormLabel>
         <Input type="date" onChange={e => setStartsAt(e.target.value)}></Input>
         </FormControl>
 
@@ -296,7 +308,7 @@ const LoginForm = () => {
         </FormControl>
 
         <Button type="submit" backgroundColor='#ffc900' width='full' mt={12} mb={4}>Create Event</Button>
-        { error && <span>Fill all fields</span> }
+        { error && <span>{errorMessage}</span> }
       </form>
     </Box>
   )
