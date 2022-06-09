@@ -27,22 +27,58 @@ import {
   export default function ProfileCard() {
     const [isEditable, setIsEditable] = useState(true);
     const [formData, setFormData] = useState({
-        name: "Abubakar",
-        dob: "2-2-1999",
-        mobile_number: "876543212",
-        school: "SPS",
-        organisation: "NSUT",
-        AvailableTill: "JAN 2022",
-        Languages: "ENGLISH",
-        Address:"123 RANDOM STREET",
-        Skills:"C++",
+        name: "name ",
+        DOB: "Feb 29 2009" ,//or any other format,
+        mobile: "9999999999",
+        email: "email@domain.com",
+        password: "password",
+        isStudent: false,
+        school:"",
+        organisation: "",
+        isEmployee: false,
+        Organisation: false,
+        educationalBackground: "Graduate",
+        occupation: "Student",
+        languages: "Hindi",
+        nationality: "indian",
+        address:"address",
+        Location: "delhi",
+        availableTill: "Jun 30 2022",
+        preferences: [
+            {
+              preference: "event management"
+            },
+            {
+              preference : "game playing"
+              }
+          ],    //not needed during signup
+          skills: [
+            {
+              skill: "content"
+            },
+            {
+              skill : "design"
+              }
+          ]  //not needed during signup
 
 
     });
     const handleSubmit = (e) => {
         setIsEditable(true);
         e.preventDefault()
-        console.log(formData)
+        console.log(formData);
+        try {
+      
+          const res = await axios.post("/volunteer/register", {
+            Locations, availableTill, preferences, skills
+          });
+          console.log(res);
+          res.data && window.location.replace("/event");
+        } catch(err) {
+          console.log(err);
+        }
+      
+        }
     
     }
     return (
