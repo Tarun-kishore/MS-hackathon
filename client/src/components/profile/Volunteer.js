@@ -5,48 +5,56 @@ Drawer,
 DrawerCloseButton,
 DrawerContent,
 DrawerOverlay,
-DrawerHeader
+DrawerHeader,
+useDisclosure,
+Stack,
+Text,
+Avatar
 } from '@chakra-ui/react';
-import { useState,useDisclosure} from 'react';
-export default function Volunteer() {
-    const [size, setSize] = useState('')
-    const { isOpen, onOpen, onClose } = useDisclosure()
+import { useState} from 'react';
+export default function Volunteer(props) {
+    const [badge,setBadge]=useState(0);
+    const [rem,setRem]=useState(0);
+    const badges = [1,2,3];
+    const volunteer_hours=props.hours;
+    const { isOpen, onOpen, onClose } = useDisclosure();
   
-    const handleClick = (newSize) => {
-      setSize(newSize)
+    const handleClick = async () => {
+        if(volunteer_hours<10){
+            setRem(10-volunteer_hours);
+             setBadge(badges[0]);
+            console.log(badge);
+        }
+        else if(50<10){
+            rem=50-volunteer_hours;
+        }
       onOpen()
     }
   
-    const sizes = ['xs', 'sm', 'md', 'lg', 'xl', 'full']
-  
     return (
       <>
-        {sizes.map((size) => (
           <Button
-            onClick={() => handleClick(size)}
-            key={size}
+            onClick={() => handleClick()}
             m={4}
-          >{`Open ${size} Drawer`}</Button>
-        ))}
+          >Volunteering</Button>
   
-        {/* <Drawer onClose={onClose} isOpen={isOpen} size={size}>
+        <Drawer onClose={onClose} isOpen={isOpen} size={`xs`}>
           <DrawerOverlay />
           <DrawerContent>
             <DrawerCloseButton />
-            <DrawerHeader>{`${size} drawer contents`}</DrawerHeader>
+            <DrawerHeader>You have done {volunteer_hours} hours of Volunteering</DrawerHeader>
             <DrawerBody>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                Consequat nisl vel pretium lectus quam id. Semper quis lectus
-                nulla at volutpat diam ut venenatis. Dolor morbi non arcu risus
-                quis varius quam quisque. Massa ultricies mi quis hendrerit dolor
-                magna eget est lorem. Erat imperdiet sed euismod nisi porta.
-                Lectus vestibulum mattis ullamcorper velit.
-              </p>
+              <Stack>
+                  Congratulations on Your Bronze Badge
+                  <>
+                  {
+                      props.hours<10 && <Text>For the Next badge you need to do {rem} hours of volunteering </Text>
+                  }
+                  </>
+              </Stack>
             </DrawerBody>
           </DrawerContent>
-        </Drawer> */}
+        </Drawer>
       </>
     )
   }
