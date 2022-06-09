@@ -203,6 +203,9 @@ const LoginForm = () => {
         <FormControl mt={4}>
           <FormLabel>Languages you know?</FormLabel><br/>
           <Stack spacing={5} direction='column'>
+          <Checkbox value="English" onChange={handleLanguage}>
+              English
+            </Checkbox> 
             <Checkbox value="Hindi" onChange={handleLanguage}>
               Hindi
             </Checkbox> 

@@ -5,11 +5,13 @@ import axios from 'axios'
 export default function Card({card}) {
 
     const handleEnroll = async(e) => {
-        e.preventDefault();        
+        e.preventDefault();      
+        console.log("heyy");  
         try {  
-        const res = await axios.post("/enrollment/enroll/:card._id", {
-
+          const res = await axios.post(`/enrollment/enroll/${card._id}`, {
         });
+
+        console.log(res);
         
       } catch(err) {
         console.log(err);
@@ -27,7 +29,7 @@ export default function Card({card}) {
           <hr/>
           <div className='buttons'>
             <button className='badge fill'> Details </button>
-            <button className='badge sec fill' onChange={handleEnroll}> Enroll </button>
+            <button className='badge sec fill' onClick={handleEnroll}> Enroll </button>
           </div>
         </div>
     </div>
