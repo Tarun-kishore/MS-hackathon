@@ -27,66 +27,26 @@ import {
   export default function ProfileCard() {
     const [isEditable, setIsEditable] = useState(true);
     const [formData, setFormData] = useState({
-        name: "name ",
-        DOB: "Feb 29 2009" ,//or any other format,
-        mobile: "9999999999",
-        email: "email@domain.com",
-        password: "password",
-        isStudent: false,
-        school:"SPS",
-        organisation: "",
-        isEmployee: false,
-        Organisation: false,
-        educationalBackground: "Graduate",
-        occupation: "Student",
-        languages: "Hindi",
-        nationality: "indian",
-        address:"address",
-        Location: "delhi",
-        availableTill: "Jun 30 2022",
-        preferences: [
-            {
-              preference: "event management"
-            },
-            {
-              preference : "game playing"
-              }
-          ],    //not needed during signup
-          skills: [
-            {
-              skill: "content"
-            },
-            {
-              skill : "design"
-              }
-          ]  //not needed during signup
-
-
     });
     useEffect(() => {
-        // Update the document title using the browser API
         try {
-      
             axios.get("/profile",formData)
             .then((res)=>{
-                console.log(res);
                 setFormData(res.data);
-                console.log(formData);
+                console.log('formdata',formData);
             })
            
             //res.data;
           } catch(err) {
             console.log(err);
           }
-        // formData = `You clicked ${count} times`;
       },[]);
     const handleSubmit = async (e) => {
         setIsEditable(true);
         e.preventDefault()
         console.log(formData);
         try {
-      
-          const res = await axios.post("/profile",formData);
+          const res = await axios.patch("/profile",formData);
           console.log(res);
         //   res.data;
         } catch(err) {
@@ -110,14 +70,47 @@ import {
             >
             <GridItem colSpan={1} bg='gray.100' height="auto" p={"4"}>
                 <VStack>    
-                        <Avatar
-                        size={'xl'}
-                        src={
-                        'https://toybank.in/wp-content/themes/dharampura/images/logo.png'
+                        <>
+                        {
+                            formData.numberOfHours<=10&&
+                            <Avatar
+                                size={'xl'}
+                                src={
+                                'https://thumbs.dreamstime.com/z/print-161157120.jpg'
+                                }
+                                alt={'Author'}
+                            />
+
                         }
-                        alt={'Author'}
-                    />
-                        <Text>Name</Text>
+                        </>
+                        <>
+                        {
+                            formData.numberOfHours>10 && formData.numberOfHours<50
+                            &&
+                            <Avatar
+                                size={'xl'}
+                                src={
+                                'https://thumbs.dreamstime.com/z/print-161157161.jpg'
+                                }
+                                alt={'Author'}
+                            />
+
+                        }
+                        </>
+                        <>
+                        {
+                            formData.numberOfHours>50&&
+                            <Avatar
+                                size={'xl'}
+                                src={
+                                'https://thumbs.dreamstime.com/z/print-161157164.jpg'
+                                }
+                                alt={'Author'}
+                            />
+
+                        }
+                        </>
+                        <Text>{formData.name}</Text>
                 </VStack>
                 <Box mt={10}>
                     <Link>
@@ -168,17 +161,30 @@ import {
                     <Box>
                     <Text mb='8px'>Mobile Number</Text>
                     <Input
-                        // value={value}
-                        // onChange={handleChange}
                         value={formData.mobile}
                         size='sm'
                     />
                     </Box>
                     <Box>
+                    <Text mb='8px'>Locations</Text>
+                    <HStack>
+                    {
+                    formData.Locations!=undefined && formData.Locations.map(element=>(
+                       
+                        <Input
+                        defaultValue={element.Location}
+                        onChange = {(e) => setFormData({...formData, Locations: e.target.value})}
+                        size='sm'
+                    />
+                        
+                    ))
+                    }
+                     </HStack>
+                    
+                    </Box>
+                    <Box>
                     <Text mb='8px'>School</Text>
                     <Input
-                        // value={value}
-                        // onChange={handleChange}
                         defaultValue={formData.school}
                         onChange = {(e) => setFormData({...formData, school: e.target.value})}
                         size='sm'
@@ -187,53 +193,58 @@ import {
                     <Box>
                     <Text mb='8px'>Organisation</Text>
                     <Input
-                        // value={value}
-                        // onChange={handleChange}
-                        defaultValue={formData.Organisation}
-                        onChange = {(e) => setFormData({...formData,Organisation: e.target.value})}
+                        defaultValue={formData.organisation}
+                        onChange = {(e) => setFormData({...formData,organisation: e.target.value})}
                         size='sm'
                     />
                     </Box>
                     <Box>
                     <Text mb='8px'>Available Till</Text>
                     <Input
-                        // value={value}
-                        // onChange={handleChange}
                         defaultValue={formData.availableTill}
-                        onChange = {(e) => setFormData({...formData, AvailableTill: e.target.value})}
+                        onChange = {(e) => setFormData({...formData, availableTill: e.target.value})}
                         size='sm'
                     />
                     </Box>
                     <Box>
                     <Text mb='8px'>Languages</Text>
-                    <Input
-                        // value={value}
-                        // onChange={handleChange}
-                        defaultValue={formData.languages}
-                        onChange = {(e) => setFormData({...formData, Languages: e.target.value})}
-                        size='sm'
-                    />
+                    <HStack>
+                    {
+                    formData.languages!=undefined && formData.languages.map(element=>(
+                       
+                            <Input
+                            defaultValue={element.language}
+                            onChange = {(e) => setFormData({...formData, languages: e.target.value})}
+                            size='sm'
+                        />
+                        
+                    ))
+                    }
+                     </HStack>
                     </Box>
                     <Box>
                     <Text mb='8px'>Address</Text>
                     <Input
-                        // value={value}
-                        // onChange={handleChange}
                         defaultValue={formData.address}
-                        onChange = {(e) => setFormData({...formData, Address: e.target.value})}
+                        onChange = {(e) => setFormData({...formData, address: e.target.value})}
                         size='sm'
                     />
                     </Box>
                     <Box>
                     <Text mb='8px'>Skills</Text>
-                    <Input
-                        // value={value}
-                        // onChange={handleChange}
-                        defaultValue={formData.skills}
-                        onChange = {(e) => setFormData({...formData, Skills: e.target.value})}
-                        isRequired='true'
-                        size='sm'
-                    />
+                    <HStack>
+                    {
+                    formData.skills!=undefined && formData.skills.map(element=>(
+                       
+                            <Input
+                            defaultValue={element.skill}
+                            onChange = {(e) => setFormData({...formData, skills: e.target.value})}
+                            size='sm'
+                        />
+                        
+                    ))
+                    }
+                     </HStack>
                     </Box>
                    <>
                         {
@@ -252,8 +263,6 @@ import {
                             <HStack>
                                  <Button
                                   onClick={handleSubmit}
-                                  //backend se jo value ye hojayegi
-
 
                             >Save Changes</Button>
                            
