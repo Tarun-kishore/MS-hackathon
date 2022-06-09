@@ -20,6 +20,7 @@ import {
   Link
 } from "react-router-dom";
 import CreateEvent from './admin/createEvent/CreateEvent';
+import Calendar from '../src/components/calender/calender'
 
 function App() {
 
@@ -50,6 +51,7 @@ function App() {
               <Route path="/login" element = {user ? <Home/> : <SignIn/>}/>
               <Route path="/profile" element={user ? <Profile/> : <SignUp/>}/>
               <Route path="/event" element={user ? <Your_Activites/> : <SignUp/>}/>
+              <Route path="/calendar" element={user ? <Calendar/> : <SignUp/>}/>
               <Route path="/register" element={user ? <Register/> : <SignUp/>}/>
               <Route path="events/:eventId" element={user ? <SingleActivity/> : <SignUp/>}/>
             </Routes>
