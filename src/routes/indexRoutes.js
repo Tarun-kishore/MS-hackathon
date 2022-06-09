@@ -1,7 +1,7 @@
 const express = require("express");
 const router = new express.Router();
 const User = require("../models/user");
-
+const validator = require("validator");
 const auth = require("../middleware/auth");
 
 router.post("/signup", async (req, res) => {
@@ -63,8 +63,31 @@ router.post("/logout", auth, async (req, res) => {
   }
 });
 
-router.get("/profile", auth, (req, res) => {
-  res.status(200).send(req.user);
+router.get("/profile", auth, async (req, res) => {
+  try {
+    if (req.user.isAdmin == false) {
+      await req.user.populate("events");
+
+      const events = req.user.events;
+      let hours = 0;
+
+      for (let i = 0, len = events.length; i < len; ++i) {
+        eventData = events[i];
+        let date = eventData.startsAt;
+        date.setHours(date.getHours() + eventData.duration);
+        if (validator.isBefore(date.toISOString())) hours += eventData.duration;
+      }
+
+      req.user.numberOfHours = hours;
+    }
+
+    res
+      .status(200)
+      .send({ ...req.user.toJSON(), numberOfHours: req.user.numberOfHours });
+  } catch (e) {
+    console.log(e);
+    res.status(500).send({ e });
+  }
 });
 
 router.patch("/profile", auth, async (req, res) => {
