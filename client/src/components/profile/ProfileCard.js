@@ -22,7 +22,7 @@ import {
     Editable
   } from '@chakra-ui/react';
   import { EditIcon,LockIcon,BellIcon } from '@chakra-ui/icons';
-  import { useState } from 'react';
+  import { useState,useEffect } from 'react';
   import axios from 'axios';
   export default function ProfileCard() {
     const [isEditable, setIsEditable] = useState(true);
@@ -33,7 +33,7 @@ import {
         email: "email@domain.com",
         password: "password",
         isStudent: false,
-        school:"",
+        school:"SPS",
         organisation: "",
         isEmployee: false,
         Organisation: false,
@@ -63,24 +63,37 @@ import {
 
 
     });
-    const handleSubmit = (e) => {
+    useEffect(() => {
+        // Update the document title using the browser API
+        try {
+      
+            axios.get("/profile",formData)
+            .then((res)=>{
+                console.log(res);
+                setFormData(res.data);
+                console.log(formData);
+            })
+           
+            //res.data;
+          } catch(err) {
+            console.log(err);
+          }
+        // formData = `You clicked ${count} times`;
+      },[]);
+    const handleSubmit = async (e) => {
         setIsEditable(true);
         e.preventDefault()
         console.log(formData);
         try {
       
-          const res = await axios.post("/volunteer/register", {
-            Locations, availableTill, preferences, skills
-          });
+          const res = await axios.post("/profile",formData);
           console.log(res);
-          res.data && window.location.replace("/event");
+        //   res.data;
         } catch(err) {
           console.log(err);
         }
       
         }
-    
-    }
     return (
       <Center py={6}>
         <Box
@@ -148,7 +161,7 @@ import {
                     <Input
                         // value={value}
                         // onChange={handleChange}
-                        value={formData.dob}
+                        value={formData.DOB}
                         size='sm'
                     />
                     </Box>
@@ -157,7 +170,7 @@ import {
                     <Input
                         // value={value}
                         // onChange={handleChange}
-                        value={formData.mobile_number}
+                        value={formData.mobile}
                         size='sm'
                     />
                     </Box>
@@ -176,8 +189,8 @@ import {
                     <Input
                         // value={value}
                         // onChange={handleChange}
-                        defaultValue={formData.organisation}
-                        onChange = {(e) => setFormData({...formData, organisation: e.target.value})}
+                        defaultValue={formData.Organisation}
+                        onChange = {(e) => setFormData({...formData,Organisation: e.target.value})}
                         size='sm'
                     />
                     </Box>
@@ -186,7 +199,7 @@ import {
                     <Input
                         // value={value}
                         // onChange={handleChange}
-                        defaultValue={formData.AvailableTill}
+                        defaultValue={formData.availableTill}
                         onChange = {(e) => setFormData({...formData, AvailableTill: e.target.value})}
                         size='sm'
                     />
@@ -196,7 +209,7 @@ import {
                     <Input
                         // value={value}
                         // onChange={handleChange}
-                        defaultValue={formData.Languages}
+                        defaultValue={formData.languages}
                         onChange = {(e) => setFormData({...formData, Languages: e.target.value})}
                         size='sm'
                     />
@@ -206,7 +219,7 @@ import {
                     <Input
                         // value={value}
                         // onChange={handleChange}
-                        defaultValue={formData.Address}
+                        defaultValue={formData.address}
                         onChange = {(e) => setFormData({...formData, Address: e.target.value})}
                         size='sm'
                     />
@@ -216,7 +229,7 @@ import {
                     <Input
                         // value={value}
                         // onChange={handleChange}
-                        defaultValue={formData.Skills}
+                        defaultValue={formData.skills}
                         onChange = {(e) => setFormData({...formData, Skills: e.target.value})}
                         isRequired='true'
                         size='sm'
