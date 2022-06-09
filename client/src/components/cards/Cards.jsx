@@ -1,7 +1,7 @@
 import Card from '../card/Card'
 import './cards.css'
 
-export default function Cards() {
+export default function Cards({cards}) {
   return (
     <>
        <div className='heading'>
@@ -13,11 +13,9 @@ export default function Cards() {
 
     <hr className='line'/>
     <div className='cards'>
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>
+        {cards.map(c=> (
+            <Card card={c}/>
+        ))}
     </div>
     </>
   )
