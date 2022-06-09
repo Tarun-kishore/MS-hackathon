@@ -19,12 +19,20 @@ import {
     LinkBox,
     Link,
     FormControl,
-    Editable
+    Editable,
+    FormLabel,
+    Radio,
+    RadioGroup,
+    FormHelperText,
+    Checkbox
   } from '@chakra-ui/react';
   import { EditIcon,LockIcon,BellIcon } from '@chakra-ui/icons';
   import { useState,useEffect } from 'react';
   import axios from 'axios';
   export default function ProfileCard() {
+    let ticked_languages = new Set();
+    let ticked_skills = new Set();
+    let ticked_locations = new Set();
     const [isEditable, setIsEditable] = useState(true);
     const [formData, setFormData] = useState({
     });
@@ -33,7 +41,6 @@ import {
             axios.get("/profile",formData)
             .then((res)=>{
                 setFormData(res.data);
-                console.log('formdata',formData);
             })
            
             //res.data;
@@ -41,18 +48,59 @@ import {
             console.log(err);
           }
       },[]);
-    const handleSubmit = async (e) => {
+      const handleSubmit = async (e) => {
         setIsEditable(true);
         e.preventDefault()
-        console.log(formData);
+        
+        let payload = formData;
+        delete payload["isAdmin"];
+        delete payload["email"];
+        delete payload["password"];
+        delete payload["mobile"];
+
         try {
-          const res = await axios.patch("/profile",formData);
+          const res = await axios.patch("/profile",payload);
           console.log(res);
-        //   res.data;
         } catch(err) {
           console.log(err);
         }
-      
+    }
+    const handleLanguage = async(e) => {
+
+        const language = e.target.value;
+        if(e.target.checked) {
+            ticked_languages.add(language);
+            console.log(language);
+        } else {
+            if(ticked_languages.has(language)) {
+            ticked_languages.delete(language);
+            console.log(language);
+            }
+        }
+        }
+        const handleLocation = async(e) => {
+            const location = e.target.value;
+            if(e.target.checked) {
+                ticked_locations.add(location);
+                console.log(location);
+            } else {
+                if(ticked_locations.has(location)) {
+                ticked_locations.delete(location);
+                console.log(location);
+                }
+            }
+        }
+        const handleSkills = async(e) => {
+            const skill = e.target.value;
+            if(e.target.checked) {
+                ticked_skills.add(skill);
+                console.log(skill);
+            } else {
+                if(ticked_skills.has(skill)) {
+                ticked_skills.delete(skill);
+                console.log(skill);
+                }
+            }
         }
     return (
       <Center py={6}>
@@ -133,6 +181,7 @@ import {
                     </Link>
                     
                 </Box>
+                
             
                 
             </GridItem>
@@ -167,19 +216,58 @@ import {
                     </Box>
                     <Box>
                     <Text mb='8px'>Locations</Text>
-                    <HStack>
-                    {
-                    formData.Locations!=undefined && formData.Locations.map(element=>(
-                       
-                        <Input
-                        defaultValue={element.Location}
-                        onChange = {(e) => setFormData({...formData, Locations: e.target.value})}
-                        size='sm'
-                    />
-                        
-                    ))
-                    }
-                     </HStack>
+                    <>
+                        {
+                            isEditable==true&&
+                            <HStack>
+                            {
+                            formData.Locations!=undefined && formData.Locations.map(element=>(
+                               
+                                <Input
+                                defaultValue={element.Location}
+                                onChange = {(e) => setFormData({...formData, Locations: e.target.value})}
+                                size='sm'
+                            />
+                                
+                            ))
+                            }
+                             </HStack>
+
+                        }
+                        </>
+                        <>
+                        {
+                            isEditable==false&&
+                            <FormControl mt={4}>
+                            <Stack spacing={5}>
+                                <Checkbox value="Outside Mumbai" onChange={handleLocation}>
+                                Outside Mumbai
+                                </Checkbox> 
+                                <Checkbox value="Navi Mumbai" onChange={handleLocation}>
+                                Navi Mumbai
+                                </Checkbox> 
+                                <Checkbox value="Central Zone" onChange={handleLocation}>
+                                Central Zone
+                                </Checkbox> 
+                                <Checkbox value="Western Zone" onChange={handleLocation}>
+                                Western Zone
+                                </Checkbox> 
+                                <Checkbox value="Harbour Zone" onChange={handleLocation}>
+                                Harbour Zone
+                                </Checkbox>
+                                <Checkbox value="In-Office (Mahim)" onChange={handleLocation}>
+                                In-Office (Mahim)
+                                </Checkbox>
+                                <Checkbox value="Online" onChange={handleLocation}>
+                                Online
+                                </Checkbox> 
+                                <br/>
+                            </Stack>
+                          </FormControl>
+
+                        }
+                        </>
+                   
                     
                     </Box>
                     <Box>
@@ -208,19 +296,54 @@ import {
                     </Box>
                     <Box>
                     <Text mb='8px'>Languages</Text>
-                    <HStack>
-                    {
-                    formData.languages!=undefined && formData.languages.map(element=>(
-                       
-                            <Input
-                            defaultValue={element.language}
-                            onChange = {(e) => setFormData({...formData, languages: e.target.value})}
-                            size='sm'
-                        />
-                        
-                    ))
-                    }
-                     </HStack>
+                    <>
+                        {
+                            isEditable==true&&
+                            <HStack>
+                            {
+                            formData.languages!=undefined && formData.languages.map(element=>(
+                               
+                                    <Input
+                                    defaultValue={element.language}
+                                    onChange = {(e) => setFormData({...formData, languages: e.target.value})}
+                                    size='sm'
+                                />
+                                
+                            ))
+                            }
+                             </HStack>
+
+                        }
+                        </>
+                        <>
+                        {
+                            isEditable==false&&
+                            <FormControl mt={4}>
+                            <Stack spacing={4}>
+                            <Checkbox value="English" onChange={handleLanguage}>
+                                English
+                              </Checkbox> 
+                              <Checkbox value="Hindi" onChange={handleLanguage}>
+                                Hindi
+                              </Checkbox> 
+                              <Checkbox value="Marathi" onChange={handleLanguage}>
+                                Marathi
+                              </Checkbox> 
+                              <Checkbox value="Urdu" onChange={handleLanguage}>
+                                Urdu
+                              </Checkbox> 
+                              <Checkbox value="Gujarati" onChange={handleLanguage}>
+                              Gujarati
+                              </Checkbox> 
+                              <Checkbox value="Tamil" onChange={handleLanguage}>
+                              Tamil
+                              </Checkbox>
+                            </Stack>
+                          </FormControl>
+
+                        }
+                        </>
+                   
                     </Box>
                     <Box>
                     <Text mb='8px'>Address</Text>
@@ -232,19 +355,45 @@ import {
                     </Box>
                     <Box>
                     <Text mb='8px'>Skills</Text>
-                    <HStack>
-                    {
-                    formData.skills!=undefined && formData.skills.map(element=>(
-                       
-                            <Input
-                            defaultValue={element.skill}
-                            onChange = {(e) => setFormData({...formData, skills: e.target.value})}
-                            size='sm'
-                        />
-                        
-                    ))
-                    }
-                     </HStack>
+                    <>
+                        {
+                            isEditable==true&&
+                            <HStack>
+                            {
+                            formData.skills!=undefined && formData.skills.map(element=>(
+                            
+                                    <Input
+                                    defaultValue={element.skill}
+                                    onChange = {(e) => setFormData({...formData, skills: e.target.value})}
+                                    size='sm'
+                                />
+                                
+                            ))
+                            }
+                            </HStack>
+
+                        }
+                        </>
+                        <>
+                        {
+                            isEditable==false&&
+                            <FormControl mt={4}>
+                            <Stack spacing={4}>
+                            <Checkbox value="Story_telling" onChange={handleSkills}>
+                                Story Telling
+                              </Checkbox> 
+                              <Checkbox value="photography" onChange={handleSkills}>
+                                Photography
+                              </Checkbox> 
+                              <Checkbox value="writing_editing" onChange={handleSkills}>
+                                Writing and Editing
+                              </Checkbox> 
+                            </Stack>
+                          </FormControl>
+
+                        }
+                        </>
+                    
                     </Box>
                    <>
                         {
