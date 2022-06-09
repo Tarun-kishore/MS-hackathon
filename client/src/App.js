@@ -19,32 +19,67 @@ import {
   Route,
   Link
 } from "react-router-dom";
-import {useContext} from "react";
+import CreateEvent from './admin/createEvent/CreateEvent';
+
+const admin_mobile = "0000000000";
+const admin_password = "password";
 
 function App() {
-  const user = localStorage.getItem('user');
-  console.log(user);
-  return (
-    <Router>
-      <ChakraProvider>
-      <div className="page-container">
-        <div className='content-wrap'>
-          <TopBar/>
-          <Routes>
-            <Route path="/" element={<Home/>}/>
-            <Route path="/signup" element={user ? <Home/> : <SignUp/>}/>
-            <Route path="/login" element = {user ? <Home/> : <SignIn/>}/>
-            <Route path="/profile" element={user ? <Profile/> : <SignUp/>}/>
-            <Route path="/event" element={user ? <Your_Activites/> : <SignUp/>}/>
-            <Route path="/register" element={user ? <Register/> : <SignUp/>}/>
-            <Route path="events/:eventId" element={user ? <SingleActivity/> : <SignUp/>}/>
-          </Routes>
+
+  const user = JSON.parse(localStorage.getItem('user'));
+  var mobile;
+  if(user) {
+    mobile = user.data.user.mobile;
+  }
+
+  // const user = JSON.parse(localStorage.getItem('user')).data.user.mobile;
+  if(user) { console.log(mobile); }
+
+  var admin = false;
+  if(mobile == admin_mobile) {
+    admin = true;
+  }
+
+  if(!admin) {
+    return (
+      <Router>
+        <ChakraProvider>
+        <div className="page-container">
+          <div className='content-wrap'>
+            <TopBar/>
+            <Routes>
+              <Route path="/" element={<Home/>}/>
+              <Route path="/signup" element={user ? <Home/> : <SignUp/>}/>
+              <Route path="/login" element = {user ? <Home/> : <SignIn/>}/>
+              <Route path="/profile" element={user ? <Profile/> : <SignUp/>}/>
+              <Route path="/event" element={user ? <Your_Activites/> : <SignUp/>}/>
+              <Route path="/register" element={user ? <Register/> : <SignUp/>}/>
+              <Route path="events/:eventId" element={user ? <SingleActivity/> : <SignUp/>}/>
+            </Routes>
+          </div>
+          <Footer/>
         </div>
-        <Footer/>
-      </div>
-      </ChakraProvider>
+        </ChakraProvider>
+        </Router>
+    );
+  } else {
+    return (
+      <Router>
+          <ChakraProvider>
+          <div className="page-container">
+            <div className='content-wrap'>
+              <TopBar/>
+              <Routes>
+                <Route path="/" element={<Home/>}/>
+                <Route path="/createEvent" element={<CreateEvent/>}/>
+              </Routes>
+            </div>
+            <Footer/>
+          </div>
+          </ChakraProvider>
       </Router>
-  );
+    );
+  }
 }
 
 export default App;

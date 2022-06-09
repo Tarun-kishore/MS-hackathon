@@ -188,7 +188,11 @@ const LoginForm = () => {
             </Checkbox>
             <Checkbox value="In-Office (Mahim)" onChange={handleLocation}>
               In-Office (Mahim)
-            </Checkbox> <br/>
+            </Checkbox>
+            <Checkbox value="Online" onChange={handleLocation}>
+              Online
+            </Checkbox> 
+             <br/>
           </Stack>
         </FormControl>
 

@@ -109,8 +109,9 @@ const LoginForm = () => {
       });
 
       console.log(res);
-      localStorage.setItem('user', res);
+      localStorage.setItem('user', JSON.stringify(res));
       res.data && window.location.replace("/event");
+      
     } catch(err) {
       console.log(err);
       setError(true);
@@ -200,7 +201,7 @@ const LoginForm = () => {
         </FormControl>
 
         <FormControl mt={4}>
-          <FormLabel>Languages spoken?</FormLabel><br/>
+          <FormLabel>Languages you know?</FormLabel><br/>
           <Stack spacing={5} direction='column'>
             <Checkbox value="Hindi" onChange={handleLanguage}>
               Hindi
@@ -214,6 +215,9 @@ const LoginForm = () => {
             <Checkbox value="Gujarati" onChange={handleLanguage}>
             Gujarati
             </Checkbox> 
+            <Checkbox value="Tamil" onChange={handleLanguage}>
+            Tamil
+            </Checkbox>
           </Stack>
         </FormControl>
 

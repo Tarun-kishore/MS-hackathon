@@ -44,7 +44,7 @@ export default function SignIn() {
 
 const LoginArea = () => {
   return (
-    <Flex mb={25} minHeight='80vh'>
+    <Flex mb={25} minHeight='50vh'>
 
       <Box background = '#fffff7'
         // opacity={0.9}
@@ -93,9 +93,15 @@ const LoginForm = () => {
         mobile : mobileRef.current.value,
         password : passwordRef.current.value
       });
-      console.log(res);
-      localStorage.setItem('user', res);
-      res.data && window.location.replace("/event");
+      console.log(res.data);
+      localStorage.setItem('user', JSON.stringify(res));
+      // const data = JSON.parse(localStorage.getItem('user')); //forgot to close
+      // console.log(data.data); mobile number is -> data.data.user.mobile
+      if(res.data.user.mobile == "0000000000") {
+        res.data && window.location.replace("/");
+      } else {
+        res.data && window.location.replace("/event");
+      }
     } catch(err) {
       console.log(err);
       setError(true);
@@ -119,7 +125,7 @@ const LoginForm = () => {
           ></Input>
         </FormControl>
 
-        <Button type="submit" backgroundColor='#ffc900' width='full' mt={12} mb={4}>Login</Button>
+        <Button type="submit" backgroundColor='#ffc900' width='full' mt={12} mb={4} >Login</Button>
         { error && <span >Something went wrong!</span> }
       </form>
     </Box>
