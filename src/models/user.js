@@ -90,7 +90,7 @@ const userSchema = mongoose.Schema(
     approval: {
       type: "String",
       required: true,
-      default: "notRegistered",
+      default: "pending",
     },
     preferences: [
       {
@@ -136,6 +136,7 @@ userSchema.virtual("events", {
 
 userSchema.methods.toJSON = function () {
   const user = this;
+
   const userObject = user.toObject();
 
   delete userObject.password;

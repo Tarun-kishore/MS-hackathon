@@ -10,7 +10,6 @@ const cookieParser = require("cookie-parser");
 // * initiating the connection with database server
 require("./db/mongoose");
 
-require("./utils/cronJob");
 require("./utils/setupDb");
 
 // *Instructing server to use json and extended url encoded data
