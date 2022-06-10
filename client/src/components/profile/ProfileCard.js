@@ -31,6 +31,7 @@ import {
   import { EditIcon,LockIcon,BellIcon } from '@chakra-ui/icons';
   import { useState,useEffect } from 'react';
   import axios from 'axios';
+  import Volunteer from './Volunteer'
   export default function ProfileCard() {
     let ticked_languages = new Set();
     let ticked_skills = new Set();
@@ -181,24 +182,7 @@ import {
                             <Text>{formData.name}</Text>
                     </VStack>
                     <Box mt={10}>
-                        <Link>
-                        <HStack mb={3}>
-                        <Icon as={EditIcon} />
-                        <Text>Profile Details</Text>
-                        </HStack>
-                        </Link>
-                        <Link>
-                            <HStack mb={3}>
-                            <Icon as={BellIcon} />
-                            <Text>Notifications</Text>
-                            </HStack>
-                        </Link>
-                        <Link>
-                        <HStack>
-                        <Icon as={LockIcon} />
-                        <Text>Change password</Text>
-                        </HStack>
-                        </Link>
+                        <Volunteer hours={formData.numberOfHours}/>
                         
                     </Box>
                     
@@ -414,13 +398,13 @@ import {
                                     isEditable==false&&
                                     <FormControl mt={4}>
                                     <Stack spacing={4}>
-                                    <Checkbox value="Story_telling" onChange={handleSkills} size="sm">
+                                    <Checkbox value="Story Telling" onChange={handleSkills} size="sm">
                                         Story Telling
                                     </Checkbox> 
-                                    <Checkbox value="photography" onChange={handleSkills} size="sm">
+                                    <Checkbox value="Photography" onChange={handleSkills} size="sm">
                                         Photography
                                     </Checkbox> 
-                                    <Checkbox value="writing_editing" onChange={handleSkills} size="sm">
+                                    <Checkbox value="Writing & Editing" onChange={handleSkills} size="sm">
                                         Writing and Editing
                                     </Checkbox> 
                                     </Stack>
