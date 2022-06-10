@@ -101,7 +101,7 @@ router.get("/requests/reject/:userId", auth, isAdmin, async (req, res) => {
 router.get("/requests", auth, isAdmin, async (req, res) => {
   try {
     const data = await User.find({ approval: "pending", isAdmin:false });
-
+    console.log(data);
     res.status(200).send(data);
   } catch (e) {
     res.status(500).send(e);

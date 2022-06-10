@@ -4,30 +4,6 @@ import { Accordion, Button,AccordionButton,AccordionItem,Box,AccordionIcon,Accor
 
 
 const ProcessRequest = () => {
-    // const data=[{
-    //     _id:"1",
-    //     name:"Anubhav",
-    //     DOB:"",
-    //     mobile:"9990446387",
-    //     email: "abcd2@gmail.com",
-    //     school:"gg school",
-    //     organisation:"employee",
-    //     educationalBackground:"school student",
-    //     occupation:"student",
-    //     address:"463/C kidwai gali"
-    //     },{
-    //         _id:"2",
-    //         name:"Anubhav",
-    //         DOB:"",
-    //         mobile:"9990446387",
-    //         email: "abcd2@gmail.com",
-    //         school:"gg school",
-    //         organisation:"employee",
-    //         educationalBackground:"school student",
-    //         occupation:"student",
-    //         address:"463/C kidwai gali"
-    //         }
-    //     ]
     const [request,setRequest]=useState([]);
     const fetchAllProcessedRequest=async()=>{
         const {data}=await axios.get("/enrollment/requests/approved");
@@ -82,12 +58,16 @@ const ProcessRequest = () => {
                        <p>EducationalBackground: <span>{r.educationalBackground}</span></p> 
                        <p>Occupation: <span>{r.occupation}</span></p> 
                        <p>Address: <span>{r.address}</span></p> 
-                       <Button margin="2px" onClick={()=>{handleApproveRequest(r._id,r)}} colorScheme='yellow' size='sm'>
-                            Approve Request
-                        </Button>
-                        <Button margin="2px" onClick={()=>{handleRejectRequest(r._id,r)}} colorScheme='yellow' size='sm'>
-                            Reject Request
-                        </Button>
+                       {(r.approval=="pending")&&
+                            <div>
+                                <Button margin="2px" onClick={()=>{handleApproveRequest(r._id,r)}} colorScheme='yellow' size='sm'>
+                                    Approve Request
+                                </Button>
+                                <Button margin="2px" onClick={()=>{handleRejectRequest(r._id,r)}} colorScheme='yellow' size='sm'>
+                                    Reject Request
+                                </Button>
+                            </div>
+                       }
                     </div>
                 </AccordionPanel>
             </AccordionItem>
