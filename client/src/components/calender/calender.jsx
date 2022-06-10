@@ -27,13 +27,14 @@ export default function MyCalender() {
   }, []);
   return (
     <div className="calendar-bg">
+      <div className="ea"> Enrolled Activities </div>
       <div className="wrapper">
       <Calendar
         localizer={localizer}
         events={myEventsList}
         startAccessor="start"
         endAccessor="end"
-        style={{ height: 350, width: 700 }}
+        style={{ height: 450 }}
       />
       </div>
     </div>
