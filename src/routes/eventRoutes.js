@@ -21,6 +21,7 @@ router.post("/add", auth, isAdmin, async (req, res) => {
 router.put("/edit/:eventID", auth, isAdmin, async (req, res) => {
   const eventID = req.params.eventID;
   const updates = Object.keys(req.body);
+  console.log(req.body);
   try {
     const eventData = await Event.findById(eventID);
     updates.forEach((update) => (eventData[update] = req.body[update]));
@@ -41,6 +42,15 @@ router.get("/all", auth, async (req, res) => {
     res.status(200).send(events);
   } catch (e) {
     res.status(500).send(e);
+  }
+});
+
+router.get("/active", auth , async(req, res) =>{
+  try {
+    const data = await Event.find({startsAt:{$gte:new Date()}});
+    res.status(200).send(data);
+  }catch(e){
+    res.status(400).send(e);
   }
 });
 
@@ -77,4 +87,6 @@ router.get("/:eventId", auth, async (req, res) => {
     res.status(500).send(e);
   }
 });
+
+
 module.exports = router;

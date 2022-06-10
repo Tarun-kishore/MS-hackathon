@@ -6,6 +6,16 @@
     -o-background-size: cover;
     background-size: cover;
 
-    /* background-color: #fff; */
+    /* background-color: rgb(246, 212, 217); */
 
+  }
+
+  .ea {
+    padding: 10px;
+    background-color: aliceblue;
+    font-family: 'Roboto', serif;
+    font-size: 16px;
+    font-weight: bolder;
+    text-align: center;
+    border-radius: 10px;
   }

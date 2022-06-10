@@ -42,6 +42,8 @@ export default function TopBar() {
       return <div className='top box-shadow'>
         <Link className="topLeft" to="/"><div>HOME</div></Link>
         <Link className='topLeft' to="/createEvent">CREATE EVENT</Link>
+        <Link className='topRight' to="/activities">ALL ACTIVITIES</Link>
+        <Link className='topRight' to="/request">VOLUNTEER REQUEST</Link>
         <div onClick={handleLogout} className="topRight">LOGOUT</div>
         </div>
   } else {

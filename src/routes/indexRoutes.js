@@ -149,6 +149,7 @@ router.get("/publicProfile/:userId", async (req, res) => {
       numberOfHours: req.user.numberOfHours,
     };
     delete returnUser.mobile;
+    delete returnUser.email;
     res.status(200).send(returnUser);
   } catch (e) {
     console.log(e);

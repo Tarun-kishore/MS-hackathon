@@ -18,6 +18,11 @@ export default function Your_Activites() {
       if(res1.data.length === 0 && res2.data.length === 0) {
         setNact(true);
       }
+      res1.data.sort(function(a,b){
+        // Turn your strings into dates, and then subtract them
+        // to get a value that is either negative, positive, or zero.
+        return new Date(a.date) - new Date(b.date);
+      });
       setCards(res1.data);
     }
     fetchCards()
@@ -27,6 +32,11 @@ export default function Your_Activites() {
     e.preventDefault();
     try {  
     const res = await axios.get("/volunteer/myEvents");
+    res.data.sort(function(a,b){
+      // Turn your strings into dates, and then subtract them
+      // to get a value that is either negative, positive, or zero.
+      return new Date(a.date) - new Date(b.date);
+    });
     setCards(res.data);
     setBn("Unenroll");
     
@@ -41,6 +51,11 @@ export default function Your_Activites() {
       const res = await axios.get("/event/recommended");
 
       console.log(res);
+      res.data.sort(function(a,b){
+        // Turn your strings into dates, and then subtract them
+        // to get a value that is either negative, positive, or zero.
+        return new Date(a.date) - new Date(b.date);
+      });
       setCards(res.data);
       setBn("Enroll");
       
@@ -53,8 +68,7 @@ export default function Your_Activites() {
     return (
       <>
       <div className='heading'>
-          <span className='waste'></span>
-          <span className='act'>Activities Coming Up</span>
+          <span className='act'>Activities Coming Up:</span>
           <span className='all' onClick={handleAll}> ALL </span>
           <span className='enrol' onClick={handleEnrolled}> ENROLLED </span>
         </div>
