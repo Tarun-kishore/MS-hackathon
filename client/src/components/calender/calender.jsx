@@ -1,5 +1,6 @@
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { useState, useEffect } from "react";
+import './calendar.css'
 
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
@@ -25,14 +26,17 @@ export default function MyCalender() {
     });
   }, []);
   return (
-    <div>
+    <div className="calendar-bg">
+      <div className="ea"> Enrolled Activities </div>
+      <div className="wrapper">
       <Calendar
         localizer={localizer}
         events={myEventsList}
         startAccessor="start"
         endAccessor="end"
-        style={{ height: 500 }}
+        style={{ height: 450 }}
       />
+      </div>
     </div>
   );
 }

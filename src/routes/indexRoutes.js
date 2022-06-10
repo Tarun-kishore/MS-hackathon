@@ -124,4 +124,36 @@ router.delete("/profile", auth, async (req, res) => {
     res.status(500).send(e);
   }
 });
+router.get("/publicProfile/:userId", async (req, res) => {
+  try {
+    req.user = await User.findById(req.params.userId);
+
+    if (req.user.isAdmin == false) {
+      await req.user.populate("events");
+
+      const events = req.user.events;
+      let hours = 0;
+
+      for (let i = 0, len = events.length; i < len; ++i) {
+        eventData = events[i];
+        let date = eventData.startsAt;
+        date.setHours(date.getHours() + eventData.duration);
+        if (validator.isBefore(date.toISOString())) hours += eventData.duration;
+      }
+
+      req.user.numberOfHours = hours;
+    }
+
+    const returnUser = {
+      ...req.user.toJSON(),
+      numberOfHours: req.user.numberOfHours,
+    };
+    delete returnUser.mobile;
+    delete returnUser.email;
+    res.status(200).send(returnUser);
+  } catch (e) {
+    console.log(e);
+    res.status(500).send({ e });
+  }
+});
 module.exports = router;

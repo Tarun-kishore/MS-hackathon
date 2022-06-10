@@ -1,0 +1,21 @@
+.calendar-bg { 
+    min-height: 100vh;
+    background: url('../assets/calendarbg.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+
+    /* background-color: rgb(246, 212, 217); */
+
+  }
+
+  .ea {
+    padding: 10px;
+    background-color: aliceblue;
+    font-family: 'Roboto', serif;
+    font-size: 16px;
+    font-weight: bolder;
+    text-align: center;
+    border-radius: 10px;
+  }

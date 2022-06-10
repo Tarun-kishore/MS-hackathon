@@ -45,6 +45,15 @@ router.get("/all", auth, async (req, res) => {
   }
 });
 
+router.get("/active", auth , async(req, res) =>{
+  try {
+    const data = await Event.find({startsAt:{$gte:new Date()}});
+    res.status(200).send(data);
+  }catch(e){
+    res.status(400).send(e);
+  }
+});
+
 //GET request for displaying all events according to the form filled (volunteer) --
 router.get("/recommended", auth, isVolunteer, async (req, res) => {
   try {
@@ -78,4 +87,6 @@ router.get("/:eventId", auth, async (req, res) => {
     res.status(500).send(e);
   }
 });
+
+
 module.exports = router;

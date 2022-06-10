@@ -92,7 +92,7 @@ const LoginForm = () => {
     const [organisation, setOrganisation] = useState("")
     const [error, setError] = useState(false)
     let ticked = new Set()
-
+    
     const handleSubmit = async (e) => {
       e.preventDefault();
       setError(false);
@@ -137,42 +137,42 @@ const LoginForm = () => {
       <form onSubmit={handleSubmit}>
         <FormControl>
           <FormLabel>Name</FormLabel>
-          <Input type="text" placeholder='Enter your name'
+          <Input required type="text" placeholder='Enter your name'
           onChange={e => setName(e.target.value)}
           ></Input>
         </FormControl>
 
         <FormControl mt={4}>
           <FormLabel>Address</FormLabel>
-          <Textarea type="text" placeholder='Enter your address'
+          <Textarea required type="text" placeholder='Enter your address'
           onChange={e => setAddress(e.target.value)}
           ></Textarea><br/>
         </FormControl>
 
         <FormControl mt={4}>
         <FormLabel>Mobile Number</FormLabel>
-          <Input type="number" placeholder='Enter mobile number'
+          <Input required type="number" placeholder='Enter mobile number'
           onChange={e => setMobile(e.target.value)}
           ></Input>
         </FormControl>
 
         <FormControl mt={4}>
         <FormLabel>Email</FormLabel>
-        <Input type="email" placeholder='Enter Email ID'
+        <Input required type="email" placeholder='Enter Email ID'
         onChange={e => setEmail(e.target.value)}
         ></Input>
         </FormControl>
 
         <FormControl mt={4}>
         <FormLabel>Create Password</FormLabel>
-        <Input type="password" placeholder='Enter password'
+        <Input required type="password" placeholder='Enter password'
         onChange={e => setPassword(e.target.value)}
         ></Input>
         </FormControl>
 
         <FormControl mt={4}>
         <FormLabel>Date of Birth</FormLabel>
-          <Input type="date" onChange={e => setDOB(e.target.value)}></Input>
+          <Input required type="date" onChange={e => setDOB(e.target.value)}></Input>
         </FormControl>
 
         <FormControl mt={4}>
@@ -187,7 +187,7 @@ const LoginForm = () => {
 
         <FormControl mt={4}>
         <FormLabel>Academic Qualifications</FormLabel>
-        <Input onChange={e => setEducationalBackground(e.target.value)}></Input>
+        <Input required onChange={e => setEducationalBackground(e.target.value)}></Input>
         </FormControl>
 
         <FormControl mt={4}>

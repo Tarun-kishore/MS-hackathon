@@ -633,3 +633,32 @@ Sample Output:
 "**v": 0
 }
 ]
+
+
+### View profile public view ( No need for login)
+
+method : `Get`
+endpoint: `/publicProfile/629c5e9f0a4fb53e7da07e61`  //userId must be passed
+
+Sample Input: json
+
+{}
+
+
+Sample Output:  //user mobile number will not be returned due to user privacy
+{
+
+    "_id": "629c5e9f0a4fb53e7da07e61",
+    "name": "user name",
+    "DOB": "2011-09-15T18:30:00.000Z",
+    "email": "user@email.com",
+    "isStudent": true,
+    "isEmployee": false,
+    "isAdmin": false,
+    "preferences": [],
+    "skills": [],
+    "createdAt": "2022-06-05T07:43:27.287Z",
+    "updatedAt": "2022-06-05T07:46:41.546Z",
+    "__v": 2
+
+}

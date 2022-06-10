@@ -180,6 +180,9 @@ userSchema.methods.getRelatedEvents = async function () {
       },
     ],
     _id: { $nin: user.events.map((eventData) => eventData._id) },
+    startsAt: {
+      $lt: new Date(),
+    },
   });
 
   const recommendedEvents = events.filter((eventData) => {
@@ -230,3 +233,4 @@ userSchema.pre("remove", async function (next) {
 const User = mongoose.model("User", userSchema);
 
 module.exports = User;
+
