@@ -72,6 +72,10 @@ router.get("/volunteers/:eventId", auth, isAdmin, async (req, res) => {
   }
 });
 
+
+//  //GET requests to display all the volunteers that have been approved (admin view)
+//  router.get("/requests/approved")
+
 //GET request to approve the registration of the volunteer(admin)
 router.get("/requests/approve/:userId", auth, isAdmin, async (req, res) => {
   const userId = req.params.userId;
@@ -99,11 +103,22 @@ router.get("/requests/reject/:userId", auth, isAdmin, async (req, res) => {
 //GET request to display all the requests pending for approval(admin)
 router.get("/requests", auth, isAdmin, async (req, res) => {
   try {
-    const data = await User.find({ approval: "pending" });
+    const data = await User.find({ approval: "pending", isAdmin:false });
 
     res.status(200).send(data);
   } catch (e) {
     res.status(500).send(e);
   }
 });
+
+//GET request to display all the requests that have been approved (admin)
+router.get("/requests/approved", auth, isAdmin, async(req, res)=>{
+  try{
+    const approvedUsers= await User.find({approval: "accepted", isAdmin: false});
+    res.status(200).send(approvedUsers);
+  }catch(e){
+    res.status(500).send(e);
+  }
+});
+
 module.exports = router;
