@@ -96,5 +96,14 @@ router.get("/requests/reject/:userId", auth, isAdmin, async (req, res) => {
     res.status(500).send(error);
   }
 });
+//GET request to display all the requests pending for approval(admin)
+router.get("/requests", auth, isAdmin, async (req, res) => {
+  try {
+    const data = await User.find({ approval: "pending" });
 
+    res.status(200).send(data);
+  } catch (e) {
+    res.status(500).send(e);
+  }
+});
 module.exports = router;
