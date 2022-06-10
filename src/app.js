@@ -22,10 +22,12 @@ const indexRouter = require("./routes/indexRoutes");
 const volunteerRouter = require("./routes/volunteerRoutes");
 const eventRouter = require("./routes/eventRoutes");
 const enrollmentRouter = require("./routes/enrollmentRoutes");
+const adminRouter = require("./routes/adminRoutes");
 
 app.use("/volunteer", volunteerRouter);
 app.use("/event", eventRouter);
 app.use("/enrollment", enrollmentRouter);
 app.use("/", indexRouter);
+app.use("/admin", adminRouter);
 
 module.exports = app;
