@@ -98,7 +98,7 @@ const LoginForm = () => {
       // const data = JSON.parse(localStorage.getItem('user')); //forgot to close
       // console.log(data.data); mobile number is -> data.data.user.mobile
       if(res.data.user.mobile == "0000000000") {
-        res.data && window.location.replace("/");
+        res.data && window.location.replace("/createEvent");
       } else {
         res.data && window.location.replace("/event");
       }

@@ -4,12 +4,34 @@ import audio from '../assets/audio.jpg'
 import translate from '../assets/translationbg.jpg'
 import axios from 'axios'
 import {useState, useEffect} from 'react'
+import {
+  DrawerBody,
+  Button,
+  Drawer,
+  DrawerCloseButton,
+  DrawerContent,
+  DrawerOverlay,
+  DrawerHeader,
+  useDisclosure,
+  Stack,
+  Text,
+  Avatar
+  } from '@chakra-ui/react';
+
 export default function Card({card, bn}) {
 
   const message = "Your registration has not been approved by the admin yet. Please bear with us :)"
   const [pending, setPending] = useState(false)
   const [buttonName, setButtonName] = useState("")
   const [pic, setPic] = useState(`${card.type}`)
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const [name, setName] = useState(card.name)
+  const [address, setAddress] = useState(card.address)
+  const [Location, setLocation] = useState(card.Location)
+  const [date, setDate] = useState(card.date)
+  const [time, setTime] = useState("10 AM")
+  const [duration, setDuration] = useState(card.duration)
+  const [description, setDescription] = useState(card.description)
 
   // console.log(bn);
 
@@ -34,6 +56,10 @@ export default function Card({card, bn}) {
     }
     fetchEnrolled()
   }, [])
+
+  const handleDetails = async(e) => {
+    onOpen()
+  }
 
     const handleEnroll = async(e) => {
         e.preventDefault();      
@@ -124,11 +150,28 @@ export default function Card({card, bn}) {
             <span className="cardTitle">{card.name}</span>
             <hr/>
             <div className='buttons'>
-              <button className='badge fill'> Details </button>
+              <button className='badge fill' onClick={handleDetails}> Details </button>
               <button className='badge sec fill' onClick={handleEnroll}> {bn} </button>
               {pending && <span className='tooltiptext'>{message}</span>}
             </div>
           </div>
+          <Drawer onClose={onClose} isOpen={isOpen} size={`xs`}>
+          <DrawerOverlay />
+          <DrawerContent>
+            <DrawerCloseButton />
+            <DrawerHeader>DETAILS OF EVENT</DrawerHeader>
+            <DrawerBody>
+              <Stack>
+                  <div>{name}</div>
+                  <div>Address: {address}, {Location}</div>
+                  <div>Date: {new Date(date).toDateString()}</div>
+                  <div>Time: {time}</div>
+                  <div>Duration: {duration} Hours</div>
+                  <div>Description: {description}</div>
+              </Stack>
+            </DrawerBody>
+          </DrawerContent>
+        </Drawer>
       </div>
     )
   }
