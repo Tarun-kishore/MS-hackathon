@@ -143,7 +143,7 @@ const LoginForm = () => {
 
       console.log(res);
       // localStorage.setItem('user', JSON.stringify(res));
-      // res.data && window.location.replace("/event");
+      res.data && window.location.replace("/activities");
       
     } catch(err) {
       console.log(err);
