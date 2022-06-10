@@ -72,7 +72,7 @@ function App() {
                 />
                 <Route
                   path="/calendar"
-                  element={user ? <Calendar /> : <SignUp />}
+                  element={user ? <Calendar url="/volunteer/myEvents" /> : <SignUp />}
                 />
                 <Route
                   path="/register"
