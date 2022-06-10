@@ -404,7 +404,7 @@ import {
                                     <Checkbox value="Photography" onChange={handleSkills} size="sm">
                                         Photography
                                     </Checkbox> 
-                                    <Checkbox value="Writing & Editing" onChange={handleSkills} size="sm">
+                                    <Checkbox value="Writing and Editing" onChange={handleSkills} size="sm">
                                         Writing and Editing
                                     </Checkbox> 
                                     </Stack>
