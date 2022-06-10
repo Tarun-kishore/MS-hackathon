@@ -1,60 +1,63 @@
 import {
-DrawerBody,
-Button,
-Drawer,
-DrawerCloseButton,
-DrawerContent,
-DrawerOverlay,
-DrawerHeader,
-useDisclosure,
-Stack,
-Text,
-Avatar
-} from '@chakra-ui/react';
-import { useState} from 'react';
-export default function Volunteer(props) {
-    const [badge,setBadge]=useState(0);
-    const [rem,setRem]=useState(0);
-    const badges = [1,2,3];
-    const volunteer_hours=props.hours;
-    const { isOpen, onOpen, onClose } = useDisclosure();
-  
-    const handleClick = async () => {
-        if(volunteer_hours<10){
-            setRem(10-volunteer_hours);
-             setBadge(badges[0]);
-            console.log(badge);
-        }
-        else if(50<10){
-            rem=50-volunteer_hours;
-        }
-      onOpen()
-    }
-  
-    return (
-      <>
-          <Button
-            onClick={() => handleClick()}
-            m={4}
-          >Volunteering</Button>
-  
-        <Drawer onClose={onClose} isOpen={isOpen} size={`xs`}>
-          <DrawerOverlay />
-          <DrawerContent>
-            <DrawerCloseButton />
-            <DrawerHeader>You have done {volunteer_hours} hours of Volunteering</DrawerHeader>
-            <DrawerBody>
-              <Stack>
-                  Congratulations on Your Bronze Badge
-                  <>
-                  {
-                      props.hours<10 && <Text>For the Next badge you need to do {rem} hours of volunteering </Text>
-                  }
-                  </>
-              </Stack>
-            </DrawerBody>
-          </DrawerContent>
-        </Drawer>
-      </>
-    )
-  }
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+  Button,
+  Avatar,
+  Text,
+  Icon,
+  HStack
+} from '@chakra-ui/react'
+import { FaTwitter ,FaFacebook} from 'react-icons/fa';
+export default function Volunteer() {
+  const { isOpen, onOpen, onClose } = useDisclosure()
+
+  return (
+    <>
+      <Button onClick={onOpen}>Volunteering</Button>
+
+      <Modal onClose={onClose} isOpen={isOpen} isCentered>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader><Avatar
+              size={'xl'}
+              src={
+              'https://thumbs.dreamstime.com/z/print-161157120.jpg'
+              }
+              alt={'Author'}
+          /></ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Text fontSize="md">
+            Congratulations On Your Bronze Badge.
+          You have done 100 hours of volunteering.
+            </Text>
+        
+         <Text>
+         For the next badge you need to do 200 hours of volunteering
+         </Text>
+         <Text>
+          Share your badge on Twitter and motivate others in helping children
+          
+         </Text>
+         
+          </ModalBody>
+          <ModalFooter>
+          <HStack>
+            <Button colorScheme='twitter' leftIcon={<FaTwitter />}>
+              Tweet
+            </Button>
+            <Button onClick={onClose}>Close</Button>
+          </HStack>
+            
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
+  )
+}
