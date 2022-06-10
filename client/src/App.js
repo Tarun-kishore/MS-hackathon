@@ -10,7 +10,6 @@ import Cards from "./components/cards/Cards";
 import Your_Activites from "./pages/your_activities/Your_Activites";
 import SingleActivity from "./pages/singleActivity/SingleActivity";
 import { ChakraProvider, Switch } from "@chakra-ui/react";
-import Register from './pages/register/Register';
 import Home from './pages/home/Home'
 import SignUp from './pages/signup/SignUp';
 import SignIn from './pages/signin/SignIn'
@@ -23,7 +22,8 @@ import {
 } from "react-router-dom";
 import CreateEvent from './admin/createEvent/CreateEvent';
 import ProcessRequest from './admin/processRequest/ProcessRequest';
-import Calendar from '../src/components/calender/calender'
+import Register from "./pages/register/Register";
+import Calendar from "../src/components/calender/calender";
 
 function App() {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -63,7 +63,7 @@ function App() {
                 />
                 <Route
                   path="/calendar"
-                  element={user ? <Calendar /> : <SignUp />}
+                  element={user ? <Calendar url="/volunteer/myEvents" /> : <SignUp />}
                 />
                 <Route
                   path="/register"
