@@ -1,6 +1,5 @@
 // *importing all environment variables
 require("dotenv").config();
-console.log(process.env.DATABASE_URL);
 
 // *importing express and creating an instance of it
 const express = require("express");

@@ -11,7 +11,7 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 // *defining port default at 3000
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 3001;
 
 // *making server listen at port defined above
 app.listen(port, () => {

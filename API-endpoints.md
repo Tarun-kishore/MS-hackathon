@@ -645,13 +645,12 @@ Sample Input: json
 {}
 
 
-Sample Output:  //user mobile number will not be returned due to user privacy
+Sample Output:  //user mobile number and email will not be returned due to user privacy
 {
 
     "_id": "629c5e9f0a4fb53e7da07e61",
     "name": "user name",
     "DOB": "2011-09-15T18:30:00.000Z",
-    "email": "user@email.com",
     "isStudent": true,
     "isEmployee": false,
     "isAdmin": false,
