@@ -72,6 +72,10 @@ router.get("/volunteers/:eventId", auth, isAdmin, async (req, res) => {
   }
 });
 
+
+//  //GET requests to display all the volunteers that have been approved (admin view)
+//  router.get("/requests/approved")
+
 //GET request to approve the registration of the volunteer(admin)
 router.get("/requests/approve/:userId", auth, isAdmin, async (req, res) => {
   const userId = req.params.userId;
