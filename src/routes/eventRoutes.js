@@ -21,6 +21,7 @@ router.post("/add", auth, isAdmin, async (req, res) => {
 router.put("/edit/:eventID", auth, isAdmin, async (req, res) => {
   const eventID = req.params.eventID;
   const updates = Object.keys(req.body);
+  console.log(req.body);
   try {
     const eventData = await Event.findById(eventID);
     updates.forEach((update) => (eventData[update] = req.body[update]));
