@@ -6,17 +6,19 @@ import axios from "axios"
 export default function Your_Activites() {
 
   const [cards, setCards] = useState([]);
+  const [bn, setBn] = useState("Enroll");
   // no activity
   const [nact, setNact] = useState(false);
 
   useEffect(() => {
     const fetchCards = async () => {
-      const res = await axios.get("/event/recommended");
-      console.log(res.data.length);
-      if(res.data.length === 0) {
+      const res1 = await axios.get("/event/recommended");
+      const res2 = await axios.get("/volunteer/myEvents");
+      console.log(res1.data.length);
+      if(res1.data.length === 0 && res2.data.length === 0) {
         setNact(true);
       }
-      setCards(res.data);
+      setCards(res1.data);
     }
     fetchCards()
   }, [])
@@ -26,6 +28,7 @@ export default function Your_Activites() {
     try {  
     const res = await axios.get("/volunteer/myEvents");
     setCards(res.data);
+    setBn("Unenroll");
     
   } catch(err) {
     console.log(err);
@@ -39,6 +42,7 @@ export default function Your_Activites() {
 
       console.log(res);
       setCards(res.data);
+      setBn("Enroll");
       
     } catch(err) {
       console.log(err);
@@ -55,7 +59,7 @@ export default function Your_Activites() {
           <span className='enrol' onClick={handleEnrolled}> ENROLLED </span>
         </div>
       <div className='your_activities'>
-        <Cards cards={cards}/>
+        <Cards cards={cards} bn={bn}/>
         </div>
       </>  
     )
