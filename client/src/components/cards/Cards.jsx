@@ -5,7 +5,6 @@ export default function Cards({cards, bn}) {
 
   return (
     <>
-    <hr className='line'/>
     <div className='cards'>
         {cards.map(c=> (
             <Card card={c} bn={bn}/>

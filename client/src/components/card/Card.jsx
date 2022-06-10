@@ -1,12 +1,15 @@
 import './card.css'
-import play2learn from '../assets/play2learn.jpeg'
+import play from '../assets/play.jpeg'
+import audio from '../assets/audio.jpg'
+import translate from '../assets/translationbg.jpg'
 import axios from 'axios'
 import {useState, useEffect} from 'react'
 export default function Card({card, bn}) {
 
   const message = "Your registration has not been approved by the admin yet. Please bear with us :)"
   const [pending, setPending] = useState(false)
-  const [buttonName, setButtonName] = useState("");
+  const [buttonName, setButtonName] = useState("")
+  const [pic, setPic] = useState(`${card.type}`)
 
   // console.log(bn);
 
@@ -16,8 +19,10 @@ export default function Card({card, bn}) {
       const user = JSON.parse(localStorage.getItem('user'));
       var str = bn;
       setButtonName(str);
-      console.log(buttonName);
-      console.log(bn);
+      // console.log(buttonName);
+      // console.log(bn);
+
+      console.log(pic)
 
       if(user) {
         const status = user.data.user.approval;
@@ -69,9 +74,11 @@ export default function Card({card, bn}) {
       }
     }
   }
+  
+  if(card.type == "audio") {
   return (
     <div className='card'>
-        <img className='cardImg' src={play2learn} alt="" />
+        <img className='cardImg' src={audio} alt="" />
         <div className='cardInfo'>
           <div className='cardCats'>
             <span className='cardCat'>{new Date(card.startsAt).toDateString()}</span>
@@ -86,6 +93,44 @@ export default function Card({card, bn}) {
           </div>
         </div>
     </div>
-  )
+  )} else if(card.type == "translate") {
+    return (
+      <div className='card'>
+          <img className='cardImg' src={translate} alt="" />
+          <div className='cardInfo'>
+            <div className='cardCats'>
+              <span className='cardCat'>{new Date(card.startsAt).toDateString()}</span>
+              <span className='cardCat'>{card.location}</span>
+            </div>
+            <span className="cardTitle">{card.name}</span>
+            <hr/>
+            <div className='buttons'>
+              <button className='badge fill'> Details </button>
+              <button className='badge sec fill' onClick={handleEnroll}> {bn} </button>
+              {pending && <span className='tooltiptext'>{message}</span>}
+            </div>
+          </div>
+      </div>
+    )
+  } else {
+    return (
+      <div className='card'>
+          <img className='cardImg' src={play} alt="" />
+          <div className='cardInfo'>
+            <div className='cardCats'>
+              <span className='cardCat'>{new Date(card.startsAt).toDateString()}</span>
+              <span className='cardCat'>{card.location}</span>
+            </div>
+            <span className="cardTitle">{card.name}</span>
+            <hr/>
+            <div className='buttons'>
+              <button className='badge fill'> Details </button>
+              <button className='badge sec fill' onClick={handleEnroll}> {bn} </button>
+              {pending && <span className='tooltiptext'>{message}</span>}
+            </div>
+          </div>
+      </div>
+    )
+  }
 }
 
