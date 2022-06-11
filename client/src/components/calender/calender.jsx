@@ -27,7 +27,7 @@ export default function MyCalender(props) {
   }, []);
   return (
     <div className="calendar-bg">
-      <div className="ea"> Enrolled Activities </div>
+      <div className="ea">{props.title}</div>
       <div className="wrapper">
         <Calendar
           localizer={localizer}
