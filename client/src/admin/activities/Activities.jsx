@@ -135,6 +135,8 @@ const Activities = () => {
                 <Box >
                 <Button colorScheme='yellow' margin='5vh'  onClick={()=>{
                     setTimePeriod(true)
+                    setCompleted(false)
+                    setUpcoming(false)
                     fetchAllActivites('timePeriod');
                     size='xs'
                 }}>Submit</Button>
