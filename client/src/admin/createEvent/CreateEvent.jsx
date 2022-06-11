@@ -1,5 +1,5 @@
-import React, { useContext } from 'react'
-import './createEvent.css'
+import React, { useContext, useEffect } from "react";
+import "./createEvent.css";
 import {
   ThemeProvider,
   theme,
@@ -18,45 +18,44 @@ import {
   Button,
   Textarea,
   Select,
-  Checkbox, 
+  Checkbox,
   CheckboxGroup,
   Radio,
-  RadioGroup
-} from '@chakra-ui/react'
+  RadioGroup,
+} from "@chakra-ui/react";
 
-import { Link } from "react-router-dom"
-import { useState } from 'react'
-import axios from "axios"
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios";
 
 export default function CreateEvent() {
-
-    return (
-        <div className='signup-background'>
-            <div className='wrapper'>
+  return (
+    <div className="signup-background">
+      <div className="wrapper">
         <ThemeProvider theme={theme}>
           <ColorModeProvider>
             <CSSReset />
             <LoginArea />
           </ColorModeProvider>
         </ThemeProvider>
-            </div>
-        </div>
-      )
+      </div>
+    </div>
+  );
 }
 
 const LoginArea = () => {
   return (
-    <Flex mb={25} minHeight='100vh'>
-
-      <Box background = '#fffff7'
+    <Flex mb={25} minHeight="100vh">
+      <Box
+        background="#fffff7"
         // opacity={0.9}
         borderWidth={1}
         px={4}
-        maxWidth='500px'
+        maxWidth="500px"
         minWidth="53%"
         borderRadius={10}
-        textAlign='center'
-        boxShadow='lg'
+        textAlign="center"
+        boxShadow="lg"
       >
         <Box p={4}>
           <LoginHeader />
@@ -64,144 +63,167 @@ const LoginArea = () => {
         </Box>
       </Box>
     </Flex>
-  )
-}
+  );
+};
 
 const LoginHeader = () => {
   return (
-    <Box textAlign='center' pt={10}>
+    <Box textAlign="center" pt={10}>
       <Heading>Create Event</Heading>
     </Box>
-  )
-}
+  );
+};
 
 const LoginForm = () => {
+  const [name, setName] = useState("");
+  const [type, setType] = useState("Play Sessions");
+  const [Location, setLocation] = useState("Online");
+  const [date, setDate] = useState("");
+  const [startsAt, setStartsAt] = useState("");
+  const [address, setAddress] = useState("");
+  const [volunteersRequired, setVolunteersRequired] = useState("");
+  const [description, setDescription] = useState("");
+  const [duration, setDuration] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  let [languages, setLanguages] = useState([]);
+  let [preferences, setPreferences] = useState([]);
+  let [skills, setSkills] = useState([]);
+  const [error, setError] = useState(false);
+  let tickedPreferences = new Set();
+  let tickedSkills = new Set();
+  let tickedLanguages = new Set();
 
-    const [name, setName] = useState("")
-    const [type, setType] = useState("")
-    const [Location, setLocation] = useState("")
-    const [date, setDate] = useState("")
-    const [startsAt, setStartsAt] = useState("")
-    const [address, setAddress] = useState("")
-    const [volunteersRequired, setVolunteersRequired] = useState("")
-    const [description, setDescription] = useState("")
-    const [duration, setDuration] = useState("")
-    const [errorMessage, setErrorMessage] = useState("")
-    let [languages, setLanguages] = useState([])
-    let [preferences, setPreferences] = useState([])
-    let [skills, setSkills] = useState([])
-    const [error, setError] = useState(false)
-    let tickedPreferences = new Set()
-    let tickedSkills = new Set()
-    let tickedLanguages = new Set()
+  const setRequired = () => {
+    document.getElementById("languagesForm").required = true;
+    document.getElementById("preferencesForm").required = true;
+    document.getElementById("skillsForm").required = true;
+  };
 
-    const handleSkill = async(e) => {
-        const skill = e.target.value;
-        if(e.target.checked) {
-          tickedSkills.add(skill)
-          console.log(skill)
-        } else {
-          if(tickedSkills.has(skill)) {
-            tickedSkills.delete(skill)
-            console.log(skill)
-          }
-        }
+  useEffect(() => {
+    setRequired();
+  }, []);
+
+  const handleSkill = async (e) => {
+    const skill = e.target.value;
+    if (e.target.checked) {
+      tickedSkills.add(skill);
+      console.log(tickedSkills);
+      console.log(skill);
+    } else {
+      if (tickedSkills.has(skill)) {
+        tickedSkills.delete(skill);
+        console.log(skill, "removed");
+      }
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError(false);
+    setErrorMessage("");
+
+    try {
+      let arrayLanguages = Array.from(tickedLanguages);
+      let arrayPreferences = Array.from(tickedPreferences);
+      let arraySkills = Array.from(tickedSkills);
+      languages = arrayLanguages.map((key, index) => ({ language: key }));
+      preferences = arrayPreferences.map((key, index) => ({ preference: key }));
+      skills = arraySkills.map((key, index) => ({ skill: key }));
+
+      console.log(tickedSkills);
+      console.log({ arrayLanguages, arraySkills, arrayPreferences });
+      if (preferences.length == 0) {
+        setError(true);
+        return;
       }
 
-    const handleSubmit = async (e) => {
-
-      console.log("Hello");
-
-      e.preventDefault();
-      setError(false);
-      setErrorMessage("");
-      
-      try {  
-        let arrayLanguages = Array.from(tickedLanguages);
-        let arrayPreferences = Array.from(tickedPreferences);
-        let arraySkills = Array.from(tickedSkills);
-        languages = arrayLanguages.map((key, index) => ({ language: key }));
-        preferences = arrayPreferences.map((key, index) => ({ preference: key }));
-        skills = arraySkills.map((key, index) => ({ skill: key }));
-
-        if(preferences.length == 0) {
-            setError(true);
-            return;
-        }
-
-        setLanguages(languages);
-        setPreferences(preferences);
-        setSkills(skills);
-        console.log(languages);
-        console.log(preferences);
-        console.log(skills);
+      setLanguages(languages);
+      setPreferences(preferences);
+      setSkills(skills);
+      console.log(languages);
+      console.log(preferences);
+      console.log(skills);
 
       const res = await axios.post("/event/add", {
-        name, type, description, Location, date, startsAt, volunteersRequired, 
-        preferences, skillsRequired : skills, duration, languages, address
+        name,
+        type,
+        description,
+        Location,
+        date,
+        startsAt,
+        volunteersRequired,
+        preferences,
+        skillsRequired: skills,
+        duration,
+        languages,
+        address,
       });
 
       console.log(res);
       // localStorage.setItem('user', JSON.stringify(res));
       res.data && window.location.replace("/activities");
-      
-    } catch(err) {
+    } catch (err) {
       console.log(err);
       setError(true);
       setErrorMessage(err);
     }
-  }
+  };
 
-  const handlePreference = async(e) => {
-
+  const handlePreference = async (e) => {
     const preference = e.target.value;
-    if(e.target.checked) {
-      tickedPreferences.add(preference)
-      console.log(preference)
+    if (e.target.checked) {
+      tickedPreferences.add(preference);
+      console.log(tickedPreferences);
+      console.log(preference);
     } else {
-      if(tickedPreferences.has(preference)) {
-        tickedPreferences.delete(preference)
-        console.log(preference)
+      if (tickedPreferences.has(preference)) {
+        tickedPreferences.delete(preference);
+        console.log(preference, "removed");
       }
     }
-  }
+  };
 
-  const handleLanguage = async(e) => {
-
+  const handleLanguage = async (e) => {
     const language = e.target.value;
-    if(e.target.checked) {
-      tickedLanguages.add(language)
-      console.log(language)
+    if (e.target.checked) {
+      tickedLanguages.add(language);
+      console.log(tickedLanguages);
+      console.log(language);
     } else {
-      if(tickedLanguages.has(language)) {
-        tickedLanguages.delete(language)
-        console.log(language)
+      if (tickedLanguages.has(language)) {
+        tickedLanguages.delete(language);
+        console.log(language, "removed");
       }
     }
-  }
+  };
 
   return (
     <Box my={8}>
-      <form onSubmit={handleSubmit}>
+      <form id="createEventForm" onSubmit={handleSubmit.bind(this)}>
         <FormControl>
           <FormLabel>Name</FormLabel>
-          <Input required type="text" placeholder='Name of activity'
-          onChange={e => setName(e.target.value)}
+          <Input
+            required
+            type="text"
+            placeholder="Name of activity"
+            onChange={(e) => setName(e.target.value)}
           ></Input>
         </FormControl>
 
         <FormControl mt={4}>
           <FormLabel>Activity Type</FormLabel>
-          <Select required onChange={e => setType(e.target.value)}>
+          <Select required onChange={(e) => setType(e.target.value)}>
             <option value="play">Play Sessions</option>
-            <option value="translate">Translation of Play to Learn Sheets</option>
+            <option value="translate">
+              Translation of Play to Learn Sheets
+            </option>
             <option value="audio">Creation of Audio Instructions</option>
           </Select>
         </FormControl>
 
         <FormControl mt={4}>
           <FormLabel>Location</FormLabel>
-          <Select required onChange={e => setLocation(e.target.value)}>
+          <Select required onChange={(e) => setLocation(e.target.value)}>
             <option value="Online">Online</option>
             <option value="Outside Mumbai">Outside Mumbai</option>
             <option value="Navi Mumbai">Navi Mumbai</option>
@@ -213,103 +235,151 @@ const LoginForm = () => {
         </FormControl>
 
         <FormControl mt={4}>
-        <FormLabel>Address</FormLabel>
-        <Input required type="text" onChange={e => setAddress(e.target.value)}></Input>
+          <FormLabel>Address</FormLabel>
+          <Input
+            required
+            type="text"
+            onChange={(e) => setAddress(e.target.value)}
+          ></Input>
         </FormControl>
 
         <FormControl mt={4}>
-        <FormLabel>Date</FormLabel>
-        <Input required type="date" onChange={e => setDate(e.target.value)}></Input>
+          <FormLabel>Date</FormLabel>
+          <Input
+            required
+            type="date"
+            onChange={(e) => setDate(e.target.value)}
+          ></Input>
         </FormControl>
 
         <FormControl mt={4}>
-        <FormLabel>Begin Time</FormLabel>
-        <Input type="date" onChange={e => setStartsAt(e.target.value)}></Input>
+          <FormLabel>Begin Time</FormLabel>
+          <Input
+            type="date"
+            onChange={(e) => setStartsAt(e.target.value)}
+          ></Input>
         </FormControl>
 
         <FormControl mt={4}>
-        <FormLabel>Duration (In hours)</FormLabel>
-        <Input type="number" onChange={e => setDuration(e.target.value)}></Input>
+          <FormLabel>Duration (In hours)</FormLabel>
+          <Input
+            type="number"
+            onChange={(e) => setDuration(e.target.value)}
+          ></Input>
         </FormControl>
 
         <FormControl mt={4}>
-        <FormLabel>Number of Volunteers Required</FormLabel>
-        <Input required type="number" onChange={e => setVolunteersRequired(e.target.value)}></Input>
+          <FormLabel>Number of Volunteers Required</FormLabel>
+          <Input
+            required
+            type="number"
+            onChange={(e) => setVolunteersRequired(e.target.value)}
+          ></Input>
         </FormControl>
 
-        <FormControl mt={4}>
-          <FormLabel>Language skills desired in - </FormLabel><br/>
-          <Stack spacing={5} direction='column'>
+        <FormControl id="languagesForm" mt={4}>
+          <FormLabel>Language skills desired in - </FormLabel>
+          <br />
+          <Stack spacing={5} direction="column">
             <Checkbox value="Hindi" onChange={handleLanguage}>
               Hindi
-            </Checkbox> 
+            </Checkbox>
             <Checkbox value="Marathi" onChange={handleLanguage}>
               Marathi
-            </Checkbox> 
+            </Checkbox>
             <Checkbox value="Urdu" onChange={handleLanguage}>
               Urdu
-            </Checkbox> 
+            </Checkbox>
             <Checkbox value="Gujarati" onChange={handleLanguage}>
               Gujarati
-            </Checkbox> 
+            </Checkbox>
             <Checkbox value="Tamil" onChange={handleLanguage}>
               Tamil
             </Checkbox>
           </Stack>
         </FormControl>
 
-        <FormControl mt={5}>
-          <FormLabel>What is the activity closest to?</FormLabel><br/>
-          <Stack spacing={5} direction='column'>
-            <Checkbox value="Play sessions with children" onChange={handlePreference}>
+        <FormControl id="preferencesForm" mt={5}>
+          <FormLabel>What is the activity closest to?</FormLabel>
+          <br />
+          <Stack spacing={5} direction="column">
+            <Checkbox
+              value="Play sessions with children"
+              onChange={handlePreference}
+            >
               Play sessions with Children
-            </Checkbox> 
-            <Checkbox value="Toy collection and Distribution" onChange={handlePreference}>
+            </Checkbox>
+            <Checkbox
+              value="Toy collection and Distribution"
+              onChange={handlePreference}
+            >
               Toy collection and Distribution
-            </Checkbox> 
-            <Checkbox value="Inventory and Gameplay" onChange={handlePreference}>
+            </Checkbox>
+            <Checkbox
+              value="Inventory and Gameplay"
+              onChange={handlePreference}
+            >
               Inventory and Gameplay
-            </Checkbox> 
-            <Checkbox value="Research and Impact Assessments" onChange={handlePreference}>
-            Research and Impact Assessments
-            </Checkbox> 
-            <Checkbox value="Events and Fundraising" onChange={handlePreference}>
+            </Checkbox>
+            <Checkbox
+              value="Research and Impact Assessments"
+              onChange={handlePreference}
+            >
+              Research and Impact Assessments
+            </Checkbox>
+            <Checkbox
+              value="Events and Fundraising"
+              onChange={handlePreference}
+            >
               Events and Fundraising
             </Checkbox>
             <Checkbox value="Content and Design" onChange={handlePreference}>
-            Content and Design
-            </Checkbox> 
+              Content and Design
+            </Checkbox>
             <Checkbox value="Toybank Ambassador" onChange={handlePreference}>
-            Toybank Ambassador
+              Toybank Ambassador
             </Checkbox>
           </Stack>
         </FormControl>
 
-        <FormControl mt={5}>
-          <FormLabel>Skills desired </FormLabel><br/>
-          <Stack spacing={5} direction='column'>
+        <FormControl id="skillsForm" mt={5}>
+          <FormLabel>Skills desired </FormLabel>
+          <br />
+          <Stack spacing={5} direction="column">
             <Checkbox value="Story Telling" onChange={handleSkill}>
               Story Telling
-            </Checkbox> 
+            </Checkbox>
             <Checkbox value="Photography" onChange={handleSkill}>
               Photography
-            </Checkbox> 
+            </Checkbox>
             <Checkbox value="Writing and Editing" onChange={handleSkill}>
               Writing and Editing
-            </Checkbox> 
+            </Checkbox>
           </Stack>
         </FormControl>
 
         <FormControl mt={6}>
-          <FormLabel>Description (Important information like actual address etc)</FormLabel>
-          <Textarea type="text"
-          onChange={e => setDescription(e.target.value)}
-          ></Textarea><br/>
+          <FormLabel>
+            Description (Important information like actual address etc)
+          </FormLabel>
+          <Textarea
+            type="text"
+            onChange={(e) => setDescription(e.target.value)}
+          ></Textarea>
+          <br />
         </FormControl>
 
-        <Button type="submit" backgroundColor='#ffc900' width='full' mt={12} mb={4}>Create Event</Button>
-        { error && <span>{errorMessage}</span> }
+        <Button
+          type="submit"
+          backgroundColor="#ffc900"
+          width="full"
+          mt={12}
+          mb={4}
+        >
+          Create Event
+        </Button>
+        {error && <span>{errorMessage}</span>}
       </form>
     </Box>
-  )
-}
+  );
+};

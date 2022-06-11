@@ -13,6 +13,7 @@ router.post("/add", auth, isAdmin, async (req, res) => {
     await newEvent.save();
     res.status(201).send(newEvent);
   } catch (e) {
+    console.log(e);
     res.status(500).send(e);
   }
 });
