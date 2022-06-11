@@ -10,18 +10,13 @@ import Cards from "./components/cards/Cards";
 import Your_Activites from "./pages/your_activities/Your_Activites";
 import SingleActivity from "./pages/singleActivity/SingleActivity";
 import { ChakraProvider, Switch } from "@chakra-ui/react";
-import Home from './pages/home/Home'
-import SignUp from './pages/signup/SignUp';
-import SignIn from './pages/signin/SignIn'
-import Activities from './admin/activities/Activities';
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Link
-} from "react-router-dom";
-import CreateEvent from './admin/createEvent/CreateEvent';
-import ProcessRequest from './admin/processRequest/ProcessRequest';
+import Home from "./pages/home/Home";
+import SignUp from "./pages/signup/SignUp";
+import SignIn from "./pages/signin/SignIn";
+import Activities from "./admin/activities/Activities";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import CreateEvent from "./admin/createEvent/CreateEvent";
+import ProcessRequest from "./admin/processRequest/ProcessRequest";
 import Register from "./pages/register/Register";
 import Calendar from "../src/components/calender/calender";
 
@@ -64,7 +59,14 @@ function App() {
                 <Route
                   path="/calendar"
                   element={
-                    user ? <Calendar url="/volunteer/myEvents" /> : <SignUp />
+                    user ? (
+                      <Calendar
+                        url="/volunteer/myEvents"
+                        title="Enrolled Activities"
+                      />
+                    ) : (
+                      <SignUp />
+                    )
                   }
                 />
                 <Route
@@ -92,10 +94,26 @@ function App() {
             <div className="content-wrap">
               <TopBar />
               <Routes>
-                <Route path="/" element={<Home/>}/>
-                <Route path="/createEvent" element={<CreateEvent/>}/>
-                <Route path="/activities" element={user ? <Activities/> : <SignUp/>}/>
-                <Route path="/request" element={user ? <ProcessRequest/> : <SignUp/>}/>
+                <Route path="/" element={<Home />} />
+                <Route path="/createEvent" element={<CreateEvent />} />
+                <Route
+                  path="/activities"
+                  element={user ? <Activities /> : <SignUp />}
+                />
+                <Route
+                  path="/request"
+                  element={user ? <ProcessRequest /> : <SignUp />}
+                />
+                <Route
+                  path="/calendar"
+                  element={
+                    user ? (
+                      <Calendar url="/event/all" title="All Activities" />
+                    ) : (
+                      <SignUp />
+                    )
+                  }
+                />
               </Routes>
             </div>
             <Footer />
