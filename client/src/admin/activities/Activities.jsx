@@ -1,5 +1,6 @@
 import React,{useState} from 'react';
 import axios from 'axios';
+import './activities.css'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Accordion, Button,AccordionButton,AccordionItem,Box,AccordionIcon,AccordionPanel,Input,Grid,GridItem,Alert,AlertTitle,AlertIcon, AlertDescription} from '@chakra-ui/react';
@@ -93,6 +94,7 @@ const Activities = () => {
     }
     return (
         <React.Fragment>
+            <div className='adminbg'>
             <Grid  h='100vh'
             templateRows='repeat(3, 3fr)'
             templateColumns='repeat(12, 1fr)'
@@ -238,6 +240,7 @@ const Activities = () => {
             </Accordion>
             </GridItem>
             </Grid>
+            </div>
         </React.Fragment>
     )
 }
