@@ -56,7 +56,7 @@ export default function Home() {
       <Flex flex={1}>
         <Image
           alt={'Login Image'}
-          // objectFit={'cover'}
+          objectFit={'repeat'}
           src={
             'https://cdn.greatnonprofits.org/images/logos/toybank_wall.jpg'
           }
