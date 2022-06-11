@@ -42,9 +42,11 @@ import {
     let ticked_languages = new Set();
     let ticked_skills = new Set();
     let ticked_locations = new Set();
+    
     const [isEditable, setIsEditable] = useState(true);
     const [formData, setFormData] = useState({});
-    const [FeildEmpty,setFeildEmpty] =useState(true);
+    const [FeildEmpty,setFeildEmpty] =useState(false);
+    let isFeildEmpty;
     useEffect(() => {
         try {
             axios.get("/profile",formData)
@@ -59,21 +61,15 @@ import {
           }
         },[]);
     useEffect(() => {
-       
-    },[FeildEmpty,setFeildEmpty]);
+       handleSubmit();
+    },[FeildEmpty]);
     const handleSubmit = async (e) => {
         if(ticked_languages.size==0 || ticked_locations.size==0 || ticked_skills.size==0){
-            // console.log('empty');
-            // console.log('feildvalue',FeildEmpty);
-            // // if(FeildEmpty==){
-            setFeildEmpty(true);
-            // // }
-            
+            setFeildEmpty(true); 
         }
         else{
-            setFeildEmpty(false);
+            setFeildEmpty(false); 
             setIsEditable(true);
-            // console.log('isEmpty',FeildEmpty);
             e.preventDefault()
             
             let payload = formData;
@@ -144,7 +140,10 @@ import {
         let commaIndex = dateStr.indexOf(',');
         return date1.toLocaleString().slice(0, commaIndex);
     }
-
+    let volunteer_props={
+       name:formData.name,
+       hours:formData.numberOfHours, 
+    }
     return (
         <>
       <Center py={6}>
@@ -159,7 +158,7 @@ import {
             <Grid
                 templateRows='repeat(2)'
                 templateColumns='repeat(5, 1fr)'>
-                <GridItem colSpan={1} bg='gray.100' height="auto" p={"4"}>
+                <GridItem colSpan={1} bg='gray.100' height="auto" p={"4"} >
                     <VStack>    
                             <>
                             {
@@ -204,7 +203,7 @@ import {
                             <Text>{formData.name}</Text>
                     </VStack>
                     <Box mt={10}>
-                        <Volunteer hours={formData.numberOfHours}/>
+                        <Volunteer {...volunteer_props}/>
                         
                     </Box>
                     
