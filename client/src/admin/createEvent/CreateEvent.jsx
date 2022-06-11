@@ -27,6 +27,7 @@ import {
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
+import moment from "moment";
 
 export default function CreateEvent() {
   return (
@@ -99,6 +100,13 @@ const LoginForm = () => {
     document.getElementById("skillsForm").required = true;
   };
 
+  const setTime = (time) => {
+    const dateString = moment(date).format("DD MMM YYYY");
+
+    console.log(new Date(`${dateString} ${time}`));
+    setStartsAt(new Date(`${dateString} ${time}`));
+  };
+
   useEffect(() => {
     setRequired();
   }, []);
@@ -144,6 +152,10 @@ const LoginForm = () => {
       console.log(preferences);
       console.log(skills);
 
+      const dateString = moment(date).format("DD MMM YYYY");
+
+      console.log(new Date(`${dateString} ${startsAt}`));
+      setStartsAt(new Date(`${dateString} ${startsAt}`));
       const res = await axios.post("/event/add", {
         name,
         type,
@@ -254,10 +266,7 @@ const LoginForm = () => {
 
         <FormControl mt={4}>
           <FormLabel>Begin Time</FormLabel>
-          <Input
-            type="date"
-            onChange={(e) => setStartsAt(e.target.value)}
-          ></Input>
+          <Input type="time" onChange={(e) => setTime(e.target.value)}></Input>
         </FormControl>
 
         <FormControl mt={4}>
