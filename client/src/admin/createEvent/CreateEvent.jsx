@@ -27,6 +27,7 @@ import {
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
+import moment from "moment";
 
 export default function CreateEvent() {
   return (
@@ -93,25 +94,40 @@ const LoginForm = () => {
   let tickedSkills = new Set();
   let tickedLanguages = new Set();
 
-  const setRequired = () => {
-    document.getElementById("languagesForm").required = true;
-    document.getElementById("preferencesForm").required = true;
-    document.getElementById("skillsForm").required = true;
+  const setLanguagesRequired = (value) => {
+    document.getElementById("languagesForm").required = value;
+  };
+
+  const setPreferencesRequired = (value) => {
+    document.getElementById("preferencesForm").required = value;
+  };
+  const setSkillsRequired = (value) => {
+    document.getElementById("skillsForm").required = value;
+  };
+  const setTime = (time) => {
+    const dateString = moment(date).format("DD MMM YYYY");
+
+    console.log(new Date(`${dateString} ${time}`));
+    setStartsAt(new Date(`${dateString} ${time}`));
   };
 
   useEffect(() => {
-    setRequired();
+    setLanguagesRequired(true);
+    setPreferencesRequired(true);
+    setPreferencesRequired(true);
   }, []);
 
   const handleSkill = async (e) => {
     const skill = e.target.value;
     if (e.target.checked) {
       tickedSkills.add(skill);
+      setSkillsRequired(false);
       console.log(tickedSkills);
       console.log(skill);
     } else {
       if (tickedSkills.has(skill)) {
         tickedSkills.delete(skill);
+        if (tickedSkills.size() == 0) setSkillsRequired(true);
         console.log(skill, "removed");
       }
     }
@@ -144,6 +160,10 @@ const LoginForm = () => {
       console.log(preferences);
       console.log(skills);
 
+      const dateString = moment(date).format("DD MMM YYYY");
+
+      console.log(new Date(`${dateString} ${startsAt}`));
+      setStartsAt(new Date(`${dateString} ${startsAt}`));
       const res = await axios.post("/event/add", {
         name,
         type,
@@ -165,7 +185,7 @@ const LoginForm = () => {
     } catch (err) {
       console.log(err);
       setError(true);
-      setErrorMessage("Something went wrong");
+      setErrorMessage(err);
     }
   };
 
@@ -173,11 +193,13 @@ const LoginForm = () => {
     const preference = e.target.value;
     if (e.target.checked) {
       tickedPreferences.add(preference);
+      setPreferencesRequired(false);
       console.log(tickedPreferences);
       console.log(preference);
     } else {
       if (tickedPreferences.has(preference)) {
         tickedPreferences.delete(preference);
+        if (tickedPreferences.size() == 0) setPreferencesRequired(true);
         console.log(preference, "removed");
       }
     }
@@ -187,11 +209,13 @@ const LoginForm = () => {
     const language = e.target.value;
     if (e.target.checked) {
       tickedLanguages.add(language);
+      setLanguagesRequired(false);
       console.log(tickedLanguages);
       console.log(language);
     } else {
       if (tickedLanguages.has(language)) {
         tickedLanguages.delete(language);
+        if (tickedLanguages.size() == 0) setLanguagesRequired(true);
         console.log(language, "removed");
       }
     }
@@ -255,10 +279,7 @@ const LoginForm = () => {
 
         <FormControl mt={4}>
           <FormLabel>Begin Time</FormLabel>
-          <Input
-            type="date"
-            onChange={(e) => setStartsAt(e.target.value)}
-          ></Input>
+          <Input type="time" onChange={(e) => setTime(e.target.value)}></Input>
         </FormControl>
 
         <FormControl mt={4}>
