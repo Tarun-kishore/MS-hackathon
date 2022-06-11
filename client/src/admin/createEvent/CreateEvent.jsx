@@ -218,6 +218,7 @@ const LoginForm = () => {
               Translation of Play to Learn Sheets
             </option>
             <option value="audio">Creation of Audio Instructions</option>
+            <option value="other">Other</option>
           </Select>
         </FormControl>
 

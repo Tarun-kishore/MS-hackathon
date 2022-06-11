@@ -14,14 +14,10 @@
 
 
   #footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%; 
-    height: 3rem;            /* Footer height */
-    background-color: #2b281b;
-    color: white;
-    padding: 4px;
-    padding-top: 10px;
+    height: 45px;
+    width: 100%;
+    padding: 10px;
     text-align: center;
-    /* padding-left: 90%; */
+    background-color: black;
+    color: white;
   }
