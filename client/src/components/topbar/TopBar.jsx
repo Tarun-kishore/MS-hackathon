@@ -6,7 +6,6 @@ import "./topbar.css"
 // style={{textDecoration: "none"}}
 
 const admin_mobile = "0000000000";
-const admin_password = "password";
 
 export default function TopBar() {
 

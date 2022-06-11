@@ -26,19 +26,25 @@ import {
     FormHelperText,
     Checkbox,
     Wrap,
-    WrapItem
+    WrapItem,
+    Alert,
+    AlertIcon,
+    AlertTitle,
+    AlertDescription,
   } from '@chakra-ui/react';
+  import { useToast } from '@chakra-ui/react'
   import { EditIcon,LockIcon,BellIcon } from '@chakra-ui/icons';
   import { useState,useEffect } from 'react';
   import axios from 'axios';
   import Volunteer from './Volunteer'
   export default function ProfileCard() {
+    const toast = useToast()
     let ticked_languages = new Set();
     let ticked_skills = new Set();
     let ticked_locations = new Set();
     const [isEditable, setIsEditable] = useState(true);
     const [formData, setFormData] = useState({});
-
+    const [FeildEmpty,setFeildEmpty] =useState(true);
     useEffect(() => {
         try {
             axios.get("/profile",formData)
@@ -52,31 +58,46 @@ import {
             console.log(err);
           }
         },[]);
-
+    useEffect(() => {
+       
+    },[FeildEmpty,setFeildEmpty]);
     const handleSubmit = async (e) => {
-        setIsEditable(true);
-        e.preventDefault()
-        
-        let payload = formData;
-        delete payload["isAdmin"];
-        delete payload["email"];
-        delete payload["password"];
-        delete payload["mobile"];
-        
-        payload.languages = Array.from(ticked_languages).map((key, index) => ({ language: key }));;
-        payload.Locations = Array.from(ticked_locations).map((key, index) => ({ Location: key }));;
-        payload.skills = Array.from(ticked_skills).map((key, index) => ({ skill: key }));;
-
-        console.log("payload", payload);
-
-        console.log("ticked", ticked_languages, ticked_locations, ticked_skills);
-
-        try {
-          const res = await axios.patch("/profile",payload);
-          console.log(res);
-        } catch(err) {
-          console.log(err);
+        if(ticked_languages.size==0 || ticked_locations.size==0 || ticked_skills.size==0){
+            // console.log('empty');
+            // console.log('feildvalue',FeildEmpty);
+            // // if(FeildEmpty==){
+            setFeildEmpty(true);
+            // // }
+            
         }
+        else{
+            setFeildEmpty(false);
+            setIsEditable(true);
+            // console.log('isEmpty',FeildEmpty);
+            e.preventDefault()
+            
+            let payload = formData;
+            delete payload["isAdmin"];
+            delete payload["email"];
+            delete payload["password"];
+            delete payload["mobile"];
+            
+            payload.languages = Array.from(ticked_languages).map((key, index) => ({ language: key }));;
+            payload.Locations = Array.from(ticked_locations).map((key, index) => ({ Location: key }));;
+            payload.skills = Array.from(ticked_skills).map((key, index) => ({ skill: key }));;
+
+            console.log("payload", payload);
+
+            console.log("ticked", ticked_languages, ticked_locations, ticked_skills);
+
+            try {
+            const res = await axios.patch("/profile",payload);
+            console.log(res);
+            } catch(err) {
+            console.log(err);
+            }
+        }
+        
     }
     const handleLanguage = async(e) => {
 
@@ -125,6 +146,7 @@ import {
     }
 
     return (
+        <>
       <Center py={6}>
         <Box
           maxW={'1000px'}
@@ -430,19 +452,32 @@ import {
                                     isEditable==false&&
                                     <HStack>
                                         <Button
-                                        onClick={handleSubmit}
-
-                                    >Save Changes</Button>
+                                        onClick={function(event){ handleSubmit(event);{
+                                            FeildEmpty==false && toast({
+                                            title: 'Changes Saved.',
+                                            status: 'success',
+                                            duration: 1000,
+                                            isClosable: true,
+                                          })
+                                        }
+                                          {
+                                            FeildEmpty==true && toast({
+                                            title: 'Some Feilds are Empty',
+                                            status: 'error',
+                                            duration: 1000,
+                                            isClosable: true,
+                                          })
+                                        }
+                                        }}
+                                        >Save Changes</Button>
                                 
                                     <Button
                                     onClick={() => setIsEditable(true)}
-                                    
                                     >Cancel</Button>
                                     </HStack>
-                                    
-
                                 }
                                 </>
+                                
 
                             
                         </SimpleGrid>
@@ -453,5 +488,6 @@ import {
           </Box>
         </Box>
       </Center>
+      </>
     );
 }
