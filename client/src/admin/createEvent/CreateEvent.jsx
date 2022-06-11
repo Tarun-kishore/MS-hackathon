@@ -126,6 +126,7 @@ const LoginForm = () => {
 
         if(preferences.length == 0) {
             setError(true);
+            setErrorMessage("Please fill preferences again")
             return;
         }
 
@@ -148,7 +149,7 @@ const LoginForm = () => {
     } catch(err) {
       console.log(err);
       setError(true);
-      setErrorMessage(err);
+      setErrorMessage("Something went wrong");
     }
   }
 
