@@ -29,7 +29,7 @@ export default function Card({card, bn}) {
   const [address, setAddress] = useState(card.address)
   const [Location, setLocation] = useState(card.Location)
   const [date, setDate] = useState(card.date)
-  const [time, setTime] = useState("10 AM")
+  const [time, setTime] = useState(card.startsAt)
   const [duration, setDuration] = useState(card.duration)
   const [description, setDescription] = useState(card.description)
 
@@ -58,6 +58,7 @@ export default function Card({card, bn}) {
   }, [])
 
   const handleDetails = async(e) => {
+    console.log(card);
     onOpen()
   }
 
@@ -128,7 +129,7 @@ export default function Card({card, bn}) {
                   <div>{name}</div>
                   <div>Address: {address}, {Location}</div>
                   <div>Date: {new Date(date).toDateString()}</div>
-                  <div>Time: {time}</div>
+                  <div>Time: {new Date(time).toTimeString()}</div>
                   <div>Duration: {duration} Hours</div>
                   <div>Description: {description}</div>
               </Stack>
@@ -163,7 +164,7 @@ export default function Card({card, bn}) {
                   <div>{name}</div>
                   <div>Address: {address}, {Location}</div>
                   <div>Date: {new Date(date).toDateString()}</div>
-                  <div>Time: {time}</div>
+                  <div>Time: {new Date(time).toTimeString()}</div>
                   <div>Duration: {duration} Hours</div>
                   <div>Description: {description}</div>
               </Stack>
@@ -199,7 +200,7 @@ export default function Card({card, bn}) {
                   <div>{name}</div>
                   <div>Address: {address}, {Location}</div>
                   <div>Date: {new Date(date).toDateString()}</div>
-                  <div>Time: {time}</div>
+                  <div>Time: {new Date(time).toTimeString()}</div>
                   <div>Duration: {duration} Hours</div>
                   <div>Description: {description}</div>
               </Stack>
