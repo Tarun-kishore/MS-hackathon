@@ -29,7 +29,7 @@ export default function Volunteer(props) {
 
   return (
     <>
-      <Button onClick={onOpen}>Volunteering</Button>
+      <Button onClick={onOpen}>Volunteering Hours</Button>
 
       <Modal onClose={onClose} isOpen={isOpen} isCentered>
         <ModalOverlay />
@@ -49,7 +49,7 @@ export default function Volunteer(props) {
           <ModalCloseButton />
           <ModalBody>
             <Text fontSize="md">
-            Congratulations {name} On Your Bronze Badge.
+            Congratulations {name} on Your Bronze Badge!!
           You have done {hours} hours of volunteering.
             </Text>
         
@@ -58,7 +58,7 @@ export default function Volunteer(props) {
          
          </Text>
          <Text>
-          Share your badge on Twitter and motivate others in helping children
+          Share your badge on Twitter and motivate others in helping children and joining this noble cause!
           
          </Text>
          
