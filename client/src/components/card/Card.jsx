@@ -17,7 +17,7 @@ import {
   Text,
   Avatar
   } from '@chakra-ui/react';
-
+  
 export default function Card({card, bn}) {
 
   const message = "Your registration has not been approved by the admin yet. Please bear with us :)"

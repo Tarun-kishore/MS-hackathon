@@ -46,9 +46,10 @@ import {
     
     const [isEditable, setIsEditable] = useState(true);
     const [formData, setFormData] = useState({});
-    const [FeildEmpty,setFeildEmpty] =useState(false);
+    const [FeildEmpty,setFeildEmpty]=useState(false);
     let isFeildEmpty;
     useEffect(() => {
+
         try {
             axios.get("/profile",formData)
             .then((res)=>{
