@@ -1,33 +1,9 @@
 import React,{useState} from 'react';
 import axios from 'axios';
-import { Accordion, Button,AccordionButton,AccordionItem,Box,AccordionIcon,AccordionPanel,Input} from '@chakra-ui/react';
+import { Accordion, Button,AccordionButton,AccordionItem,Box,AccordionIcon,AccordionPanel,Input,Grid,GridItem} from '@chakra-ui/react';
 
 
 const ProcessRequest = () => {
-    // const data=[{
-    //     _id:"1",
-    //     name:"Anubhav",
-    //     DOB:"",
-    //     mobile:"9990446387",
-    //     email: "abcd2@gmail.com",
-    //     school:"gg school",
-    //     organisation:"employee",
-    //     educationalBackground:"school student",
-    //     occupation:"student",
-    //     address:"463/C kidwai gali"
-    //     },{
-    //         _id:"2",
-    //         name:"Anubhav",
-    //         DOB:"",
-    //         mobile:"9990446387",
-    //         email: "abcd2@gmail.com",
-    //         school:"gg school",
-    //         organisation:"employee",
-    //         educationalBackground:"school student",
-    //         occupation:"student",
-    //         address:"463/C kidwai gali"
-    //         }
-    //     ]
     const [request,setRequest]=useState([]);
     const fetchAllProcessedRequest=async()=>{
         const {data}=await axios.get("/enrollment/requests/approved");
@@ -53,12 +29,24 @@ const ProcessRequest = () => {
 
   return (
     <React.Fragment>
+         <Grid  h='100vh'
+            templateRows='repeat(3, 3fr)'
+            templateColumns='repeat(12, 1fr)'
+            columnGap={1}
+           >
+        <GridItem colSpan={3} rowSpan={1} bg="yellow.400" area={'nav'} >
+        <div>
         <Button colorScheme='yellow' margin='5px' onClick={()=>{
             fetchAllProcessedRequest();
         }}>Processed</Button>
+        </div>
+        <div>
         <Button colorScheme='yellow' margin='5px' onClick={()=>{
             fetchAllNotProcessedRequest();
         }}>NotProcessed</Button>
+        </div>
+        </GridItem>
+        <GridItem colSpan={7}>
         <Accordion allowToggle>
             {
             request.map((r)=>
@@ -82,18 +70,24 @@ const ProcessRequest = () => {
                        <p>EducationalBackground: <span>{r.educationalBackground}</span></p> 
                        <p>Occupation: <span>{r.occupation}</span></p> 
                        <p>Address: <span>{r.address}</span></p> 
-                       <Button margin="2px" onClick={()=>{handleApproveRequest(r._id,r)}} colorScheme='yellow' size='sm'>
-                            Approve Request
-                        </Button>
-                        <Button margin="2px" onClick={()=>{handleRejectRequest(r._id,r)}} colorScheme='yellow' size='sm'>
-                            Reject Request
-                        </Button>
+                       {(r.approval=="pending")&&
+                            <div>
+                                <Button margin="2px" onClick={()=>{handleApproveRequest(r._id,r)}} colorScheme='yellow' size='sm'>
+                                    Approve Request
+                                </Button>
+                                <Button margin="2px" onClick={()=>{handleRejectRequest(r._id,r)}} colorScheme='yellow' size='sm'>
+                                    Reject Request
+                                </Button>
+                            </div>
+                       }
                     </div>
                 </AccordionPanel>
             </AccordionItem>
             )
             }   
             </Accordion>
+            </GridItem>
+            </Grid>
     </React.Fragment>
   )
 }
