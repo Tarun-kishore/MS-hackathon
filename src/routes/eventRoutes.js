@@ -13,6 +13,7 @@ router.post("/add", auth, isAdmin, async (req, res) => {
     await newEvent.save();
     res.status(201).send(newEvent);
   } catch (e) {
+    console.log(e);
     res.status(500).send(e);
   }
 });
@@ -36,7 +37,7 @@ router.put("/edit/:eventID", auth, isAdmin, async (req, res) => {
 
 router.get("/all", auth, async (req, res) => {
   try {
-    const events = await Event.find({});
+    const events = await Event.find({}).sort({ startsAt: 1 });
 
     res.status(200).send(events);
   } catch (e) {
@@ -44,11 +45,13 @@ router.get("/all", auth, async (req, res) => {
   }
 });
 
-router.get("/active", auth , async(req, res) =>{
+router.get("/active", auth, async (req, res) => {
   try {
-    const data = await Event.find({startsAt:{$gte:new Date()}});
+    const data = await Event.find({ startsAt: { $gte: new Date() } }).sort({
+      startsAt: 1,
+    });
     res.status(200).send(data);
-  }catch(e){
+  } catch (e) {
     res.status(400).send(e);
   }
 });
@@ -60,6 +63,7 @@ router.get("/recommended", auth, isVolunteer, async (req, res) => {
 
     res.status(200).send(events);
   } catch (e) {
+    console.log(e);
     res.status(500).send(e);
   }
 });
@@ -86,6 +90,5 @@ router.get("/:eventId", auth, async (req, res) => {
     res.status(500).send(e);
   }
 });
-
 
 module.exports = router;

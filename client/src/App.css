@@ -8,6 +8,6 @@
     background-size: cover;
   }
 
-  .content-wrap {
-    padding-bottom: 2.5rem;    /* Footer height */
+  .fix {
+    min-height: 100vh;
   }

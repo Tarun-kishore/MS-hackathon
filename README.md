@@ -28,12 +28,15 @@ First you need to setup an environment for the server to run (You have to do it 
   ADMIN_MOBILE = `admin mobile number`
 
   ADMIN_PASSWORD = `password`
+  
+  API_KEY = `api key` of [https://rapidapi.com/darkmanaminovic/api/email-sender1/](https://rapidapi.com/darkmanaminovic/api/email-sender1/)
+
 
   Every time you pull contents form repository make sure you run `npm install` to install all required modules.
 
 Then every time you run the server, run mongodb shell beforehand using command `mongod`.
 Then run `npm run devstart` to start server
-run `npm start` in `client` folder to start react app.
+run `npm start` in `client` folder to start react app after running `npm install` to install react packages.
 
 # How can i contribute to repository?
 
