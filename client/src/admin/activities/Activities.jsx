@@ -135,9 +135,9 @@ const Activities = () => {
                 <Box >
                 <Button colorScheme='yellow' margin='5vh'  onClick={()=>{
                     setTimePeriod(true)
-                    fetchAllActivites('timePeriod');
-                    size='xs'
-                }}>Submit</Button>
+                    fetchAllActivites('timePeriod')
+                   
+                }}  size='xs' >Submit</Button>
                 </Box>
             </div>}
             <Accordion allowToggle>

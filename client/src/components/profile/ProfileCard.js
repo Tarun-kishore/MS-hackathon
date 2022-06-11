@@ -42,6 +42,7 @@ import {
     let ticked_languages = new Set();
     let ticked_skills = new Set();
     let ticked_locations = new Set();
+    let ticked_preferences = new Set();
     
     const [isEditable, setIsEditable] = useState(true);
     const [formData, setFormData] = useState({});
@@ -60,11 +61,11 @@ import {
             console.log(err);
           }
         },[]);
-    useEffect(() => {
-       handleSubmit();
-    },[FeildEmpty]);
+    // useEffect(() => {
+    //    handleSubmit();
+    // },[FeildEmpty]);
     const handleSubmit = async (e) => {
-        if(ticked_languages.size==0 || ticked_locations.size==0 || ticked_skills.size==0){
+        if(ticked_languages.size==0 || ticked_locations.size==0 || ticked_skills.size==0 || ticked_preferences.size==0){
             setFeildEmpty(true); 
         }
         else{
@@ -81,10 +82,12 @@ import {
             payload.languages = Array.from(ticked_languages).map((key, index) => ({ language: key }));;
             payload.Locations = Array.from(ticked_locations).map((key, index) => ({ Location: key }));;
             payload.skills = Array.from(ticked_skills).map((key, index) => ({ skill: key }));;
+            payload.preferences = Array.from(ticked_preferences).map((key, index) => ({ preference: key }));;
+
 
             console.log("payload", payload);
 
-            console.log("ticked", ticked_languages, ticked_locations, ticked_skills);
+            console.log("ticked", ticked_languages, ticked_locations, ticked_skills,ticked_preferences);
 
             try {
             const res = await axios.patch("/profile",payload);
@@ -133,7 +136,20 @@ import {
             }
         }
     }
+    const handlePreference = async(e) => {
 
+        const preference = e.target.value;
+        if(e.target.checked) {
+          ticked_preferences.add(preference)
+          console.log(preference)
+        } else {
+          if(ticked_preferences.has(preference)) {
+            ticked_preferences.delete(preference)
+            console.log(preference)
+          }
+        }
+      }
+    
     const convertUTCDateToLocalDate = (date) => {
         const date1 = new Date(date);
         let dateStr = date1.toLocaleString();
@@ -299,6 +315,7 @@ import {
                         
                             
                             </Box>
+                            
                             <Box>
                             <Text mb='8px'>School</Text>
                             <Input
@@ -308,18 +325,66 @@ import {
                             />
                             </Box>
                             <Box>
+                            <Text mb='8px'>Preferences</Text>
+                            <>
+                                {
+                                    isEditable==true&&
+                                    <Grid templateColumns='repeat(2, 1fr)' gap={2}>
+                                    {
+                                    formData.preferences!=undefined && formData.preferences.map((element, idx)=>(
+                                        <Text key={idx}
+                                        onChange = {(e) => setFormData({...formData, preferences: e.target.value})}
+                                        size='sm'
+                                        fontSize='sm'
+                                        p={2}
+                                        bg="gray.200"
+                                        borderRadius={2}
+                                        textAlign="center"
+                                    >{element.preference}</Text>
+                                      
+                                    ))
+                                    }
+                                    </Grid>
+
+                                }
+                                </>
+                                <>
+                                {
+                                    isEditable==false&&
+                                    <FormControl mt={4}>
+                                    <Grid templateColumns='repeat(3, 1fr)' gap={6}>
+                                    <Checkbox value="Play sessions with children" onChange={handlePreference} size="sm">
+                                    Play sessions with Children
+                                    </Checkbox> 
+                                    <Checkbox value="Toy collection and Distribution" onChange={handlePreference} size="sm">
+                                    Toy collection and Distribution
+                                    </Checkbox> 
+                                    <Checkbox value="Inventory and Gameplay" onChange={handlePreference} size="sm">
+                                    Inventory and Gameplay
+                                    </Checkbox> 
+                                    <Checkbox value="Research and Impact Assessments" onChange={handlePreference} size="sm" >
+                                    Research and Impact Assessments
+                                    </Checkbox> 
+                                    <Checkbox value="Events and Fundraising" onChange={handlePreference} size="sm" >
+                                    Events and Fundraising
+                                    </Checkbox>
+                                    <Checkbox value="Content and Design" onChange={handlePreference} size="sm">
+                                    Content and Design
+                                    </Checkbox> 
+                                    <Checkbox value="Toybank Ambassador" onChange={handlePreference} size="sm">
+                                    Toybank Ambassador
+                                    </Checkbox><br/>
+                                    </Grid>
+                                </FormControl>
+
+                                }
+                                </>
+                            </Box>
+                            <Box>
                             <Text mb='8px'>Organisation</Text>
                             <Input
                                 defaultValue={formData.organisation}
                                 onChange = {(e) => setFormData({...formData,organisation: e.target.value})}
-                                size='sm'
-                            />
-                            </Box>
-                            <Box>
-                            <Text mb='8px'>Available Till</Text>
-                            <Input
-                                defaultValue={convertUTCDateToLocalDate(formData.availableTill)}
-                                onChange = {(e) => setFormData({...formData, availableTill: e.target.value})}
                                 size='sm'
                             />
                             </Box>
@@ -381,10 +446,10 @@ import {
                         
                             </Box>
                             <Box>
-                            <Text mb='8px'>Address</Text>
+                            <Text mb='8px'>Available Till</Text>
                             <Input
-                                defaultValue={formData.address}
-                                onChange = {(e) => setFormData({...formData, address: e.target.value})}
+                                defaultValue={convertUTCDateToLocalDate(formData.availableTill)}
+                                onChange = {(e) => setFormData({...formData, availableTill: e.target.value})}
                                 size='sm'
                             />
                             </Box>
@@ -435,12 +500,22 @@ import {
                                 </>
                             
                             </Box>
+                            <Box>
+                            <Text mb='8px'>Address</Text>
+                            <Input
+                                defaultValue={formData.address}
+                                onChange = {(e) => setFormData({...formData, address: e.target.value})}
+                                size='sm'
+                            />
+                            </Box>
+                            
                         <>
                                 {
                                     isEditable==true&&
                                     <Box>
                                     <Button
                                         onClick={() => setIsEditable(false)}
+                                        colorScheme="yellow"
                                     >Edit Details</Button>
                                     </Box>
 
@@ -451,6 +526,7 @@ import {
                                     isEditable==false&&
                                     <HStack>
                                         <Button
+                                        colorScheme="blue"
                                         onClick={function(event){ handleSubmit(event);{
                                             FeildEmpty==false && toast({
                                             title: 'Changes Saved.',
@@ -471,6 +547,7 @@ import {
                                         >Save Changes</Button>
                                 
                                     <Button
+                                    colorScheme="red"
                                     onClick={() => setIsEditable(true)}
                                     >Cancel</Button>
                                     </HStack>
