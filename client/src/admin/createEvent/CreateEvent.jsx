@@ -120,7 +120,7 @@ const LoginForm = () => {
         let arrayLanguages = Array.from(tickedLanguages);
         let arrayPreferences = Array.from(tickedPreferences);
         let arraySkills = Array.from(tickedSkills);
-        languages = arrayLanguages.map((key, index) => ({ languages: key }));
+        languages = arrayLanguages.map((key, index) => ({ language: key }));
         preferences = arrayPreferences.map((key, index) => ({ preference: key }));
         skills = arraySkills.map((key, index) => ({ skill: key }));
 
