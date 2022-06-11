@@ -42,8 +42,8 @@ function App() {
       <Router>
         <ChakraProvider>
           <div className="page-container">
-            <div className="content-wrap">
               <TopBar />
+              <div className="fix">
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/signup" element={user ? <Home /> : <SignUp />} />
@@ -80,9 +80,9 @@ function App() {
 
                 <Route path="/profile/:userId" element={<PublicProfile />} />
               </Routes>
+              </div>
+              <Footer />
             </div>
-            <Footer />
-          </div>
         </ChakraProvider>
       </Router>
     );
@@ -91,8 +91,8 @@ function App() {
       <Router>
         <ChakraProvider>
           <div className="page-container">
-            <div className="content-wrap">
               <TopBar />
+              <div className="fix">
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/createEvent" element={<CreateEvent />} />
@@ -115,9 +115,8 @@ function App() {
                   }
                 />
               </Routes>
+              </div>
             </div>
-            <Footer />
-          </div>
         </ChakraProvider>
       </Router>
     );
