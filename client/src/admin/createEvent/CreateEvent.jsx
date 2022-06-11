@@ -165,7 +165,7 @@ const LoginForm = () => {
     } catch (err) {
       console.log(err);
       setError(true);
-      setErrorMessage(err);
+      setErrorMessage("Something went wrong");
     }
   };
 
