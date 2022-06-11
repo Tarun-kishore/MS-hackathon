@@ -3,6 +3,7 @@ import './home.css'
 
 export default function Home() {
   return <div>
-    HOME
+    <div className="cover"></div>
+    
   </div>;
 }

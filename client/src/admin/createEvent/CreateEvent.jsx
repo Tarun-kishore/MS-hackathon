@@ -382,7 +382,7 @@ const LoginForm = () => {
 
         <FormControl mt={6}>
           <FormLabel>
-            Description (Important information like actual address etc)
+            Description (More Information of task)
           </FormLabel>
           <Textarea
             type="text"
