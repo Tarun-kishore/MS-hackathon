@@ -113,11 +113,28 @@ export default function Card({card, bn}) {
           <span className="cardTitle">{card.name}</span>
           <hr/>
           <div className='buttons'>
-            <button className='badge fill'> Details </button>
+            <button className='badge fill' onClick={handleDetails}> Details </button>
             <button className='badge sec fill' onClick={handleEnroll}> {bn} </button>
             {pending && <span className='tooltiptext'>{message}</span>}
           </div>
         </div>
+        <Drawer onClose={onClose} isOpen={isOpen} size={`xs`}>
+          <DrawerOverlay />
+          <DrawerContent>
+            <DrawerCloseButton />
+            <DrawerHeader>DETAILS OF EVENT</DrawerHeader>
+            <DrawerBody>
+              <Stack>
+                  <div>{name}</div>
+                  <div>Address: {address}, {Location}</div>
+                  <div>Date: {new Date(date).toDateString()}</div>
+                  <div>Time: {time}</div>
+                  <div>Duration: {duration} Hours</div>
+                  <div>Description: {description}</div>
+              </Stack>
+            </DrawerBody>
+          </DrawerContent>
+        </Drawer>
     </div>
   )} else if(card.type == "translate") {
     return (
@@ -131,11 +148,28 @@ export default function Card({card, bn}) {
             <span className="cardTitle">{card.name}</span>
             <hr/>
             <div className='buttons'>
-              <button className='badge fill'> Details </button>
+              <button className='badge fill' onClick={handleDetails}> Details </button>
               <button className='badge sec fill' onClick={handleEnroll}> {bn} </button>
               {pending && <span className='tooltiptext'>{message}</span>}
             </div>
           </div>
+          <Drawer onClose={onClose} isOpen={isOpen} size={`xs`}>
+          <DrawerOverlay />
+          <DrawerContent>
+            <DrawerCloseButton />
+            <DrawerHeader>DETAILS OF EVENT</DrawerHeader>
+            <DrawerBody>
+              <Stack>
+                  <div>{name}</div>
+                  <div>Address: {address}, {Location}</div>
+                  <div>Date: {new Date(date).toDateString()}</div>
+                  <div>Time: {time}</div>
+                  <div>Duration: {duration} Hours</div>
+                  <div>Description: {description}</div>
+              </Stack>
+            </DrawerBody>
+          </DrawerContent>
+        </Drawer>
       </div>
     )
   } else {
