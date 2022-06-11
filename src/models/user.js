@@ -183,7 +183,7 @@ userSchema.methods.getRelatedEvents = async function () {
     "languages.language": {
       $in: user.languages.map((lang) => lang.language),
     },
-  });
+  }).sort({ startsAt: -1 });
 
   const recommendedEvents = events.filter((eventData) => {
     if (eventData.volunteersEnrolled >= eventData.volunteersRequired)
@@ -233,4 +233,3 @@ userSchema.pre("remove", async function (next) {
 const User = mongoose.model("User", userSchema);
 
 module.exports = User;
-
