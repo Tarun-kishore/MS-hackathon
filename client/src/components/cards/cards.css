@@ -21,6 +21,13 @@
     text-align: right;
 }
 
+@media only screen and (max-width: 600px) {
+    .heading {
+        font-size: 0.5em;
+        padding: 0;
+    }
+}
+
 .all {
     background-color: #fffff7;
     cursor: pointer;
