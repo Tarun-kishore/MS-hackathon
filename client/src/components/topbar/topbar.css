@@ -8,7 +8,7 @@
     align-items: center;
     font-family: 'Josefin Sans', sans-serif;
     z-index: 100;
-    font-size: 15px;
+    font-size: 1.5vw;
 }
 
 .topLeft, .topRight {

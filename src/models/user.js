@@ -171,7 +171,9 @@ userSchema.methods.getRelatedEvents = async function () {
         },
       },
       {
-        "skills.skill": { $in: user.skills.map((skillObj) => skillObj.skill) },
+        "skillsRequired.skill": {
+          $in: user.skills.map((skillObj) => skillObj.skill),
+        },
       },
       {
         "languages.language": {
@@ -180,12 +182,15 @@ userSchema.methods.getRelatedEvents = async function () {
       },
     ],
     _id: { $nin: user.events.map((eventData) => eventData._id) },
+    startsAt: {
+      $gte: new Date(),
+    },
   });
 
   const recommendedEvents = events.filter((eventData) => {
     if (eventData.volunteersEnrolled >= eventData.volunteersRequired)
       return false;
-    if (eventData.Location == "online") return true;
+    if (eventData.Location == "Online") return true;
     const tempArray = user.Locations.map((obj) => obj.Location);
     if (tempArray.includes(eventData.Location)) return true;
   });
@@ -230,3 +235,4 @@ userSchema.pre("remove", async function (next) {
 const User = mongoose.model("User", userSchema);
 
 module.exports = User;
+

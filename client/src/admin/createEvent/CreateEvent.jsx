@@ -143,7 +143,7 @@ const LoginForm = () => {
 
       console.log(res);
       // localStorage.setItem('user', JSON.stringify(res));
-      // res.data && window.location.replace("/event");
+      res.data && window.location.replace("/activities");
       
     } catch(err) {
       console.log(err);
@@ -193,9 +193,9 @@ const LoginForm = () => {
         <FormControl mt={4}>
           <FormLabel>Activity Type</FormLabel>
           <Select required onChange={e => setType(e.target.value)}>
-            <option value="Play Sessions">Play Sessions</option>
-            <option value="Translation of Play to Learn Sheets">Translation of Play to Learn Sheets</option>
-            <option value="Creation of Audio Instructions">Creation of Audio Instructions</option>
+            <option value="play">Play Sessions</option>
+            <option value="translate">Translation of Play to Learn Sheets</option>
+            <option value="audio">Creation of Audio Instructions</option>
           </Select>
         </FormControl>
 

@@ -6,7 +6,6 @@ import "./topbar.css"
 // style={{textDecoration: "none"}}
 
 const admin_mobile = "0000000000";
-const admin_password = "password";
 
 export default function TopBar() {
 
@@ -33,8 +32,9 @@ export default function TopBar() {
     return <div className='top box-shadow'>
         <Link className="topLeft" to="/"><div>HOME</div></Link>
         <Link className="topLeft" to="/event"><div>YOUR ACTIVITIES</div></Link>
-        <Link className="topRight" to="/register"><div>REGISTER</div></Link>
         <Link className="topRight" to="/profile"><div>PROFILE</div></Link>
+        <Link className="topRight" to="/register"><div>REGISTER</div></Link>
+        <Link className="topRight" to="/calendar"><div>CALENDAR</div></Link>
       <div onClick={handleLogout} className="topRight">LOGOUT</div>
     </div>
   } else if(admin) {
