@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { sendCancelationMail } = require("../utils/mail");
 
 const eventSchema = new mongoose.Schema(
   {
@@ -105,6 +106,23 @@ eventSchema.methods.removeVolunteer = async function (volunteerID) {
   await Event.save();
   return Event;
 };
+eventSchema.pre("remove", async function (next) {
+  const eventData = this;
+
+  await eventData.populate({
+    path: "enrolledVolunteers.enrolledVolunteer",
+  });
+
+  const volunteers = eventData.enrolledVolunteers.map(
+    (enrolledVolunteer) => enrolledVolunteer.enrolledVolunteer
+  );
+  const dateString = `${eventData.startsAt.getDate()} / ${eventData.startsAt.getMonth()} /${eventData.startsAt.getFullYear()} `;
+  for (let i = 0, len = volunteers.length; i < len; i++) {
+    const volunteer = volunteers[i];
+    sendCancelationMail({ dateString, name: eventData.name }, volunteer.email);
+  }
+  next();
+});
 const Event = mongoose.model("Event", eventSchema);
 
 module.exports = Event;
