@@ -13,6 +13,7 @@ router.post("/add", auth, isAdmin, async (req, res) => {
     await newEvent.save();
     res.status(201).send(newEvent);
   } catch (e) {
+    console.log(e);
     res.status(500).send(e);
   }
 });
@@ -58,10 +59,11 @@ router.get("/active", auth, async (req, res) => {
 //GET request for displaying all events according to the form filled (volunteer) --
 router.get("/recommended", auth, isVolunteer, async (req, res) => {
   try {
-    const events = await req.user.getRelatedEvents().sort({ startsAt: -1 });
+    const events = await req.user.getRelatedEvents();
 
     res.status(200).send(events);
   } catch (e) {
+    console.log(e);
     res.status(500).send(e);
   }
 });

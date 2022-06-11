@@ -1,5 +1,6 @@
 import React,{useState} from 'react';
 import axios from 'axios';
+import './ProcessRequest.css'
 import { Accordion, Button,AccordionButton,AccordionItem,Box,AccordionIcon,AccordionPanel,Input,Grid,GridItem} from '@chakra-ui/react';
 
 
@@ -29,6 +30,7 @@ const ProcessRequest = () => {
 
   return (
     <React.Fragment>
+        <div className='adminbg'>
          <Grid  h='100vh'
             templateRows='repeat(3, 3fr)'
             templateColumns='repeat(12, 1fr)'
@@ -88,6 +90,7 @@ const ProcessRequest = () => {
             </Accordion>
             </GridItem>
             </Grid>
+            </div>
     </React.Fragment>
   )
 }
