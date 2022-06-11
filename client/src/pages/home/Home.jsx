@@ -1,3 +1,5 @@
+import './home.css'
+import { Link } from "react-router-dom";
 import {
   Button,
   Flex,
@@ -10,6 +12,7 @@ import {
 
 export default function Home() {
   return (
+    <div className="homebg">
     <Stack minH={'100vh'} direction={{ base: 'column', md: 'row' }}>
       <Flex p={8} flex={1} align={'center'} justify={'center'}>
         <Stack spacing={6} w={'full'} maxW={'lg'}>
@@ -36,10 +39,11 @@ export default function Home() {
           </Heading>
           <Text fontSize={{ base: 'md', lg: 'lg' }} color={'gray.500'}>
           Toybank's mindful approach to play promotes at-risk children's mental well-being
-          and socio-emotional development to ensure a better prespective towards life in adulthood
+          and socio-emotional development to ensure a better perspective towards life in adulthood.
 
           </Text>
           <Stack direction={{ base: 'column', md: 'row' }} spacing={4}>
+            <a href="http://toybank.org/contact">
             <Button
               rounded={'full'}
               bg={'#ffc900'}
@@ -47,21 +51,25 @@ export default function Home() {
               _hover={{
                 bg: 'yellow.500',
               }}>
-              Explore Events
+              Contact Us
             </Button>
-            <Button rounded={'full'}>About Us</Button>
+            </a>
+            <Link to="/signup">
+            <Button rounded={'full'}>SIGN UP</Button>
+            </Link>
           </Stack>
         </Stack>
       </Flex>
-      <Flex flex={1}>
+      <Flex flex={3}>
         <Image
           alt={'mY Image'}
           objectFit={'repeat'}
           src={
-            'https://cdn.greatnonprofits.org/images/logos/toybank_wall.jpg'
+            'https://1.bp.blogspot.com/-j4C_rCpkGEI/XfhsKgBL_yI/AAAAAAAAaPU/6KTZcK_Qg8U0RqFewAYHArsY9OXXYszYwCLcBGAsYHQ/s640/IMG_7460.jpg'
           }
         />
       </Flex>
     </Stack>
+    </div>
   );
 }
