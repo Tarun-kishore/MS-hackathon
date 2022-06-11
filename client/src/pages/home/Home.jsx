@@ -55,7 +55,7 @@ export default function Home() {
       </Flex>
       <Flex flex={1}>
         <Image
-          alt={'Login Image'}
+          alt={'mY Image'}
           objectFit={'repeat'}
           src={
             'https://cdn.greatnonprofits.org/images/logos/toybank_wall.jpg'
