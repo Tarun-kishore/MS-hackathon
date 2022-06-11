@@ -1,6 +1,6 @@
 import React,{useState} from 'react';
 import axios from 'axios';
-import { Accordion, Button,AccordionButton,AccordionItem,Box,AccordionIcon,AccordionPanel,Input} from '@chakra-ui/react';
+import { Accordion, Button,AccordionButton,AccordionItem,Box,AccordionIcon,AccordionPanel,Input,Grid,GridItem} from '@chakra-ui/react';
 
 
 const ProcessRequest = () => {
@@ -29,12 +29,24 @@ const ProcessRequest = () => {
 
   return (
     <React.Fragment>
+         <Grid  h='100vh'
+            templateRows='repeat(3, 3fr)'
+            templateColumns='repeat(12, 1fr)'
+            columnGap={1}
+           >
+        <GridItem colSpan={3} rowSpan={1} bg="yellow.400" area={'nav'} >
+        <div>
         <Button colorScheme='yellow' margin='5px' onClick={()=>{
             fetchAllProcessedRequest();
         }}>Processed</Button>
+        </div>
+        <div>
         <Button colorScheme='yellow' margin='5px' onClick={()=>{
             fetchAllNotProcessedRequest();
         }}>NotProcessed</Button>
+        </div>
+        </GridItem>
+        <GridItem colSpan={7}>
         <Accordion allowToggle>
             {
             request.map((r)=>
@@ -74,6 +86,8 @@ const ProcessRequest = () => {
             )
             }   
             </Accordion>
+            </GridItem>
+            </Grid>
     </React.Fragment>
   )
 }
