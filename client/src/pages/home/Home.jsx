@@ -62,8 +62,8 @@ export default function Home() {
       </Flex>
       <Flex flex={3}>
         <Image
-          alt={'Login Image'}
-          // objectFit={'cover'}
+          alt={'mY Image'}
+          objectFit={'repeat'}
           src={
             'https://1.bp.blogspot.com/-j4C_rCpkGEI/XfhsKgBL_yI/AAAAAAAAaPU/6KTZcK_Qg8U0RqFewAYHArsY9OXXYszYwCLcBGAsYHQ/s640/IMG_7460.jpg'
           }
