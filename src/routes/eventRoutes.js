@@ -3,6 +3,7 @@ const router = express.Router();
 const Event = require("../models/event");
 const auth = require("../middleware/auth");
 const { isAdmin, isVolunteer } = require("../middleware/userRoles");
+const validator = require("validator");
 
 // list of routes required
 
@@ -59,6 +60,11 @@ router.get("/active", auth, async (req, res) => {
 //GET request for displaying all events according to the form filled (volunteer) --
 router.get("/recommended", auth, isVolunteer, async (req, res) => {
   try {
+    if (
+      req.user.availableTill &&
+      validator.isBefore(req.user.availableTill.toISOString())
+    )
+      return res.status(403).send({ error: "Volunteer not registered" });
     const events = await req.user.getRelatedEvents();
 
     res.status(200).send(events);
