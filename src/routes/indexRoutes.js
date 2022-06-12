@@ -15,6 +15,7 @@ router.post("/signup", async (req, res) => {
     res
       .cookie("token", token, {
         httpOnly: true,
+        expires: false,
       })
       .status(201)
       .json({
@@ -37,6 +38,7 @@ router.post("/login", async (req, res) => {
     return res
       .cookie("token", token, {
         httpOnly: true,
+        expires: false,
       })
       .status(200)
       .send({

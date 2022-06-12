@@ -61,10 +61,10 @@ router.get("/active", auth, async (req, res) => {
 router.get("/recommended", auth, isVolunteer, async (req, res) => {
   try {
     if (
-      req.user.availableTill &&
+      !req.user.availableTill ||
       validator.isBefore(req.user.availableTill.toISOString())
     )
-      return res.status(403).send({ error: "Volunteer not registered" });
+      return res.status(200).send([]);
     const events = await req.user.getRelatedEvents();
 
     res.status(200).send(events);
