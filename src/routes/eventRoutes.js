@@ -62,6 +62,7 @@ router.get("/recommended", auth, isVolunteer, async (req, res) => {
   try {
     if (
       !req.user.availableTill ||
+      req.user.status == "pending" ||
       validator.isBefore(req.user.availableTill.toISOString())
     )
       return res.status(200).send([]);
