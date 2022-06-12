@@ -17,7 +17,7 @@
 .act {
     background-color: #fffff7;
     padding: 15px;
-    flex: 7;
+    flex: 2.5;
     text-align: right;
 }
 
@@ -55,4 +55,14 @@
 
 .enrol:hover {
     color: rgb(150, 149, 149);
+}
+
+.username:hover {
+    color: black;
+}
+
+.username {
+    font-size: 15px;
+    cursor:default;
+    padding-right: 3%;
 }

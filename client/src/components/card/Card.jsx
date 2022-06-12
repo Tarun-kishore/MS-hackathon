@@ -100,7 +100,7 @@ export default function Card({ card, bn, onActivity }) {
             <span className="cardCat">
               {new Date(card.startsAt).toDateString()}
             </span>
-            <span className="cardCat">{card.location}</span>
+            <span className="cardCat">{card.Location}</span>
           </div>
           <span className="cardTitle">{card.name}</span>
           <hr />
@@ -146,7 +146,7 @@ export default function Card({ card, bn, onActivity }) {
             <span className="cardCat">
               {new Date(card.startsAt).toDateString()}
             </span>
-            <span className="cardCat">{card.location}</span>
+            <span className="cardCat">{card.Location}</span>
           </div>
           <span className="cardTitle">{card.name}</span>
           <hr />
@@ -192,7 +192,7 @@ export default function Card({ card, bn, onActivity }) {
             <span className="cardCat">
               {new Date(card.startsAt).toDateString()}
             </span>
-            <span className="cardCat">{card.location}</span>
+            <span className="cardCat">{card.Location}</span>
           </div>
           <span className="cardTitle">{card.name}</span>
           <hr />
