@@ -10,6 +10,12 @@ const eventSchema = new mongoose.Schema(
     description: {
       type: String,
     },
+    driveLink: {
+      type: String,
+    },
+    formLink: {
+      type: String,
+    },
     type: {
       type: String,
       lowercase: true,
