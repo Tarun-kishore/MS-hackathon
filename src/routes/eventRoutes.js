@@ -61,10 +61,11 @@ router.get("/active", auth, async (req, res) => {
 router.get("/recommended", auth, isVolunteer, async (req, res) => {
   try {
     if (
-      req.user.availableTill &&
+      !req.user.availableTill ||
+      req.user.status == "pending" ||
       validator.isBefore(req.user.availableTill.toISOString())
     )
-      return res.status(403).send({ error: "Volunteer not registered" });
+      return res.status(200).send([]);
     const events = await req.user.getRelatedEvents();
 
     res.status(200).send(events);
@@ -97,4 +98,21 @@ router.get("/:eventId", auth, async (req, res) => {
   }
 });
 
+router.get("/copy/:eventID", auth, isAdmin, async (req, res) => {
+  const eventID = req.params.eventID;
+  try {
+    const eventData = await Event.findById(eventID);
+    const tempData = eventData.toJSON();
+    delete tempData._id;
+    delete tempData.enrolledVolunteers;
+    delete tempData.volunteersEnrolled;
+    tempData.name = tempData.name + "-Copy";
+
+    const newEvent = new Event(tempData);
+    await newEvent.save();
+    res.status(200).send(newEvent);
+  } catch (e) {
+    res.status(500).send(e);
+  }
+});
 module.exports = router;
