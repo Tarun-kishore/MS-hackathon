@@ -22,7 +22,7 @@ import {
   Checkbox, 
   CheckboxGroup
 } from '@chakra-ui/react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import axios from 'axios'
 
 export default function Register() {
@@ -72,10 +72,35 @@ const LoginHeader = () => {
 
 const LoginForm = () => {
 
-  let [Locations, setLocations] = useState([])
-  let [availableTill, setAvailableTill] = useState("")
-  let [preferences, setPreferences] = useState([])
-  let [skills, setSkills] = useState([])
+  const setLocationsRequired = (value) => {
+    document.getElementById("locationsForm").required = value;
+  };
+
+  const setPreferencesRequired = (value) => {
+    document.getElementById("preferencesForm").required = value;
+  };
+  const setSkillsRequired = (value) => {
+    document.getElementById("skillsForm").required = value;
+  };
+
+  useEffect(() => {
+    setLocationsRequired(true);
+    setPreferencesRequired(true);
+    setSkillsRequired(true);
+  }, []);
+
+  // let date = new Date();
+  let formData = {
+    Locations: [],
+    availableTill: new Date().setMonth(new Date().getMonth()+1),
+    preferences:[],
+    skills:[]
+  }
+
+  // let [Locations, setLocations] = useState([])
+  // let [availableTill, setAvailableTill] = useState("")
+  // let [preferences, setPreferences] = useState([])
+  // let [skills, setSkills] = useState([])
   const [error, setError] = useState(false)
   let tickedLocations = new Set()
   let tickedPreferences = new Set()
@@ -90,25 +115,18 @@ const LoginForm = () => {
       let arrayLocations = Array.from(tickedLocations);
       let arrayPreferences = Array.from(tickedPreferences);
       let arraySkills = Array.from(tickedSkills);
-      Locations = arrayLocations.map((key, index) => ({ Location: key }));
-      preferences = arrayPreferences.map((key, index) => ({ preference: key }));
-      skills = arraySkills.map((key, index) => ({ skill: key }));
+      formData.Locations = arrayLocations.map((key, index) => ({ Location: key }));
+      formData.preferences = arrayPreferences.map((key, index) => ({ preference: key }));
+      formData.skills = arraySkills.map((key, index) => ({ skill: key }));
 
-      if(Locations.length == 0) {
-        setError(true);
-        return;
-      }
+      // setLocations(Locations);
+      // setPreferences(preferences);
+      // setSkills(skills);
+      // console.log(Locations);
+      // console.log(preferences);
+      // console.log(skills);
 
-      setLocations(Locations);
-      setPreferences(preferences);
-      setSkills(skills);
-      console.log(Locations);
-      console.log(preferences);
-      console.log(skills);
-
-    const res = await axios.post("/volunteer/register", {
-      Locations, availableTill, preferences, skills
-    });
+    const res = await axios.post("/volunteer/register", formData);
     console.log(res);
     res.data && window.location.replace("/event");
   } catch(err) {
@@ -121,54 +139,62 @@ const LoginForm = () => {
 
     const location = e.target.value;
     if(e.target.checked) {
-      tickedLocations.add(location)
+      tickedLocations.add(location);
+      setLocationsRequired(false);
+      console.log(tickedLocations);
       console.log(location)
     } else {
       if(tickedLocations.has(location)) {
         tickedLocations.delete(location)
-        console.log(location)
+        if (tickedLocations.size == 0) setLocationsRequired(true);
+        console.log(location, "removed")
       }
     }
   }
 
-  const handlePreference = async(e) => {
-
+  const handlePreference = async (e) => {
     const preference = e.target.value;
-    if(e.target.checked) {
-      tickedPreferences.add(preference)
-      console.log(preference)
+    if (e.target.checked) {
+      tickedPreferences.add(preference);
+      setPreferencesRequired(false);
+      console.log(tickedPreferences);
+      console.log(preference);
     } else {
-      if(tickedPreferences.has(preference)) {
-        tickedPreferences.delete(preference)
-        console.log(preference)
+      if (tickedPreferences.has(preference)) {
+        tickedPreferences.delete(preference);
+        if (tickedPreferences.size == 0) setPreferencesRequired(true);
+        console.log(preference, "removed");
       }
     }
-  }
+  };
 
-  const handleSkill = async(e) => {
+  const handleSkill = async (e) => {
     const skill = e.target.value;
-    if(e.target.checked) {
-      tickedSkills.add(skill)
-      console.log(skill)
+    if (e.target.checked) {
+      tickedSkills.add(skill);
+      setSkillsRequired(false);
+      console.log(tickedSkills);
+      console.log(skill);
     } else {
-      if(tickedSkills.has(skill)) {
-        tickedSkills.delete(skill)
-        console.log(skill)
+      if (tickedSkills.has(skill)) {
+        tickedSkills.delete(skill);
+        if (tickedSkills.size == 0) setSkillsRequired(true);
+        console.log(skill, "removed");
       }
     }
-  }
+  };
 
   const handleAvailability = async(e) => {
     let numberOfMonths = parseInt(e.target.value);
+    console.log(numberOfMonths);
     let date = new Date();
-    availableTill = new Date(date.setMonth(date.getMonth()+numberOfMonths));
-    setAvailableTill(availableTill);
+    formData.availableTill = date.setMonth(date.getMonth()+numberOfMonths);
   }
 
   return (
     <Box my={8} textAlign='center'>
       <form onSubmit={handleSubmit}>
-        <FormControl>
+        <FormControl id="locationsForm">
           <FormLabel>In which Toybank location would you like to volunteer?</FormLabel><br/>
           <Stack spacing={5} direction='column'>
             <Checkbox value="Outside Mumbai" onChange={handleLocation}>
@@ -199,7 +225,7 @@ const LoginForm = () => {
         <FormControl mt={4}>
           <FormLabel>Availability</FormLabel>
           <Select id="availability" name="availability" 
-          onChange={e => handleAvailability}
+          onChange={handleAvailability}
           >
             <option value="1">1 month</option>
             <option value="3">3 months</option>
@@ -207,7 +233,7 @@ const LoginForm = () => {
           </Select> <br/>
         </FormControl>
 
-        <FormControl>
+        <FormControl id="preferencesForm">
           <FormLabel>Please indicate your top Volunteering preferences:</FormLabel><br/>
           <Stack spacing={5} direction='column'>
             <Checkbox value="Play sessions with children" onChange={handlePreference}>
@@ -234,7 +260,7 @@ const LoginForm = () => {
           </Stack>
         </FormControl>
 
-        <FormControl>
+        <FormControl id="skillsForm">
           <FormLabel>Please list the relevant skills you have in these areas </FormLabel><br/>
           <Stack spacing={5} direction='column'>
             <Checkbox value="Story Telling" onChange={handleSkill}>
