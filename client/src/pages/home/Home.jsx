@@ -9,8 +9,16 @@ import {
   Text,
   useBreakpointValue,
 } from '@chakra-ui/react';
+import {useEffect, useState} from 'react'
 
 export default function Home() {
+
+  const [user, setUser] = useState("");
+
+  useEffect(() => {
+    setUser(JSON.parse(localStorage.getItem("user")));
+  }, []);
+
   return (
     <div className="homebg">
     <Stack minH={'100vh'} direction={{ base: 'column', md: 'row' }}>
@@ -55,7 +63,7 @@ export default function Home() {
             </Button>
             </a>
             <Link to="/signup">
-            <Button rounded={'full'}>SIGN UP</Button>
+            {!user && <Button rounded={'full'}>SIGN UP</Button>}
             </Link>
           </Stack>
         </Stack>

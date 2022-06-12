@@ -23,7 +23,7 @@ import {
 } from '@chakra-ui/react'
 
 import { Link } from "react-router-dom"
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import axios from "axios"
 
 export default function SignUp() {
@@ -78,35 +78,54 @@ const LoginHeader = () => {
 
 const LoginForm = () => {
 
-    const [name, setName] = useState("")
-    const [DOB, setDOB] = useState("")
-    const [mobile, setMobile] = useState("")
-    const [address, setAddress] = useState("")
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    const [educationalBackground, setEducationalBackground] = useState("")
-    const [occupation, setOccupation] = useState("")
-    let [languages, setLanguages] = useState([])
-    const [nationality, setNationality] = useState("")
-    const [school, setSchool] = useState("")
-    const [organisation, setOrganisation] = useState("")
+  let formData = {
+    name: "",
+    DOB:"",
+    mobile:"",
+    address:"",
+    email:"",
+    password:"",
+    educationalBackground:"",
+    occupation:"",
+    languages: [],
+    nationality:"",
+    school:"",
+    organisation:""
+  }
+
+    // const [name, setName] = useState("")
+    // const [DOB, setDOB] = useState("")
+    // const [mobile, setMobile] = useState("")
+    // const [address, setAddress] = useState("")
+    // const [email, setEmail] = useState("")
+    // const [password, setPassword] = useState("")
+    // const [educationalBackground, setEducationalBackground] = useState("")
+    // const [occupation, setOccupation] = useState("")
+    // let [languages, setLanguages] = useState([])
+    // const [nationality, setNationality] = useState("")
+    // const [school, setSchool] = useState("")
+    // const [organisation, setOrganisation] = useState("")
     const [error, setError] = useState(false)
-    let ticked = new Set()
+    let tickedLanguages = new Set()
+
+    const setLanguagesRequired = (value) => {
+      document.getElementById("languagesForm").required = value;
+    };
+
+    useEffect(() => {
+      setLanguagesRequired(true);
+    }, []);
     
     const handleSubmit = async (e) => {
       e.preventDefault();
       setError(false);
       
       try {  
-        let array = Array.from(ticked);
-        languages = array.map((key, index) => ({ language: key }));
-        setLanguages(languages);
-        console.log(languages);
+        let array = Array.from(tickedLanguages);
+        formData.languages = array.map((key, index) => ({ language: key }));
+        console.log(formData.languages);
 
-      const res = await axios.post("/signup", {
-        name, DOB, mobile, address, email, password, educationalBackground, 
-        occupation, languages, nationality, school, organisation 
-      });
+      const res = await axios.post("/signup", formData);
 
       console.log(res);
       localStorage.setItem('user', JSON.stringify(res));
@@ -118,19 +137,21 @@ const LoginForm = () => {
     }
   }
 
-  const handleLanguage = async(e) => {
-
+  const handleLanguage = async (e) => {
     const language = e.target.value;
-    if(e.target.checked) {
-      ticked.add(language)
-      console.log(language)
+    if (e.target.checked) {
+      tickedLanguages.add(language);
+      setLanguagesRequired(false);
+      console.log(tickedLanguages);
+      console.log(language);
     } else {
-      if(ticked.has(language)) {
-        ticked.delete(language)
-        console.log(language)
+      if (tickedLanguages.has(language)) {
+        tickedLanguages.delete(language);
+        if (tickedLanguages.size == 0) setLanguagesRequired(true);
+        console.log(language, "removed");
       }
     }
-  }
+  };
 
   return (
     <Box my={8}>
@@ -138,69 +159,69 @@ const LoginForm = () => {
         <FormControl>
           <FormLabel>Name</FormLabel>
           <Input required type="text" placeholder='Enter your name'
-          onChange={e => setName(e.target.value)}
+          onChange={e => formData.name = e.target.value}
           ></Input>
         </FormControl>
 
         <FormControl mt={4}>
           <FormLabel>Address</FormLabel>
           <Textarea required type="text" placeholder='Enter your address'
-          onChange={e => setAddress(e.target.value)}
+          onChange={e => formData.address = e.target.value}
           ></Textarea><br/>
         </FormControl>
 
         <FormControl mt={4}>
         <FormLabel>Mobile Number</FormLabel>
           <Input required type="number" placeholder='Enter mobile number'
-          onChange={e => setMobile(e.target.value)}
+          onChange={e => formData.mobile = e.target.value}
           ></Input>
         </FormControl>
 
         <FormControl mt={4}>
         <FormLabel>Email</FormLabel>
         <Input required type="email" placeholder='Enter Email ID'
-        onChange={e => setEmail(e.target.value)}
+        onChange={e => formData.email = e.target.value}
         ></Input>
         </FormControl>
 
         <FormControl mt={4}>
         <FormLabel>Create Password</FormLabel>
         <Input required type="password" placeholder='Enter password'
-        onChange={e => setPassword(e.target.value)}
+        onChange={e => formData.password = e.target.value}
         ></Input>
         </FormControl>
 
         <FormControl mt={4}>
         <FormLabel>Date of Birth</FormLabel>
-          <Input required type="date" onChange={e => setDOB(e.target.value)}></Input>
+          <Input required type="date" onChange={e => formData.DOB = e.target.value}></Input>
         </FormControl>
 
         <FormControl mt={4}>
         <FormLabel>In which school/college do you study?</FormLabel>
-        <Input onChange={e => setSchool(e.target.value)}></Input>
+        <Input onChange={e => formData.school = e.target.value}></Input>
         </FormControl>
 
         <FormControl mt={4}>
         <FormLabel>In which organization/corporate do you work?</FormLabel>
-        <Input onChange={e => setOrganisation(e.target.value)}></Input>
+        <Input onChange={e => formData.organisation = e.target.value}></Input>
         </FormControl>
 
         <FormControl mt={4}>
         <FormLabel>Academic Qualifications</FormLabel>
-        <Input required onChange={e => setEducationalBackground(e.target.value)}></Input>
+        <Input required onChange={e => formData.educationalBackground = e.target.value}></Input>
         </FormControl>
 
         <FormControl mt={4}>
         <FormLabel>Occupation</FormLabel>
-        <Input onChange={e => setOccupation(e.target.value)}></Input>
+        <Input onChange={e => formData.occupation = e.target.value}></Input>
         </FormControl>
 
         <FormControl mt={4}>
         <FormLabel>Nationality</FormLabel>
-        <Input onChange={e => setNationality(e.target.value)}></Input>
+        <Input onChange={e => formData.nationality = e.target.value}></Input>
         </FormControl>
 
-        <FormControl mt={4}>
+        <FormControl id="languagesForm" mt={4}>
           <FormLabel>Languages you know?</FormLabel><br/>
           <Stack spacing={5} direction='column'>
           <Checkbox value="English" onChange={handleLanguage}>

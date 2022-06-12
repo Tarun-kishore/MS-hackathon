@@ -76,19 +76,34 @@ const LoginHeader = () => {
 };
 
 const LoginForm = () => {
-  const [name, setName] = useState("");
-  const [type, setType] = useState("Play Sessions");
-  const [Location, setLocation] = useState("Online");
-  const [date, setDate] = useState("");
-  const [startsAt, setStartsAt] = useState("");
-  const [address, setAddress] = useState("");
-  const [volunteersRequired, setVolunteersRequired] = useState("");
-  const [description, setDescription] = useState("");
-  const [duration, setDuration] = useState("");
+
+  let formData = {
+    name: "",
+    type:"Play Sessions",
+    Location:"Online",
+    date:"",
+    startsAt:"",
+    address:"",
+    volunteersRequired:"",
+    description:"",
+    languages: [],
+    preferences:[],
+    skillsRequired: []
+  }
+
+  // const [name, setName] = useState("");
+  // const [type, setType] = useState("Play Sessions");
+  // const [Location, setLocation] = useState("Online");
+  // const [date, setDate] = useState("");
+  // const [startsAt, setStartsAt] = useState("");
+  // const [address, setAddress] = useState("");
+  // const [volunteersRequired, setVolunteersRequired] = useState("");
+  // const [description, setDescription] = useState("");
+  // const [duration, setDuration] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  let [languages, setLanguages] = useState([]);
-  let [preferences, setPreferences] = useState([]);
-  let [skills, setSkills] = useState([]);
+  // let [languages, setLanguages] = useState([]);
+  // let [preferences, setPreferences] = useState([]);
+  // let [skills, setSkills] = useState([]);
   const [error, setError] = useState(false);
   let tickedPreferences = new Set();
   let tickedSkills = new Set();
@@ -104,17 +119,17 @@ const LoginForm = () => {
   const setSkillsRequired = (value) => {
     document.getElementById("skillsForm").required = value;
   };
-  const setTime = (time) => {
-    const dateString = moment(date).format("DD MMM YYYY");
+  // const setTime = (time) => {
+  //   const dateString = moment(date).format("DD MMM YYYY");
 
-    console.log(new Date(`${dateString} ${time}`));
-    setStartsAt(new Date(`${dateString} ${time}`));
-  };
+  //   console.log(new Date(`${dateString} ${time}`));
+  //   setStartsAt(new Date(`${dateString} ${time}`));
+  // };
 
   useEffect(() => {
     setLanguagesRequired(true);
     setPreferencesRequired(true);
-    setPreferencesRequired(true);
+    setSkillsRequired(true);
   }, []);
 
   const handleSkill = async (e) => {
@@ -127,7 +142,7 @@ const LoginForm = () => {
     } else {
       if (tickedSkills.has(skill)) {
         tickedSkills.delete(skill);
-        if (tickedSkills.size() == 0) setSkillsRequired(true);
+        if (tickedSkills.size == 0) setSkillsRequired(true);
         console.log(skill, "removed");
       }
     }
@@ -142,42 +157,27 @@ const LoginForm = () => {
       let arrayLanguages = Array.from(tickedLanguages);
       let arrayPreferences = Array.from(tickedPreferences);
       let arraySkills = Array.from(tickedSkills);
-      languages = arrayLanguages.map((key, index) => ({ language: key }));
-      preferences = arrayPreferences.map((key, index) => ({ preference: key }));
-      skills = arraySkills.map((key, index) => ({ skill: key }));
+      formData.languages = arrayLanguages.map((key, index) => ({ language: key }));
+      formData.preferences = arrayPreferences.map((key, index) => ({ preference: key }));
+      formData.skillsRequired = arraySkills.map((key, index) => ({ skill: key }));
 
       console.log(tickedSkills);
       console.log({ arrayLanguages, arraySkills, arrayPreferences });
-      if (preferences.length == 0) {
-        setError(true);
-        return;
-      }
 
-      setLanguages(languages);
-      setPreferences(preferences);
-      setSkills(skills);
-      console.log(languages);
-      console.log(preferences);
-      console.log(skills);
+      // setLanguages(languages);
+      // setPreferences(preferences);
+      // setSkills(skills);
+      // console.log(languages);
+      // console.log(preferences);
+      // console.log(skills);
 
-      const dateString = moment(date).format("DD MMM YYYY");
+      const dateString = moment(formData.date).format("DD MMM YYYY");
 
-      console.log(new Date(`${dateString} ${startsAt}`));
-      setStartsAt(new Date(`${dateString} ${startsAt}`));
-      const res = await axios.post("/event/add", {
-        name,
-        type,
-        description,
-        Location,
-        date,
-        startsAt,
-        volunteersRequired,
-        preferences,
-        skillsRequired: skills,
-        duration,
-        languages,
-        address,
-      });
+      console.log(new Date(`${dateString} ${formData.startsAt}`));
+      formData.startsAt = new Date(`${dateString} ${formData.startsAt}`);
+      console.log(formData.startsAt)
+      console.log(formData)
+      const res = await axios.post("/event/add", formData);
 
       console.log(res);
       // localStorage.setItem('user', JSON.stringify(res));
@@ -199,7 +199,7 @@ const LoginForm = () => {
     } else {
       if (tickedPreferences.has(preference)) {
         tickedPreferences.delete(preference);
-        if (tickedPreferences.size() == 0) setPreferencesRequired(true);
+        if (tickedPreferences.size == 0) setPreferencesRequired(true);
         console.log(preference, "removed");
       }
     }
@@ -215,7 +215,7 @@ const LoginForm = () => {
     } else {
       if (tickedLanguages.has(language)) {
         tickedLanguages.delete(language);
-        if (tickedLanguages.size() == 0) setLanguagesRequired(true);
+        if (tickedLanguages.size == 0) setLanguagesRequired(true);
         console.log(language, "removed");
       }
     }
@@ -230,13 +230,13 @@ const LoginForm = () => {
             required
             type="text"
             placeholder="Name of activity"
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => formData.name=e.target.value}
           ></Input>
         </FormControl>
 
         <FormControl mt={4}>
           <FormLabel>Activity Type</FormLabel>
-          <Select required onChange={(e) => setType(e.target.value)}>
+          <Select required onChange={(e) => formData.type=e.target.value}>
             <option value="play">Play Sessions</option>
             <option value="translate">
               Translation of Play to Learn Sheets
@@ -248,7 +248,7 @@ const LoginForm = () => {
 
         <FormControl mt={4}>
           <FormLabel>Location</FormLabel>
-          <Select required onChange={(e) => setLocation(e.target.value)}>
+          <Select required onChange={(e) => formData.Location = e.target.value}>
             <option value="Online">Online</option>
             <option value="Outside Mumbai">Outside Mumbai</option>
             <option value="Navi Mumbai">Navi Mumbai</option>
@@ -264,7 +264,7 @@ const LoginForm = () => {
           <Input
             required
             type="text"
-            onChange={(e) => setAddress(e.target.value)}
+            onChange={(e) => formData.address = e.target.value}
           ></Input>
         </FormControl>
 
@@ -273,20 +273,20 @@ const LoginForm = () => {
           <Input
             required
             type="date"
-            onChange={(e) => setDate(e.target.value)}
+            onChange={(e) => formData.date = e.target.value}
           ></Input>
         </FormControl>
 
         <FormControl mt={4}>
           <FormLabel>Begin Time</FormLabel>
-          <Input type="time" onChange={(e) => setTime(e.target.value)}></Input>
+          <Input type="time" onChange={(e) => formData.startsAt = e.target.value}></Input>
         </FormControl>
 
         <FormControl mt={4}>
           <FormLabel>Duration (In hours)</FormLabel>
           <Input
             type="number"
-            onChange={(e) => setDuration(e.target.value)}
+            onChange={(e) => formData.duration = e.target.value}
           ></Input>
         </FormControl>
 
@@ -295,7 +295,7 @@ const LoginForm = () => {
           <Input
             required
             type="number"
-            onChange={(e) => setVolunteersRequired(e.target.value)}
+            onChange={(e) => formData.volunteersRequired = e.target.value}
           ></Input>
         </FormControl>
 
@@ -303,6 +303,9 @@ const LoginForm = () => {
           <FormLabel>Language skills desired in - </FormLabel>
           <br />
           <Stack spacing={5} direction="column">
+          <Checkbox value="English" onChange={handleLanguage}>
+              English
+            </Checkbox>
             <Checkbox value="Hindi" onChange={handleLanguage}>
               Hindi
             </Checkbox>
@@ -386,7 +389,7 @@ const LoginForm = () => {
           </FormLabel>
           <Textarea
             type="text"
-            onChange={(e) => setDescription(e.target.value)}
+            onChange={(e) => formData.description = e.target.value}
           ></Textarea>
           <br />
         </FormControl>
