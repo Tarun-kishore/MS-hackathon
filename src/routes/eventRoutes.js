@@ -97,4 +97,20 @@ router.get("/:eventId", auth, async (req, res) => {
   }
 });
 
+router.get("/copy/:eventID", auth, isAdmin, async (req, res) => {
+  const eventID = req.params.eventID;
+  try {
+    const eventData = await Event.findById(eventID);
+    delete eventData._id;
+    delete eventData.enrolledVolunteers;
+    delete eventData.volunteersEnrolled;
+    eventData.name = eventData.name + "-Copy";
+
+    const newEvent = new Event(eventData);
+    await newEvent.save();
+    res.status(200).send(newEvent);
+  } catch (e) {
+    res.status(500).send(e);
+  }
+});
 module.exports = router;
