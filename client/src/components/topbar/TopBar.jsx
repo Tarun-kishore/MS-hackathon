@@ -43,6 +43,7 @@ export default function TopBar() {
         <Link className='topLeft' to="/createEvent">CREATE EVENT</Link>
         <Link className='topRight' to="/activities">ALL ACTIVITIES</Link>
         <Link className='topRight' to="/request">VOLUNTEER REQUEST</Link>
+        <Link className="topLeft" to="/calendar"><div>CALENDAR</div></Link>
         <div onClick={handleLogout} className="topRight">LOGOUT</div>
         </div>
   } else {

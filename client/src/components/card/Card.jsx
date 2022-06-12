@@ -17,7 +17,7 @@ import {
   Text,
   Avatar
   } from '@chakra-ui/react';
-
+  
 export default function Card({card, bn}) {
 
   const message = "Your registration has not been approved by the admin yet. Please bear with us :)"
@@ -26,12 +26,7 @@ export default function Card({card, bn}) {
   const [pic, setPic] = useState(`${card.type}`)
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [name, setName] = useState(card.name)
-  const [address, setAddress] = useState(card.address)
-  const [Location, setLocation] = useState(card.Location)
-  const [date, setDate] = useState(card.date)
-  const [time, setTime] = useState("10 AM")
-  const [duration, setDuration] = useState(card.duration)
-  const [description, setDescription] = useState(card.description)
+
 
   // console.log(bn);
 
@@ -45,6 +40,7 @@ export default function Card({card, bn}) {
       // console.log(bn);
 
       console.log(pic)
+      console.log(name);
 
       if(user) {
         const status = user.data.user.approval;
@@ -58,6 +54,7 @@ export default function Card({card, bn}) {
   }, [])
 
   const handleDetails = async(e) => {
+    console.log(card);
     onOpen()
   }
 
@@ -125,12 +122,12 @@ export default function Card({card, bn}) {
             <DrawerHeader>DETAILS OF EVENT</DrawerHeader>
             <DrawerBody>
               <Stack>
-                  <div>{name}</div>
-                  <div>Address: {address}, {Location}</div>
-                  <div>Date: {new Date(date).toDateString()}</div>
-                  <div>Time: {time}</div>
-                  <div>Duration: {duration} Hours</div>
-                  <div>Description: {description}</div>
+                  <div>{card.name}</div>
+                  <div>Address: {card.address}, {card.Location}</div>
+                  <div>Date: {new Date(card.date).toDateString()}</div>
+                  <div>Time: {new Date(card.startsAt).toTimeString()}</div>
+                  <div>Duration: {card.duration} Hours</div>
+                  <div>Description: {card.description}</div>
               </Stack>
             </DrawerBody>
           </DrawerContent>
@@ -160,12 +157,12 @@ export default function Card({card, bn}) {
             <DrawerHeader>DETAILS OF EVENT</DrawerHeader>
             <DrawerBody>
               <Stack>
-                  <div>{name}</div>
-                  <div>Address: {address}, {Location}</div>
-                  <div>Date: {new Date(date).toDateString()}</div>
-                  <div>Time: {time}</div>
-                  <div>Duration: {duration} Hours</div>
-                  <div>Description: {description}</div>
+                  <div>{card.name}</div>
+                  <div>Address: {card.address}, {card.Location}</div>
+                  <div>Date: {new Date(card.date).toDateString()}</div>
+                  <div>Time: {new Date(card.startsAt).toTimeString()}</div>
+                  <div>Duration: {card.duration} Hours</div>
+                  <div>Description: {card.description}</div>
               </Stack>
             </DrawerBody>
           </DrawerContent>
@@ -196,12 +193,12 @@ export default function Card({card, bn}) {
             <DrawerHeader>DETAILS OF EVENT</DrawerHeader>
             <DrawerBody>
               <Stack>
-                  <div>{name}</div>
-                  <div>Address: {address}, {Location}</div>
-                  <div>Date: {new Date(date).toDateString()}</div>
-                  <div>Time: {time}</div>
-                  <div>Duration: {duration} Hours</div>
-                  <div>Description: {description}</div>
+                  <div>{card.name}</div>
+                  <div>Address: {card.address}, {card.Location}</div>
+                  <div>Date: {new Date(card.date).toDateString()}</div>
+                  <div>Time: {new Date(card.startsAt).toTimeString()}</div>
+                  <div>Duration: {card.duration} Hours</div>
+                  <div>Description: {card.description}</div>
               </Stack>
             </DrawerBody>
           </DrawerContent>

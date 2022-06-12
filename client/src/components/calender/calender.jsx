@@ -9,9 +9,9 @@ import axios from "axios";
 const localizer = momentLocalizer(moment);
 export default function MyCalender(props) {
   const [myEventsList, setmyEventsList] = useState([]);
-
   useEffect(() => {
     axios.get(props.url).then((events) => {
+      console.log(events);
       events = events.data.map((eventData) => {
         let end = new Date(`${eventData.startsAt}`);
         end.setHours(end.getHours() + eventData.duration);

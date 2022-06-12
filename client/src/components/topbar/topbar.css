@@ -11,6 +11,13 @@
     font-size: 0.8em;
 }
 
+@media only screen and (max-width: 600px) {
+    .top {
+        font-size: 0.5em;
+        padding: 0;
+    }
+}
+
 .topLeft, .topRight {
     display: flex;
     flex: 3;
