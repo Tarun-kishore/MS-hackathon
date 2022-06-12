@@ -84,6 +84,14 @@ const Activities = () => {
         setEditId(null);
         fetchAllActivites(s);
     }
+
+    const handleActivityCopy=async(id,e,s) => {
+        const res=await axios.get(`event/copy/${id}`);
+        console.log(res);
+        fetchAllActivites(s);
+    }
+
+
     const getTime=(d)=>{
         let v=new Date(d);
         return v.toLocaleTimeString('en-US');
@@ -123,7 +131,7 @@ const Activities = () => {
                 setCompleted(false)
                 setUpcoming(false)
                 fetchAllActivites('timePeriod');
-            }}>ActivitiesTp</Button>
+            }}>Filter activities</Button>
             </div>
             </GridItem>
             <GridItem colSpan={7}>
@@ -198,7 +206,10 @@ const Activities = () => {
                             Edit
                         </Button>
                         <Button margin="2px" onClick={()=>{handleActivityDelete(e._id,decideButton())}} colorScheme='yellow' size='xs'>
-                            Delete
+                            Cancel
+                        </Button>
+                        <Button margin="2px" onClick={()=>{handleActivityCopy(e._id,decideButton())}} colorScheme='yellow' size='xs'>
+                            Copy
                         </Button>
                     </div>:
                         <div>
