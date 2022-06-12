@@ -101,12 +101,13 @@ router.get("/copy/:eventID", auth, isAdmin, async (req, res) => {
   const eventID = req.params.eventID;
   try {
     const eventData = await Event.findById(eventID);
-    delete eventData._id;
-    delete eventData.enrolledVolunteers;
-    delete eventData.volunteersEnrolled;
-    eventData.name = eventData.name + "-Copy";
+    const tempData = eventData.toJSON();
+    delete tempData._id;
+    delete tempData.enrolledVolunteers;
+    delete tempData.volunteersEnrolled;
+    tempData.name = tempData.name + "-Copy";
 
-    const newEvent = new Event(eventData);
+    const newEvent = new Event(tempData);
     await newEvent.save();
     res.status(200).send(newEvent);
   } catch (e) {
