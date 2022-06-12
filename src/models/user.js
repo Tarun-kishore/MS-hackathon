@@ -188,7 +188,6 @@ userSchema.methods.getRelatedEvents = async function () {
   const recommendedEvents = events.filter((eventData) => {
     if (eventData.volunteersEnrolled >= eventData.volunteersRequired)
       return false;
-    if (eventData.Location == "Online") return true;
     const tempArray = user.Locations.map((obj) => obj.Location);
     if (tempArray.includes(eventData.Location)) return true;
   });
