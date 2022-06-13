@@ -106,6 +106,13 @@ router.get("/copy/:eventID", auth, isAdmin, async (req, res) => {
     delete tempData._id;
     delete tempData.enrolledVolunteers;
     delete tempData.volunteersEnrolled;
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+    tempData.name = tempData.name + "-Copy";
+=======
+>>>>>>> ea3dc1fa9ba54e7c72eb1de47221bc06e8a24f97
+>>>>>>> f0c9af05e88dbae5659c350989b48a7dde5e519a
 
     const newEvent = new Event(tempData);
     await newEvent.save();
