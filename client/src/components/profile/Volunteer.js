@@ -65,7 +65,7 @@ export default function Volunteer(props) {
           </ModalBody>
           <ModalFooter>
           <HStack>
-            <Link href="https://twitter.com/intent/tweet?text=Hello%20world" target="_blank" style={{ textDecoration: 'none' }} >
+            <Link href="https://twitter.com/intent/tweet?text=Hello%20Everyone%20I%20have%20done%20" target="_blank" style={{ textDecoration: 'none' }} >
             <Button colorScheme='twitter' leftIcon={<FaTwitter />} borderRadius={5}>
               Tweet
             </Button>
