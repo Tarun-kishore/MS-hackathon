@@ -53,7 +53,7 @@ const ProcessRequest = () => {
         }}>Not Processed</Button>
         </div>
         </GridItem>
-        <GridItem colSpan={3}>
+        <GridItem colSpan={10}>
         <Accordion allowToggle>
             {
             request.map((r)=>
