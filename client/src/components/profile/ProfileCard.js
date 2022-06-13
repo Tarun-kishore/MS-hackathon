@@ -31,7 +31,8 @@ import {
     AlertIcon,
     AlertTitle,
     AlertDescription,
-    Badge
+    Badge,
+    Select
   } from '@chakra-ui/react';
   import { useToast } from '@chakra-ui/react'
   import { EditIcon,LockIcon,BellIcon } from '@chakra-ui/icons';
@@ -153,7 +154,12 @@ import {
           }
         }
       }
-    
+      const handleAvailability = async(e) => {
+        let numberOfMonths = parseInt(e.target.value);
+        console.log(numberOfMonths);
+        let date = new Date();
+        formData.availableTill = date.setMonth(date.getMonth()+numberOfMonths);
+      }
     const convertUTCDateToLocalDate = (date) => {
         const date1 = new Date(date);
         let dateStr = date1.toLocaleString();
@@ -458,11 +464,24 @@ import {
                             </Box>
                             <Box>
                             <Text mb='8px'>Available Till</Text>
-                            <Input
-                                defaultValue={convertUTCDateToLocalDate(formData.availableTill)}
-                                onChange = {(e) => setFormData({...formData, availableTill: e.target.value})}
-                                size='sm'
-                            />
+                            <>
+                            {
+                                isEditable==true&&<Input
+                                    defaultValue={convertUTCDateToLocalDate(formData.availableTill)}
+                                    onChange = {(e) => setFormData({...formData, availableTill: e.target.value})}
+                                    size='sm'
+                                />
+                            }
+                            {
+                                isEditable==false&&<Select id="availability" name="availability" 
+                                onChange={handleAvailability} size="sm">
+                                  <option value="1">1 month</option>
+                                  <option value="3">3 months</option>
+                                  <option value="6">6 months</option>
+                                </Select>
+                            }
+                            </>
+                            
                             </Box>
                             <Box>
                             <Text mb='8px'>Skills</Text>
