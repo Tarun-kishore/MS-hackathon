@@ -122,7 +122,9 @@ eventSchema.pre("remove", async function (next) {
   const volunteers = eventData.enrolledVolunteers.map(
     (enrolledVolunteer) => enrolledVolunteer.enrolledVolunteer
   );
-  const dateString = `${eventData.startsAt.getDate()} / ${eventData.startsAt.getMonth()} /${eventData.startsAt.getFullYear()} `;
+  const dateString = `${eventData.startsAt.getDate()} / ${
+    eventData.startsAt.getMonth() + 1
+  } /${eventData.startsAt.getFullYear()} `;
   for (let i = 0, len = volunteers.length; i < len; i++) {
     const volunteer = volunteers[i];
     sendCancelationMail({ dateString, name: eventData.name }, volunteer.email);
