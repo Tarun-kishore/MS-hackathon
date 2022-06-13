@@ -124,7 +124,7 @@ const LoginForm = () => {
         let array = Array.from(tickedLanguages);
         formData.languages = array.map((key, index) => ({ language: key }));
         console.log(formData.languages);
-
+      
       const res = await axios.post("/signup", formData);
 
       console.log(res);
