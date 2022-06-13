@@ -27,7 +27,12 @@ const ProcessRequest = () => {
         console.log(data);
         fetchAllNotProcessedRequest();
     }
-
+    const convertUTCDateToLocalDate = (date) => {
+        const date1 = new Date(date);
+        let dateStr = date1.toLocaleString();
+        let commaIndex = dateStr.indexOf(',');
+        return date1.toLocaleString().slice(0, commaIndex);
+    }
   return (
     <React.Fragment>
         <div className='adminbg'>
@@ -36,19 +41,19 @@ const ProcessRequest = () => {
             templateColumns='repeat(12, 1fr)'
             columnGap={1}
            >
-        <GridItem colSpan={3} rowSpan={1} bg="yellow.400" area={'nav'} >
+        <GridItem colSpan={2} rowSpan="10" bg="yellow.400" area={'nav'} >
         <div>
-        <Button colorScheme='yellow' margin='5px' onClick={()=>{
+        <Button colorScheme='yellow' width="full" mb={2} onClick={()=>{
             fetchAllProcessedRequest();
         }}>Processed</Button>
         </div>
         <div>
-        <Button colorScheme='yellow' margin='5px' onClick={()=>{
+        <Button colorScheme='yellow' width="full" mb={2} onClick={()=>{
             fetchAllNotProcessedRequest();
-        }}>NotProcessed</Button>
+        }}>Not Processed</Button>
         </div>
         </GridItem>
-        <GridItem colSpan={7}>
+        <GridItem colSpan={3}>
         <Accordion allowToggle>
             {
             request.map((r)=>
@@ -64,12 +69,12 @@ const ProcessRequest = () => {
                 <AccordionPanel pb={4}>
                     <div>
                        <p>Name: <span>{r.name}</span></p> 
-                       <p>DOB: <span>{r.DOB}</span></p> 
+                       <p>DOB: <span>{convertUTCDateToLocalDate(r.DOB)}</span></p> 
                        <p>Mobile:<span> {r.mobile}</span></p> 
                        <p>Email: <span>{r.email}</span></p> 
                        <p>School:<span> {r.school}</span></p>
                        <p>Organisation: <span>{r.organisation}</span></p> 
-                       <p>EducationalBackground: <span>{r.educationalBackground}</span></p> 
+                       <p>Educational Background: <span>{r.educationalBackground}</span></p> 
                        <p>Occupation: <span>{r.occupation}</span></p> 
                        <p>Address: <span>{r.address}</span></p> 
                        {(r.approval=="pending")&&

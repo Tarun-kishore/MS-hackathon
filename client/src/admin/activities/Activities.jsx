@@ -3,7 +3,7 @@ import axios from 'axios';
 import './activities.css'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { Accordion, Button,AccordionButton,AccordionItem,Box,AccordionIcon,AccordionPanel,Input,Grid,GridItem,Alert,AlertTitle,AlertIcon, AlertDescription} from '@chakra-ui/react';
+import {Heading,Text, Flex,Accordion, Button,AccordionButton,AccordionItem,Box,AccordionIcon,AccordionPanel,Input,Grid,GridItem,Alert,AlertTitle,AlertIcon, AlertDescription, Spacer, HStack} from '@chakra-ui/react';
 
 const Activities = () => {
     const [event,setEvent]=useState([]);
@@ -108,9 +108,9 @@ const Activities = () => {
             templateColumns='repeat(12, 1fr)'
             columnGap={1}
            >
-            <GridItem colSpan={3} rowSpan={3} bg="yellow.400" area={'nav'} >
+            <GridItem colSpan={2} rowSpan={3} bg="yellow.400" area={'nav'} >
             <div>
-            <Button colorScheme='yellow' margin='5vh'  onClick={()=>{
+            <Button colorScheme='yellow' width="full" mb={2} onClick={()=>{
                 setTimePeriod(false)
                 setUpcoming(true)
                 setCompleted(false)
@@ -118,7 +118,7 @@ const Activities = () => {
             }}>Upcoming</Button>
             </div>
             <div>
-            <Button colorScheme='yellow' margin='5vh'  onClick={()=>{
+            <Button colorScheme='yellow' width="full"  mb={2} onClick={()=>{
                 setTimePeriod(false)
                 setCompleted(true)
                 setUpcoming(false)
@@ -126,7 +126,7 @@ const Activities = () => {
             }}>Completed</Button>
             </div>
             <div>
-            <Button colorScheme='yellow' margin='5vh'  onClick={()=>{
+            <Button colorScheme='yellow' width="full"  mb={2} onClick={()=>{
                 setTimePeriod(true)
                 setCompleted(false)
                 setUpcoming(false)
@@ -134,7 +134,7 @@ const Activities = () => {
             }}>Filter activities</Button>
             </div>
             </GridItem>
-            <GridItem colSpan={7}>
+            <GridItem colSpan={10}>
             {(timePeriod)&&<div>
                 <Box margin={5}>
                 <DatePicker selected={queryStartDate} onChange={(date) => setQueryStartDate(date)} />
@@ -155,23 +155,27 @@ const Activities = () => {
             event.map((e)=>
                 <AccordionItem key={e._id}>
                 <h2>
+                <AccordionButton>
+                    <HStack width="full">
+                    <Text >{e.name}</Text>
+                    <Spacer/>
                 {(e.volunteersRequired>e.volunteersEnrolled)?
-                        <AccordionButton>
-                            <Box flex='1' textAlign='left'>
+                            <Box textAlign='left'>
                             <Alert status='error'>
                                 <AlertIcon/>
-                                <AlertTitle>{e.name}</AlertTitle>
+                                <AlertTitle width="180px">Volunteers Needed</AlertTitle>
                             </Alert>
                             </Box>
-                        </AccordionButton>:
-                        <AccordionButton>
-                        <Box flex='1' textAlign='left'>
+                        :
+                        <Box textAlign='left'>
                         <Alert status='success'>
                             <AlertIcon/>
-                            <AlertTitle>{e.name}</AlertTitle>
+                            <AlertTitle width="180px">Sufficient Volunteers</AlertTitle>
                         </Alert>
                         </Box>
-                    </AccordionButton>}
+                      }
+                    </HStack>
+                    </AccordionButton>
                 </h2>
                 <AccordionPanel pb={4}>
                     {(e._id!=editId)?<div>
