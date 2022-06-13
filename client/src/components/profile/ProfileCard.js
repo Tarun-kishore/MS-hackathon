@@ -31,6 +31,7 @@ import {
     AlertIcon,
     AlertTitle,
     AlertDescription,
+    Badge
   } from '@chakra-ui/react';
   import { useToast } from '@chakra-ui/react'
   import { EditIcon,LockIcon,BellIcon } from '@chakra-ui/icons';
@@ -54,6 +55,7 @@ import {
             axios.get("/profile",formData)
             .then((res)=>{
                 setFormData(res.data);
+                console.log("form",formData.approval);
 
             })
            
@@ -217,7 +219,22 @@ import {
 
                             }
                             </>
-                            <Text>{formData.name}</Text>
+                            <Text>{formData.name}
+                            
+                            
+                            </Text>
+                            <>
+                            {
+                                formData.approval=="accepted"&&<Badge ml='1' fontSize='0.8em' colorScheme='green'>
+                                {formData.approval}
+                                </Badge>
+                            }
+                            {
+                                formData.approval!="accepted"&&<Badge ml='1' fontSize='0.8em' colorScheme='green'>
+                                {formData.approval}
+                                </Badge>
+                            }
+                            </>
                     </VStack>
                     <Box mt={10}>
                         <Volunteer {...volunteer_props}/>
