@@ -9,6 +9,10 @@ export default function Your_Activites() {
   // no activity
   const [nact, setNact] = useState(false);
   const [current, setCurrent] = useState("ALL");
+<<<<<<< HEAD
+=======
+  const [user, setUser] = useState("");
+>>>>>>> ea3dc1fa9ba54e7c72eb1de47221bc06e8a24f97
 
   const fetchCards = async () => {
     let res1 = await axios.get("/event/recommended");
@@ -27,6 +31,10 @@ export default function Your_Activites() {
   };
   useEffect(() => {
     fetchCards();
+<<<<<<< HEAD
+=======
+    setUser(JSON.parse(localStorage.getItem("user")).data.user.name);
+>>>>>>> ea3dc1fa9ba54e7c72eb1de47221bc06e8a24f97
   }, []);
 
   const reRender = () => {
@@ -82,6 +90,10 @@ export default function Your_Activites() {
             {" "}
             ENROLLED{" "}
           </span>
+<<<<<<< HEAD
+=======
+          <span className="act username">Hello {user}!</span>
+>>>>>>> ea3dc1fa9ba54e7c72eb1de47221bc06e8a24f97
         </div>
         <div className="your_activities">
           <Cards onActivity={reRender} cards={cards} bn={bn} />
