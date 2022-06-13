@@ -226,21 +226,6 @@ import {
                             }
                             </>
                             <Text>{formData.name}
-                            
-                            
-                            </Text>
-                            <>
-                            {
-                                formData.approval=="accepted"&&<Badge ml='1' fontSize='0.8em' colorScheme='green'>
-                                {formData.approval}
-                                </Badge>
-                            }
-                            {
-                                formData.approval!="accepted"&&<Badge ml='1' fontSize='0.8em' colorScheme='green'>
-                                {formData.approval}
-                                </Badge>
-                            }
-                            </>
                             </Text>
                             
                     </VStack>
