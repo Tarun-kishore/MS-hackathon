@@ -15,6 +15,7 @@ import {
   Link
 } from '@chakra-ui/react'
 import { FaTwitter ,FaFacebook, FaMedal} from 'react-icons/fa';
+import { useEffect } from 'react';
 export default function Volunteer(props) {
   let name=props.name;
   let hours=props.hours;
@@ -26,6 +27,19 @@ export default function Volunteer(props) {
     rem=50-hours;
   }
   const { isOpen, onOpen, onClose } = useDisclosure()
+  useEffect(() => {
+    const script = document.createElement('script');
+  
+    script.src="https://platform.twitter.com/widgets.js"
+    script.async = true;
+    // script.charset="UTF-8";
+  
+    document.body.appendChild(script);
+  
+    return () => {
+      document.body.removeChild(script);
+    }
+  }, []);
 
   return (
     <>
@@ -65,11 +79,15 @@ export default function Volunteer(props) {
           </ModalBody>
           <ModalFooter>
           <HStack>
-            <Link href="https://twitter.com/intent/tweet?text=Hello%20Everyone%20I%20have%20done%20" target="_blank" style={{ textDecoration: 'none' }} >
-            <Button colorScheme='twitter' leftIcon={<FaTwitter />} borderRadius={5}>
-              Tweet
-            </Button>
-            </Link>
+            <a 
+            target="blank"
+            href="https://twitter.com/intent/tweet?screen_name=TwitterDev&ref_src=twsrc%5Etfw" 
+            class="twitter-mention-button" data-text="Hello! Everyone I have done volunteering through" 
+            data-related="Toybank"
+            data-lang="en" 
+            data-show-count="true"><Button colorScheme='twitter' leftIcon={<FaTwitter />}>
+            Tweet
+          </Button></a>
             <Button onClick={onClose}>Close</Button>
           </HStack>
             
@@ -79,3 +97,5 @@ export default function Volunteer(props) {
     </>
   )
 }
+
+

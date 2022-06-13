@@ -56,6 +56,7 @@ import {
             .then((res)=>{
                 setFormData(res.data);
                 console.log("form",formData.approval);
+                console.log('status',formData.approval);
 
             })
            
@@ -179,6 +180,11 @@ import {
                 templateColumns='repeat(5, 1fr)'>
                 <GridItem colSpan={1} bg='gray.100' height="auto" p={"4"} >
                     <VStack>    
+                        <>
+                        { formData.approval=="accepted" &&  <Badge colorScheme='green'>Accepted</Badge>}
+                        { formData.approval=="pending" &&  <Badge colorScheme='yellow'>Pending</Badge>}
+                        </>
+                   
                             <>
                             {
                                 formData.numberOfHours<=10&&
@@ -235,6 +241,8 @@ import {
                                 </Badge>
                             }
                             </>
+                            </Text>
+                            
                     </VStack>
                     <Box mt={10}>
                         <Volunteer {...volunteer_props}/>
