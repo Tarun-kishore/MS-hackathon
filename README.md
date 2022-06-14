@@ -35,8 +35,9 @@ First you need to setup an environment for the server to run (You have to do it 
   Every time you pull contents form repository make sure you run `npm install` to install all required modules.
 
 Then every time you run the server, run mongodb shell beforehand using command `mongod`.
-Then run `npm run devstart` to start server
-run `npm start` in `client` folder to start react app after running `npm install` to install react packages.
+Then run `npm run devstart` to start server.
+
+Run `npm start` in `client` folder to start react app after running `npm install` to install react packages.
 
 # How can i contribute to repository?
 
