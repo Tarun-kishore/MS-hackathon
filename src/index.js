@@ -13,6 +13,9 @@ if (process.env.NODE_ENV === "production") {
 // *defining port default at 3000
 const port = process.env.PORT || 3001;
 
+console.log(process.env.DATABASE_URL);
+console.log(process.env.SECRET);
+
 // *making server listen at port defined above
 app.listen(port, () => {
   console.log(`server running at ${port}`);

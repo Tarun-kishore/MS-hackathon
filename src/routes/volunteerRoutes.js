@@ -4,7 +4,6 @@ const auth = require("../middleware/auth");
 const { isVolunteer } = require("../middleware/userRoles");
 
 router.post("/register", auth, isVolunteer, async (req, res) => {
-  console.log(req.body);
   const updates = Object.keys(req.body);
   //These fields cannot be updated and should always be fixed
   const nonAllowedUpdates = ["isAdmin", "email", "password", "mobile"];
@@ -18,7 +17,6 @@ router.post("/register", auth, isVolunteer, async (req, res) => {
 
   try {
     updates.forEach((update) => (req.user[update] = req.body[update]));
-    console.log(req.user);
 
     await req.user.save();
 
